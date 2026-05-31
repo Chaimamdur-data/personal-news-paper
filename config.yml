@@ -1,0 +1,56 @@
+site:
+  title: "Chai's Personal Newspaper"
+  subtitle: "Hourly refreshed personal news with citations"
+  max_articles_per_topic: 6
+
+topics:
+  - name: "AI, Data & Analytics"
+    keywords:
+      - AI
+      - data
+      - analytics
+      - machine learning
+    feeds:
+      - "https://feeds.arstechnica.com/arstechnica/index"
+      - "https://www.wired.com/feed/rss"
+      - "https://techcrunch.com/feed/"
+
+  - name: "Business & Markets"
+    keywords:
+      - market
+      - stocks
+      - economy
+      - earnings
+    feeds:
+      - "https://www.investing.com/rss/news_25.rss"
+      - "https://feeds.marketwatch.com/marketwatch/topstories/"
+
+  - name: "Cloud, Data Platforms & SaaS"
+    keywords:
+      - Snowflake
+      - Salesforce
+      - Databricks
+      - cloud
+      - SaaS
+    feeds:
+      - "https://techcrunch.com/feed/"
+      - "https://www.zdnet.com/news/rss.xml"
+
+  - name: "Bay Area & California"
+    keywords:
+      - California
+      - Bay Area
+      - San Francisco
+    feeds:
+      - "https://www.kqed.org/news/rss"
+      - "https://abc7news.com/feed/"
+
+  - name: "Debate, Education & STEM"
+    keywords:
+      - debate
+      - education
+      - robotics
+      - STEM
+    feeds:
+      - "https://www.edweek.org/feeds/education-week"
+      - "https://www.sciencedaily.com/rss/top/science.xml"

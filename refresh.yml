@@ -1,0 +1,36 @@
+name: Refresh Personal Newspaper
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install packages
+        run: pip install -r requirements.txt
+
+      - name: Generate newspaper
+        run: python generate_newspaper.py
+
+      - name: Commit updated newspaper
+        run: |
+          git config user.name "personal-newspaper-bot"
+          git config user.email "bot@example.com"
+          git add index.html
+          git commit -m "Refresh personal newspaper" || echo "No changes"
+          git push
