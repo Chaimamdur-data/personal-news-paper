@@ -1,8 +1,7 @@
 site:
-  title: "Chai's Personal Newspaper"
-  subtitle: "Hourly refreshed personal news with citations"
+  title: "Chai's Briefing"
+  subtitle: "Markets · World · India · Bay Area"
   max_articles_per_topic: 6
-  # ── Add/remove tickers here to update your stock dashboard ──
   stock_tickers:
     - NVDA
     - MU
@@ -14,19 +13,19 @@ site:
     - SMH
     - CRM
     - NFLX
+    - AVGO
+    - GOOGL
+    - SPGI
+    - DAL
+    - MA
+    - V
+    - BSX
+    - MPWR
+    - TTWO
+    - WYNN
 
 topics:
   - name: "India — National Politics & News"
-    keywords:
-      - India
-      - Modi
-      - BJP
-      - Congress
-      - Parliament
-      - Delhi
-      - Indian economy
-      - Lok Sabha
-      - Supreme Court India
     feeds:
       - "https://feeds.feedburner.com/ndtvnews-top-stories"
       - "https://www.thehindu.com/feeder/default.rss"
@@ -37,19 +36,7 @@ topics:
       - "https://theprint.in/feed/"
       - "https://sundayguardianlive.com/feed"
 
-  - name: "Telugu & Andhra Pradesh Politics"
-    keywords:
-      - Andhra Pradesh
-      - Telangana
-      - Telugu
-      - TDP
-      - YSRCP
-      - BRS
-      - Chandrababu
-      - Jagan
-      - Hyderabad
-      - KTR
-      - Revanth
+  - name: "Telugu & Andhra Pradesh"
     feeds:
       - "https://www.gulte.com/feed"
       - "https://www.greatandhra.com/rss.xml"
@@ -58,36 +45,13 @@ topics:
       - "https://www.m9.news/feed"
 
   - name: "Pakistan & South Asia"
-    keywords:
-      - Pakistan
-      - Imran Khan
-      - PTI
-      - Islamabad
-      - Karachi
-      - PMLN
-      - Pakistan Army
-      - South Asia
-      - Bangladesh
-      - Sri Lanka
     feeds:
       - "https://tribune.com.pk/feed"
       - "https://www.pakistantoday.com.pk/feed/"
       - "https://www.nation.com.pk/rss/home"
       - "https://www.thenews.com.pk/rss/1/1"
 
-  - name: "Geopolitics & International Affairs"
-    keywords:
-      - geopolitics
-      - NATO
-      - China
-      - Russia
-      - Middle East
-      - Iran
-      - Israel
-      - Ukraine
-      - Indo-Pacific
-      - US foreign policy
-      - sanctions
+  - name: "Geopolitics"
     feeds:
       - "https://eurasiantimes.com/feed/"
       - "https://www.arabnews.com/rss.xml"
@@ -95,17 +59,7 @@ topics:
       - "https://www.tribuneindia.com/rss/feed"
       - "https://www.deccanchronicle.com/rss_feed/news/rss.xml"
 
-  - name: "US Politics & Policy"
-    keywords:
-      - Trump
-      - Congress
-      - Senate
-      - White House
-      - Democrat
-      - Republican
-      - US election
-      - Washington DC
-      - Supreme Court
+  - name: "US Politics"
     feeds:
       - "https://thehill.com/feed/"
       - "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml"
@@ -113,18 +67,6 @@ topics:
       - "https://www.politico.com/rss/politicopicks.xml"
 
   - name: "Business & Markets"
-    keywords:
-      - market
-      - stocks
-      - economy
-      - earnings
-      - investing
-      - S&P 500
-      - interest rates
-      - Fed
-      - Bloomberg
-      - rupee
-      - India GDP
     feeds:
       - "https://www.investing.com/rss/news_25.rss"
       - "https://feeds.marketwatch.com/marketwatch/topstories/"
@@ -132,16 +74,7 @@ topics:
       - "https://www.livemint.com/rss/news"
       - "https://economictimes.indiatimes.com/rssfeedsdefault.cms"
 
-  - name: "AI, Data & Analytics"
-    keywords:
-      - AI
-      - artificial intelligence
-      - data
-      - analytics
-      - machine learning
-      - LLM
-      - generative AI
-      - data engineering
+  - name: "AI & Tech"
     feeds:
       - "https://feeds.arstechnica.com/arstechnica/index"
       - "https://www.wired.com/feed/rss"
@@ -149,45 +82,15 @@ topics:
       - "https://www.technologyreview.com/feed/"
       - "https://venturebeat.com/category/ai/feed/"
 
-  - name: "Cloud, Data Platforms & SaaS"
-    keywords:
-      - Snowflake
-      - Salesforce
-      - Databricks
-      - cloud
-      - SaaS
-      - AWS
-      - Azure
-      - Google Cloud
-      - dbt
+  - name: "Cloud & SaaS"
     feeds:
       - "https://techcrunch.com/feed/"
       - "https://www.zdnet.com/news/rss.xml"
       - "https://thenewstack.io/feed/"
 
-  - name: "Bay Area & California"
-    keywords:
-      - California
-      - Bay Area
-      - San Francisco
-      - Silicon Valley
-      - Oakland
-      - San Jose
+  - name: "Bay Area"
     feeds:
       - "https://www.kqed.org/news/rss"
       - "https://abc7news.com/feed/"
       - "https://www.mercurynews.com/feed/"
       - "https://sfstandard.com/feed/"
-
-  - name: "Debate, Education & STEM"
-    keywords:
-      - debate
-      - education
-      - robotics
-      - STEM
-      - science
-      - math competition
-    feeds:
-      - "https://www.edweek.org/feeds/education-week"
-      - "https://www.sciencedaily.com/rss/top/science.xml"
-      - "https://www.nature.com/nature.rss"
