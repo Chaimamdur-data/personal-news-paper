@@ -1,1529 +1,1606 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Chai&#x27;s Personal Newspaper</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="3600">
-    <style>
-        body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f4f1ea; color: #1f2933; }
-        header { background: #111827; color: white; padding: 32px 20px; text-align: center; }
-        header h1 { margin: 0; font-size: 36px; }
-        header p { margin: 8px 0 0; color: #d1d5db; }
-        nav { background: #1f2937; padding: 10px 20px; text-align: center; position: sticky; top: 0; z-index: 100; }
-        nav a { color: #d1d5db; text-decoration: none; margin: 0 12px; font-size: 14px; }
-        nav a:hover { color: white; }
-        main { max-width: 1180px; margin: 0 auto; padding: 24px; }
-        .ai-summary { margin-bottom: 36px; }
-        .ai-summary h2 { font-size: 28px; border-bottom: 3px solid #111827; padding-bottom: 8px; }
-        .ai-box { background: #ffffff; border-left: 6px solid #0f766e; padding: 22px; border-radius: 14px;
-                   box-shadow: 0 4px 12px rgba(0,0,0,0.08); line-height: 1.6; font-size: 16px; }
-        .topic { margin-bottom: 36px; }
-        .topic h2 { border-bottom: 3px solid #111827; padding-bottom: 8px; font-size: 26px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
-        .card { background: white; padding: 18px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .card h3 { margin: 10px 0; font-size: 20px; line-height: 1.3; }
-        .card p { line-height: 1.5; color: #374151; }
-        .card a { display: inline-block; margin-top: 10px; color: #0f766e; font-weight: bold; text-decoration: none; }
-        .meta { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: #6b7280; }
-        footer { text-align: center; padding: 24px; color: #6b7280; font-size: 13px; }
-    </style>
+<meta charset="UTF-8">
+<title>Chai&#x27;s Briefing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="3600">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f7f4;
+  --surface: #ffffff;
+  --border: #e5e2db;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --accent: #1a73e8;
+  --accent-hover: #1557b0;
+  --green: #137333;
+  --red: #c5221f;
+  --amber: #b06000;
+  --tag-bg: #f1f3f4;
+  --header-bg: #202124;
+  --nav-bg: #ffffff;
+  --nav-border: #e5e2db;
+  --lead-border: #dadce0;
+  --score-a: #137333;
+  --score-b: #1a73e8;
+  --score-c: #b06000;
+  --score-d: #c5221f;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+.site-header {
+  background: var(--header-bg);
+  padding: 18px 24px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.site-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+.site-subtitle {
+  font-size: 12px;
+  color: #9aa0a6;
+  margin-top: 1px;
+}
+.header-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+.refresh-badge {
+  font-size: 11px;
+  color: #9aa0a6;
+  background: rgba(255,255,255,0.08);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── STICKY NAV ──────────────────────────────────────────────── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  padding: 0 24px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sticky-nav::-webkit-scrollbar { display: none; }
+.nav-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 11px 14px;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.nav-link.stocks-link {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ── MAIN LAYOUT ─────────────────────────────────────────────── */
+.main-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+/* ── STOCK SECTION ───────────────────────────────────────────── */
+.stock-section {
+  margin-bottom: 32px;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.stock-section-header {
+  padding: 14px 20px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fafafa;
+}
+.stock-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.stock-meta-note {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Stock ticker strip — horizontal scroll */
+.stock-ticker-strip {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0;
+}
+.stock-ticker-strip::-webkit-scrollbar { display: none; }
+.stock-chip {
+  flex-shrink: 0;
+  padding: 12px 18px;
+  border-right: 1px solid var(--border);
+  cursor: default;
+  transition: background 0.12s;
+  min-width: 130px;
+}
+.stock-chip:hover { background: #f5f8ff; }
+.stock-chip:last-child { border-right: none; }
+.chip-top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.chip-ticker {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.chip-price {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.chip-change-pos { font-size: 12px; color: var(--green); font-weight: 600; }
+.chip-change-neg { font-size: 12px; color: var(--red); font-weight: 600; }
+.chip-bottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chip-score {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: white;
+}
+.chip-rec {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.score-a  { background: var(--score-a); }
+.score-b  { background: var(--score-b); }
+.score-c  { background: var(--amber); }
+.score-d  { background: var(--score-d); }
+.score-f  { background: #666; }
+
+/* Stock detail table */
+.stock-table-wrap {
+  overflow-x: auto;
+  border-top: 1px solid var(--border);
+}
+.stock-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.stock-table th {
+  background: #f1f3f4;
+  padding: 8px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.stock-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #f1f3f4;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+.stock-table tr:last-child td { border-bottom: none; }
+.stock-table tr:hover td { background: #f8f9ff; }
+.td-ticker { font-weight: 700; font-size: 13px; }
+.td-name { color: var(--text-secondary); max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+.pos { color: var(--green); font-weight: 600; }
+.neg { color: var(--red); font-weight: 600; }
+.disq-flag { color: var(--red); font-size: 11px; }
+.stock-disclaimer {
+  padding: 10px 20px;
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: #fafafa;
+}
+
+/* ── TOPIC SECTIONS ──────────────────────────────────────────── */
+.topic-section {
+  margin-bottom: 24px;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.topic-header {
+  padding: 12px 20px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fafafa;
+}
+.topic-icon { font-size: 16px; }
+.topic-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.topic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+@media (max-width: 700px) {
+  .topic-grid { grid-template-columns: 1fr; }
+}
+
+/* Lead story */
+.lead-card {
+  padding: 18px 20px;
+  border-right: 1px solid var(--border);
+}
+.lead-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.lead-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+.lead-title a {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.lead-title a:hover { color: var(--accent); }
+.lead-summary {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Side list */
+.side-list {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0;
+}
+.side-item {
+  padding: 10px 18px;
+  border-bottom: 1px solid #f3f3f0;
+}
+.side-item:last-child { border-bottom: none; }
+.side-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.side-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+.side-title a {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.side-title a:hover { color: var(--accent); }
+
+/* Shared tags */
+.source-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.time-tag {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── TWO-COLUMN TOPIC LAYOUT ─────────────────────────────────── */
+.topics-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 0;
+}
+@media (max-width: 900px) {
+  .topics-columns { grid-template-columns: 1fr; }
+}
+.topics-columns .topic-section {
+  margin-bottom: 0;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+.site-footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+}
+</style>
 </head>
 <body>
-    <header>
-        <h1>Chai&#x27;s Personal Newspaper</h1>
-        <p>Hourly refreshed personal news with citations</p>
-        <p>Last refreshed: Jun 01, 2026 01:42 AM</p>
-    </header>
 
-    <nav>
-        <a href="#stocks">📈 Stocks</a>
-        <a href="#summary">🧠 AI Summary</a>
-        <a href="#topic-0">India — National Politics &amp; News</a><a href="#topic-1">Telugu &amp; Andhra Pradesh Politics</a><a href="#topic-2">Pakistan &amp; South Asia</a><a href="#topic-3">Geopolitics &amp; International Affairs</a><a href="#topic-4">US Politics &amp; Policy</a><a href="#topic-5">Business &amp; Markets</a><a href="#topic-6">AI, Data &amp; Analytics</a><a href="#topic-7">Cloud, Data Platforms &amp; SaaS</a><a href="#topic-8">Bay Area &amp; California</a><a href="#topic-9">Debate, Education &amp; STEM</a>
-    </nav>
+<header class="site-header">
+  <div>
+    <div class="site-title">Chai&#x27;s Briefing</div>
+    <div class="site-subtitle">Markets · World · India · Bay Area</div>
+  </div>
+  <div class="header-right">
+    <span class="refresh-badge">🔄 Jun 01, 2026 · 02:44 AM</span>
+  </div>
+</header>
 
-    <main>
-        <div id="stocks">
-    <section class="stock-section">
-        <h2>📈 Stock Health Dashboard</h2>
-        <p class="stock-subtitle">Live data via Yahoo Finance · Scored across 16 parameters · Sorted by Health Score</p>
+<nav class="sticky-nav">
+  <a href="#stocks" class="nav-link stocks-link">📈 Markets</a>
+  <a href="#topic-india-—-national-politics--news" class="nav-link">🇮🇳 India — National Politics &amp; News</a><a href="#topic-telugu--andhra-pradesh" class="nav-link">🏛️ Telugu &amp; Andhra Pradesh</a><a href="#topic-pakistan--south-asia" class="nav-link">🌏 Pakistan &amp; South Asia</a><a href="#topic-geopolitics" class="nav-link">🌍 Geopolitics</a><a href="#topic-us-politics" class="nav-link">🇺🇸 US Politics</a><a href="#topic-business--markets" class="nav-link">📊 Business &amp; Markets</a><a href="#topic-ai--tech" class="nav-link">🤖 AI &amp; Tech</a><a href="#topic-cloud--saas" class="nav-link">☁️ Cloud &amp; SaaS</a><a href="#topic-bay-area" class="nav-link">🌉 Bay Area</a>
+</nav>
 
-        <div class="stock-grid">
-            
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">NVDA</span>
-                    <span class="sc-name">NVIDIA Corporation</span>
-                    <span class="sc-sector">Technology</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#14532d;background:#dcfce7">
-                    A &nbsp;·&nbsp; 91.2/100
-                </div>
-            </div>
+<main class="main-wrap">
 
-            <div class="sc-price-row">
-                <span class="sc-price">$211.14</span>
-                <span style="color:#dc2626">▼ 1.45%</span>
-                <span class="upside">🎯 +40.6% upside</span>
-            </div>
+  <div id="stocks">
+    <div class="stock-section" id="stocks">
+      <div class="stock-section-header">
+        <span class="stock-section-title">📈 Markets & Portfolio</span>
+        <span class="stock-meta-note">Yahoo Finance · 20 stocks · Scored across 16 parameters</span>
+      </div>
 
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:91%;background:#16a34a"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🚀 Strong Buy</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>32.4</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>0.65</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>85.2%</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>63.0%</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>0.066</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>114.3%</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>1.3%</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>199.35</strong> &nbsp;|&nbsp;
-                MA200 <strong>187.65</strong> &nbsp;|&nbsp;
-                52W <strong>135.4–236.54</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
-        </div>
+      <div class="stock-ticker-strip">
         
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">MU</span>
-                    <span class="sc-name">Micron Technology, Inc.</span>
-                    <span class="sc-sector">Technology</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#1e3a5f;background:#dbeafe">
-                    B &nbsp;·&nbsp; 79.4/100
-                </div>
-            </div>
-
-            <div class="sc-price-row">
-                <span class="sc-price">$971.00</span>
-                <span style="color:#16a34a">▲ 5.14%</span>
-                <span class="upside">🎯 -27.6% upside</span>
-            </div>
-
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:79%;background:#16a34a"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🟢 Buy</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>45.9</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>0.33</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>196.3%</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>41.5%</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>0.149</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>39.8%</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>3.1%</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>557.56</strong> &nbsp;|&nbsp;
-                MA200 <strong>338.74</strong> &nbsp;|&nbsp;
-                52W <strong>94.4–981.0</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">NVDA</span>
+            <span class="chip-price">$211.14</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 1.45%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-a">91.2</span>
+            <span class="chip-rec">S.Buy</span>
+          </div>
         </div>
-        
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">META</span>
-                    <span class="sc-name">Meta Platforms, Inc.</span>
-                    <span class="sc-sector">Communication Services</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#1e3a5f;background:#dbeafe">
-                    B &nbsp;·&nbsp; 78.5/100
-                </div>
-            </div>
-
-            <div class="sc-price-row">
-                <span class="sc-price">$632.51</span>
-                <span style="color:#dc2626">▼ 0.44%</span>
-                <span class="upside">🎯 +30.7% upside</span>
-            </div>
-
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:78%;background:#16a34a"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🟢 Buy</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>23.0</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>0.91</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>33.1%</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>32.8%</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>0.356</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>32.9%</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>1.5%</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>618.53</strong> &nbsp;|&nbsp;
-                MA200 <strong>666.57</strong> &nbsp;|&nbsp;
-                52W <strong>520.26–796.25</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">MU</span>
+            <span class="chip-price">$971.00</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-pos">▲ 5.14%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">79.4</span>
+            <span class="chip-rec">Buy</span>
+          </div>
         </div>
-        
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">NFLX</span>
-                    <span class="sc-name">Netflix, Inc.</span>
-                    <span class="sc-sector">Communication Services</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#1e3a5f;background:#dbeafe">
-                    B &nbsp;·&nbsp; 74.3/100
-                </div>
-            </div>
-
-            <div class="sc-price-row">
-                <span class="sc-price">$86.02</span>
-                <span style="color:#dc2626">▼ 0.39%</span>
-                <span class="upside">🎯 +33.2% upside</span>
-            </div>
-
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:74%;background:#16a34a"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🟢 Buy</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>27.7</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>1.69</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>16.2%</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>28.5%</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>0.538</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>48.5%</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>2.3%</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>93.04</strong> &nbsp;|&nbsp;
-                MA200 <strong>101.2</strong> &nbsp;|&nbsp;
-                52W <strong>75.01–134.12</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">GOOGL</span>
+            <span class="chip-price">$380.34</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 2.51%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">78.8</span>
+            <span class="chip-rec">Buy</span>
+          </div>
         </div>
-        
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">MSFT</span>
-                    <span class="sc-name">Microsoft Corporation</span>
-                    <span class="sc-sector">Technology</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#1e3a5f;background:#dbeafe">
-                    B &nbsp;·&nbsp; 72.9/100
-                </div>
-            </div>
-
-            <div class="sc-price-row">
-                <span class="sc-price">$450.24</span>
-                <span style="color:#16a34a">▲ 5.45%</span>
-                <span class="upside">🎯 +24.5% upside</span>
-            </div>
-
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:72%;background:#16a34a"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🟢 Buy</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>26.8</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>1.39</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>18.3%</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>39.3%</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>0.303</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>34.0%</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>1.0%</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>402.83</strong> &nbsp;|&nbsp;
-                MA200 <strong>458.46</strong> &nbsp;|&nbsp;
-                52W <strong>356.28–555.45</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">META</span>
+            <span class="chip-price">$632.51</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 0.44%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">78.5</span>
+            <span class="chip-rec">Buy</span>
+          </div>
         </div>
-        
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">AMZN</span>
-                    <span class="sc-name">Amazon.com, Inc.</span>
-                    <span class="sc-sector">Consumer Cyclical</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#1e3a5f;background:#dbeafe">
-                    B &nbsp;·&nbsp; 72.5/100
-                </div>
-            </div>
-
-            <div class="sc-price-row">
-                <span class="sc-price">$270.64</span>
-                <span style="color:#dc2626">▼ 1.23%</span>
-                <span class="upside">🎯 +15.6% upside</span>
-            </div>
-
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:72%;background:#16a34a"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🟢 Buy</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>31.7</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>1.83</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>16.6%</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>12.2%</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>0.533</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>24.3%</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>1.1%</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>246.67</strong> &nbsp;|&nbsp;
-                MA200 <strong>231.52</strong> &nbsp;|&nbsp;
-                52W <strong>196.0–278.56</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">BSX</span>
+            <span class="chip-price">$48.31</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 1.63%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">75.9</span>
+            <span class="chip-rec">Buy</span>
+          </div>
         </div>
-        
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">CRM</span>
-                    <span class="sc-name">Salesforce, Inc.</span>
-                    <span class="sc-sector">Technology</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#1e3a5f;background:#dbeafe">
-                    B &nbsp;·&nbsp; 71.5/100
-                </div>
-            </div>
-
-            <div class="sc-price-row">
-                <span class="sc-price">$191.10</span>
-                <span style="color:#16a34a">▲ 8.47%</span>
-                <span class="upside">🎯 +33.7% upside</span>
-            </div>
-
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:71%;background:#16a34a"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🟢 Buy</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>22.1</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>0.93</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>13.3%</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>18.7%</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>1.243</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>16.9%</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>8.9%</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>180.81</strong> &nbsp;|&nbsp;
-                MA200 <strong>221.27</strong> &nbsp;|&nbsp;
-                52W <strong>163.52–276.8</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">V</span>
+            <span class="chip-price">$326.36</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-pos">▲ 0.43%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">74.9</span>
+            <span class="chip-rec">Buy</span>
+          </div>
         </div>
-        
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">AAPL</span>
-                    <span class="sc-name">Apple Inc.</span>
-                    <span class="sc-sector">Technology</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#1e3a5f;background:#dbeafe">
-                    B &nbsp;·&nbsp; 67.4/100
-                </div>
-            </div>
-
-            <div class="sc-price-row">
-                <span class="sc-price">$312.06</span>
-                <span style="color:#dc2626">▼ 0.14%</span>
-                <span class="upside">🎯 -0.5% upside</span>
-            </div>
-
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:67%;background:#f59e0b"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🟡 Hold</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>37.7</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>2.72</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>16.6%</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>27.2%</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>0.795</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>141.5%</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>0.9%</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>275.28</strong> &nbsp;|&nbsp;
-                MA200 <strong>263.24</strong> &nbsp;|&nbsp;
-                52W <strong>195.07–315.0</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">NFLX</span>
+            <span class="chip-price">$86.02</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 0.39%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">74.3</span>
+            <span class="chip-rec">Buy</span>
+          </div>
         </div>
-        
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">SMH</span>
-                    <span class="sc-name">VanEck Semiconductor ETF</span>
-                    <span class="sc-sector">N/A</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#713f12;background:#fef9c3">
-                    C &nbsp;·&nbsp; 56.9/100
-                </div>
-            </div>
-
-            <div class="sc-price-row">
-                <span class="sc-price">$598.93</span>
-                <span style="color:#dc2626">▼ 0.15%</span>
-                
-            </div>
-
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:56%;background:#f59e0b"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🟡 Hold</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>49.3</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>—</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>—</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>—</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>—</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>—</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>—</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>484.73</strong> &nbsp;|&nbsp;
-                MA200 <strong>388.75</strong> &nbsp;|&nbsp;
-                52W <strong>238.96–612.3</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">AVGO</span>
+            <span class="chip-price">$446.77</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-pos">▲ 4.73%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">73.8</span>
+            <span class="chip-rec">Buy</span>
+          </div>
         </div>
-        
-        <div class="stock-card">
-            <div class="sc-header">
-                <div>
-                    <span class="sc-ticker">VUG</span>
-                    <span class="sc-name">Vanguard Growth ETF</span>
-                    <span class="sc-sector">N/A</span>
-                </div>
-                <div class="sc-grade-badge" style="color:#713f12;background:#fef9c3">
-                    C &nbsp;·&nbsp; 55.1/100
-                </div>
-            </div>
-
-            <div class="sc-price-row">
-                <span class="sc-price">$89.60</span>
-                <span style="color:#16a34a">▲ 0.43%</span>
-                
-            </div>
-
-            <div class="sc-bar-wrap">
-                <div class="sc-bar" style="width:55%;background:#f59e0b"></div>
-            </div>
-
-            <div class="sc-metrics">
-                <div class="sc-metric"><span>Rec</span><strong>🟡 Hold</strong></div>
-                <div class="sc-metric"><span>P/E</span><strong>36.8</strong></div>
-                <div class="sc-metric"><span>PEG</span><strong>—</strong></div>
-                <div class="sc-metric"><span>Rev↑</span><strong>—</strong></div>
-                <div class="sc-metric"><span>Margin</span><strong>—</strong></div>
-                <div class="sc-metric"><span>D/E</span><strong>—</strong></div>
-                <div class="sc-metric"><span>ROE</span><strong>—</strong></div>
-                <div class="sc-metric"><span>Short</span><strong>—</strong></div>
-            </div>
-
-            <div class="sc-ma">
-                MA50 <strong>81.29</strong> &nbsp;|&nbsp;
-                MA200 <strong>79.98</strong> &nbsp;|&nbsp;
-                52W <strong>68.42–89.87</strong>
-            </div>
-
-            
-            <div class="sc-updated">Updated: Jun 01 2026 01:41 AM</div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">MA</span>
+            <span class="chip-price">$493.98</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-pos">▲ 0.05%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">73.2</span>
+            <span class="chip-rec">Buy</span>
+          </div>
         </div>
-        
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">MSFT</span>
+            <span class="chip-price">$450.24</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-pos">▲ 5.45%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">72.9</span>
+            <span class="chip-rec">Buy</span>
+          </div>
         </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">AMZN</span>
+            <span class="chip-price">$270.64</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 1.23%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">72.5</span>
+            <span class="chip-rec">Buy</span>
+          </div>
+        </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">SPGI</span>
+            <span class="chip-price">$424.00</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-pos">▲ 1.75%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">71.8</span>
+            <span class="chip-rec">Buy</span>
+          </div>
+        </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">CRM</span>
+            <span class="chip-price">$191.10</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-pos">▲ 8.47%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">71.5</span>
+            <span class="chip-rec">Buy</span>
+          </div>
+        </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">DAL</span>
+            <span class="chip-price">$82.48</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 0.01%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">70.1</span>
+            <span class="chip-rec">Buy</span>
+          </div>
+        </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">AAPL</span>
+            <span class="chip-price">$312.06</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 0.14%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">67.4</span>
+            <span class="chip-rec">Hold</span>
+          </div>
+        </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">MPWR</span>
+            <span class="chip-price">$1,566.21</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 4.10%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-b">65.1</span>
+            <span class="chip-rec">Hold</span>
+          </div>
+        </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">WYNN</span>
+            <span class="chip-price">$101.22</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 0.32%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-c">62.8</span>
+            <span class="chip-rec">Hold</span>
+          </div>
+        </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">SMH</span>
+            <span class="chip-price">$598.93</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-neg">▼ 0.15%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-c">56.9</span>
+            <span class="chip-rec">Hold</span>
+          </div>
+        </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">TTWO</span>
+            <span class="chip-price">$224.16</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-pos">▲ 2.89%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-c">56.6</span>
+            <span class="chip-rec">Hold</span>
+          </div>
+        </div>
+        <div class="stock-chip">
+          <div class="chip-top">
+            <span class="chip-ticker">VUG</span>
+            <span class="chip-price">$89.60</span>
+          </div>
+          <div class="chip-top" style="margin-bottom:4px">
+            <span class="chip-change-pos">▲ 0.43%</span>
+          </div>
+          <div class="chip-bottom">
+            <span class="chip-score score-c">55.1</span>
+            <span class="chip-rec">Hold</span>
+          </div>
+        </div>
+      </div>
 
-        <div class="stock-table-wrap">
-            <table class="stock-table">
-                <thead>
-                    <tr>
-                        <th>#</th><th>Ticker</th><th>Price</th><th>Score</th>
-                        <th>Rec</th><th>Analyst</th><th>PEG</th><th>Rev↑</th>
-                        <th>D/E</th><th>MA50/200</th><th>Upside</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
+      <div class="stock-table-wrap">
+        <table class="stock-table">
+          <thead>
+            <tr>
+              <th>Ticker</th><th>Company</th><th>Price</th><th>Day</th>
+              <th>Score</th><th>Rec</th><th>Analyst</th>
+              <th>PEG</th><th>Rev↑</th><th>Margin</th>
+              <th>D/E</th><th>ROE</th><th>Upside</th><th>MA50</th>
+            </tr>
+          </thead>
+          <tbody>
         <tr>
-            <td class="t-rank">1</td>
-            <td class="t-ticker"><strong>NVDA</strong></td>
-            <td>$211.14 <span style="color:#dc2626">▼ 1.45%</span></td>
-            <td style="color:#14532d;background:#dcfce7;font-weight:700;text-align:center">
-                A 91.2
-            </td>
-            <td>🚀 Strong Buy</td>
-            <td>🟢 Strong Buy</td>
-            <td>🟢 0.65</td>
-            <td>🟢 85.2%</td>
-            <td>🟢 0.066</td>
-            <td>🟢 199.35 / 187.65</td>
-            <td>40.6%</td>
+          <td class="td-ticker">NVDA</td>
+          <td class="td-name">NVIDIA Corporation</td>
+          <td>$211.14</td>
+          <td><span class="neg">▼ 1.45%</span></td>
+          <td><span class="chip-score score-a" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">91.2</span> A</td>
+          <td>Strong Buy</td>
+          <td>Strong Buy</td>
+          <td>0.65</td>
+          <td>85.2%</td>
+          <td>63.0%</td>
+          <td>0.066</td>
+          <td>114.3%</td>
+          <td><span class="pos">+40.6%</span></td>
+          <td>199.35 <span class="pos" style="font-size:10px">↑</span></td>
         </tr>
-        
         <tr>
-            <td class="t-rank">2</td>
-            <td class="t-ticker"><strong>MU</strong></td>
-            <td>$971.00 <span style="color:#16a34a">▲ 5.14%</span></td>
-            <td style="color:#1e3a5f;background:#dbeafe;font-weight:700;text-align:center">
-                B 79.4
-            </td>
-            <td>🟢 Buy</td>
-            <td>🟢 Strong Buy</td>
-            <td>🟢 0.33</td>
-            <td>🟢 196.3%</td>
-            <td>🟢 0.149</td>
-            <td>🟢 557.56 / 338.74</td>
-            <td>-27.6%</td>
+          <td class="td-ticker">MU</td>
+          <td class="td-name">Micron Technology, Inc</td>
+          <td>$971.00</td>
+          <td><span class="pos">▲ 5.14%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">79.4</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>0.33</td>
+          <td>196.3%</td>
+          <td>41.5%</td>
+          <td>0.149</td>
+          <td>39.8%</td>
+          <td><span class="neg">-27.6%</span></td>
+          <td>557.56 <span class="pos" style="font-size:10px">↑</span></td>
         </tr>
-        
         <tr>
-            <td class="t-rank">3</td>
-            <td class="t-ticker"><strong>META</strong></td>
-            <td>$632.51 <span style="color:#dc2626">▼ 0.44%</span></td>
-            <td style="color:#1e3a5f;background:#dbeafe;font-weight:700;text-align:center">
-                B 78.5
-            </td>
-            <td>🟢 Buy</td>
-            <td>🟢 Strong Buy</td>
-            <td>🟢 0.91</td>
-            <td>🟢 33.1%</td>
-            <td>🟢 0.356</td>
-            <td>🔴 618.53 / 666.57</td>
-            <td>30.7%</td>
+          <td class="td-ticker">GOOGL</td>
+          <td class="td-name">Alphabet Inc.</td>
+          <td>$380.34</td>
+          <td><span class="neg">▼ 2.51%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">78.8</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>1.5</td>
+          <td>21.8%</td>
+          <td>37.9%</td>
+          <td>0.2</td>
+          <td>38.9%</td>
+          <td><span class="pos">+13.2%</span></td>
+          <td>347.57 <span class="pos" style="font-size:10px">↑</span></td>
         </tr>
-        
         <tr>
-            <td class="t-rank">4</td>
-            <td class="t-ticker"><strong>NFLX</strong></td>
-            <td>$86.02 <span style="color:#dc2626">▼ 0.39%</span></td>
-            <td style="color:#1e3a5f;background:#dbeafe;font-weight:700;text-align:center">
-                B 74.3
-            </td>
-            <td>🟢 Buy</td>
-            <td>🟢 Buy</td>
-            <td>🟡 1.69</td>
-            <td>🟡 16.2%</td>
-            <td>🟢 0.538</td>
-            <td>🔴 93.04 / 101.2</td>
-            <td>33.2%</td>
+          <td class="td-ticker">META</td>
+          <td class="td-name">Meta Platforms, Inc.</td>
+          <td>$632.51</td>
+          <td><span class="neg">▼ 0.44%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">78.5</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>0.91</td>
+          <td>33.1%</td>
+          <td>32.8%</td>
+          <td>0.356</td>
+          <td>32.9%</td>
+          <td><span class="pos">+30.7%</span></td>
+          <td>618.53 <span class="neg" style="font-size:10px">↓</span></td>
         </tr>
-        
         <tr>
-            <td class="t-rank">5</td>
-            <td class="t-ticker"><strong>MSFT</strong></td>
-            <td>$450.24 <span style="color:#16a34a">▲ 5.45%</span></td>
-            <td style="color:#1e3a5f;background:#dbeafe;font-weight:700;text-align:center">
-                B 72.9
-            </td>
-            <td>🟢 Buy</td>
-            <td>🟢 Strong Buy</td>
-            <td>🟢 1.39</td>
-            <td>🟡 18.3%</td>
-            <td>🟢 0.303</td>
-            <td>🔴 402.83 / 458.46</td>
-            <td>24.5%</td>
+          <td class="td-ticker">BSX</td>
+          <td class="td-name">Boston Scientific Corp</td>
+          <td>$48.31</td>
+          <td><span class="neg">▼ 1.63%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">75.9</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>0.59</td>
+          <td>11.6%</td>
+          <td>17.3%</td>
+          <td>0.422</td>
+          <td>14.7%</td>
+          <td><span class="pos">+64.4%</span></td>
+          <td>60.1 <span class="neg" style="font-size:10px">↓</span></td>
         </tr>
-        
         <tr>
-            <td class="t-rank">6</td>
-            <td class="t-ticker"><strong>AMZN</strong></td>
-            <td>$270.64 <span style="color:#dc2626">▼ 1.23%</span></td>
-            <td style="color:#1e3a5f;background:#dbeafe;font-weight:700;text-align:center">
-                B 72.5
-            </td>
-            <td>🟢 Buy</td>
-            <td>🟢 Strong Buy</td>
-            <td>🟡 1.83</td>
-            <td>🟡 16.6%</td>
-            <td>🟢 0.533</td>
-            <td>🟢 246.67 / 231.52</td>
-            <td>15.6%</td>
+          <td class="td-ticker">V</td>
+          <td class="td-name">Visa Inc.</td>
+          <td>$326.36</td>
+          <td><span class="pos">▲ 0.43%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">74.9</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>1.69</td>
+          <td>17.1%</td>
+          <td>51.7%</td>
+          <td>0.672</td>
+          <td>60.3%</td>
+          <td><span class="pos">+22.2%</span></td>
+          <td>315.27 <span class="neg" style="font-size:10px">↓</span></td>
         </tr>
-        
         <tr>
-            <td class="t-rank">7</td>
-            <td class="t-ticker"><strong>CRM</strong></td>
-            <td>$191.10 <span style="color:#16a34a">▲ 8.47%</span></td>
-            <td style="color:#1e3a5f;background:#dbeafe;font-weight:700;text-align:center">
-                B 71.5
-            </td>
-            <td>🟢 Buy</td>
-            <td>🟢 Buy</td>
-            <td>🟢 0.93</td>
-            <td>🟡 13.3%</td>
-            <td>🟡 1.243</td>
-            <td>🔴 180.81 / 221.27</td>
-            <td>33.7%</td>
+          <td class="td-ticker">NFLX</td>
+          <td class="td-name">Netflix, Inc.</td>
+          <td>$86.02</td>
+          <td><span class="neg">▼ 0.39%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">74.3</span> B</td>
+          <td>Buy</td>
+          <td>Buy</td>
+          <td>1.69</td>
+          <td>16.2%</td>
+          <td>28.5%</td>
+          <td>0.538</td>
+          <td>48.5%</td>
+          <td><span class="pos">+33.2%</span></td>
+          <td>93.04 <span class="neg" style="font-size:10px">↓</span></td>
         </tr>
-        
         <tr>
-            <td class="t-rank">8</td>
-            <td class="t-ticker"><strong>AAPL</strong></td>
-            <td>$312.06 <span style="color:#dc2626">▼ 0.14%</span></td>
-            <td style="color:#1e3a5f;background:#dbeafe;font-weight:700;text-align:center">
-                B 67.4
-            </td>
-            <td>🟡 Hold</td>
-            <td>🟢 Buy</td>
-            <td>🔴 2.72</td>
-            <td>🟡 16.6%</td>
-            <td>🟡 0.795</td>
-            <td>🟢 275.28 / 263.24</td>
-            <td>-0.5%</td>
+          <td class="td-ticker">AVGO</td>
+          <td class="td-name">Broadcom Inc.</td>
+          <td>$446.77</td>
+          <td><span class="pos">▲ 4.73%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">73.8</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>0.97</td>
+          <td>29.5%</td>
+          <td>36.6%</td>
+          <td>0.827</td>
+          <td>33.4%</td>
+          <td><span class="pos">+7.9%</span></td>
+          <td>385.7 <span class="pos" style="font-size:10px">↑</span></td>
         </tr>
-        
         <tr>
-            <td class="t-rank">9</td>
-            <td class="t-ticker"><strong>SMH</strong></td>
-            <td>$598.93 <span style="color:#dc2626">▼ 0.15%</span></td>
-            <td style="color:#713f12;background:#fef9c3;font-weight:700;text-align:center">
-                C 56.9
-            </td>
-            <td>🟡 Hold</td>
-            <td>🟡 None</td>
-            <td>🟡 —</td>
-            <td>🟡 —</td>
-            <td>🟡 —</td>
-            <td>🟢 484.73 / 388.75</td>
-            <td>—</td>
+          <td class="td-ticker">MA</td>
+          <td class="td-name">Mastercard Incorporate</td>
+          <td>$493.98</td>
+          <td><span class="pos">▲ 0.05%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">73.2</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>1.58</td>
+          <td>15.8%</td>
+          <td>45.9%</td>
+          <td>2.821</td>
+          <td>232.1%</td>
+          <td><span class="pos">+31.0%</span></td>
+          <td>501.33 <span class="neg" style="font-size:10px">↓</span></td>
         </tr>
-        
         <tr>
-            <td class="t-rank">10</td>
-            <td class="t-ticker"><strong>VUG</strong></td>
-            <td>$89.60 <span style="color:#16a34a">▲ 0.43%</span></td>
-            <td style="color:#713f12;background:#fef9c3;font-weight:700;text-align:center">
-                C 55.1
-            </td>
-            <td>🟡 Hold</td>
-            <td>🟡 None</td>
-            <td>🟡 —</td>
-            <td>🟡 —</td>
-            <td>🟡 —</td>
-            <td>🟢 81.29 / 79.98</td>
-            <td>—</td>
+          <td class="td-ticker">MSFT</td>
+          <td class="td-name">Microsoft Corporation</td>
+          <td>$450.24</td>
+          <td><span class="pos">▲ 5.45%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">72.9</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>1.39</td>
+          <td>18.3%</td>
+          <td>39.3%</td>
+          <td>0.303</td>
+          <td>34.0%</td>
+          <td><span class="pos">+24.5%</span></td>
+          <td>402.83 <span class="neg" style="font-size:10px">↓</span></td>
         </tr>
-        
-                </tbody>
-            </table>
+        <tr>
+          <td class="td-ticker">AMZN</td>
+          <td class="td-name">Amazon.com, Inc.</td>
+          <td>$270.64</td>
+          <td><span class="neg">▼ 1.23%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">72.5</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>1.83</td>
+          <td>16.6%</td>
+          <td>12.2%</td>
+          <td>0.533</td>
+          <td>24.3%</td>
+          <td><span class="pos">+15.6%</span></td>
+          <td>246.67 <span class="pos" style="font-size:10px">↑</span></td>
+        </tr>
+        <tr>
+          <td class="td-ticker">SPGI</td>
+          <td class="td-name">S&amp;P Global Inc.</td>
+          <td>$424.00</td>
+          <td><span class="pos">▲ 1.75%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">71.8</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>1.49</td>
+          <td>10.4%</td>
+          <td>30.4%</td>
+          <td>0.384</td>
+          <td>13.9%</td>
+          <td><span class="pos">+25.9%</span></td>
+          <td>424.49 <span class="neg" style="font-size:10px">↓</span></td>
+        </tr>
+        <tr>
+          <td class="td-ticker">CRM</td>
+          <td class="td-name">Salesforce, Inc.</td>
+          <td>$191.10</td>
+          <td><span class="pos">▲ 8.47%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">71.5</span> B</td>
+          <td>Buy</td>
+          <td>Buy</td>
+          <td>0.93</td>
+          <td>13.3%</td>
+          <td>18.7%</td>
+          <td>1.243</td>
+          <td>16.9%</td>
+          <td><span class="pos">+33.7%</span></td>
+          <td>180.81 <span class="neg" style="font-size:10px">↓</span></td>
+        </tr>
+        <tr>
+          <td class="td-ticker">DAL</td>
+          <td class="td-name">Delta Air Lines, Inc.</td>
+          <td>$82.48</td>
+          <td><span class="neg">▼ 0.01%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">70.1</span> B</td>
+          <td>Buy</td>
+          <td>Strong Buy</td>
+          <td>0.21</td>
+          <td>12.9%</td>
+          <td>6.9%</td>
+          <td>1.05</td>
+          <td>25.0%</td>
+          <td><span class="neg">-1.5%</span></td>
+          <td>70.03 <span class="pos" style="font-size:10px">↑</span></td>
+        </tr>
+        <tr>
+          <td class="td-ticker">AAPL</td>
+          <td class="td-name">Apple Inc.</td>
+          <td>$312.06</td>
+          <td><span class="neg">▼ 0.14%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">67.4</span> B</td>
+          <td>Hold</td>
+          <td>Buy</td>
+          <td>2.72</td>
+          <td>16.6%</td>
+          <td>27.2%</td>
+          <td>0.795</td>
+          <td>141.5%</td>
+          <td><span class="neg">-0.5%</span></td>
+          <td>275.28 <span class="pos" style="font-size:10px">↑</span></td>
+        </tr>
+        <tr>
+          <td class="td-ticker">MPWR</td>
+          <td class="td-name">Monolithic Power Syste</td>
+          <td>$1,566.21</td>
+          <td><span class="neg">▼ 4.10%</span></td>
+          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">65.1</span> B</td>
+          <td>Hold</td>
+          <td>None</td>
+          <td>2.06</td>
+          <td>26.1%</td>
+          <td>23.0%</td>
+          <td>0.005</td>
+          <td>19.6%</td>
+          <td><span class="pos">+14.7%</span></td>
+          <td>1420.47 <span class="pos" style="font-size:10px">↑</span></td>
+        </tr>
+        <tr>
+          <td class="td-ticker">WYNN</td>
+          <td class="td-name">Wynn Resorts, Limited</td>
+          <td>$101.22</td>
+          <td><span class="neg">▼ 0.32%</span></td>
+          <td><span class="chip-score score-c" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">62.8</span> C</td>
+          <td>Hold</td>
+          <td>Strong Buy</td>
+          <td>1.7</td>
+          <td>9.2%</td>
+          <td>5.1%</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="pos">+34.3%</span></td>
+          <td>102.33 <span class="neg" style="font-size:10px">↓</span></td>
+        </tr>
+        <tr>
+          <td class="td-ticker">SMH</td>
+          <td class="td-name">VanEck Semiconductor E</td>
+          <td>$598.93</td>
+          <td><span class="neg">▼ 0.15%</span></td>
+          <td><span class="chip-score score-c" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">56.9</span> C</td>
+          <td>Hold</td>
+          <td>None</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>484.73 <span class="pos" style="font-size:10px">↑</span></td>
+        </tr>
+        <tr>
+          <td class="td-ticker">TTWO</td>
+          <td class="td-name">Take-Two Interactive S</td>
+          <td>$224.16</td>
+          <td><span class="pos">▲ 2.89%</span></td>
+          <td><span class="chip-score score-c" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">56.6</span> C</td>
+          <td>Hold</td>
+          <td>Strong Buy</td>
+          <td>3.13</td>
+          <td>6.1%</td>
+          <td>-4.5%</td>
+          <td>0.843</td>
+          <td>-10.6%</td>
+          <td><span class="pos">+24.4%</span></td>
+          <td>213.64 <span class="neg" style="font-size:10px">↓</span></td>
+        </tr>
+        <tr>
+          <td class="td-ticker">VUG</td>
+          <td class="td-name">Vanguard Growth ETF</td>
+          <td>$89.60</td>
+          <td><span class="pos">▲ 0.43%</span></td>
+          <td><span class="chip-score score-c" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">55.1</span> C</td>
+          <td>Hold</td>
+          <td>None</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>81.29 <span class="pos" style="font-size:10px">↑</span></td>
+        </tr></tbody>
+        </table>
+      </div>
+
+      
+        <div style="padding:10px 20px;font-size:12px;color:#137333;background:#f0fdf4;border-top:1px solid #e5e2db">
+          🏆 Top Pick: <strong>NVDA</strong> · Strong Buy · 91.2/100
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <span style="color:#c5221f">⚠️ Lowest: <strong>VUG</strong> · 55.1/100</span>
         </div>
 
-        <div class="best-pick-bar">🏆 Best Pick: <strong>NVDA</strong> — Strong Buy, score 91.2/100</div>
+      <div class="stock-disclaimer">
+        ⚠️ Not financial advice. Data from Yahoo Finance. Consult a professional before investing.
+      </div>
+    </div></div>
 
-        <p class="stock-disclaimer">⚠️ Not financial advice. Always consult a professional before investing. Data from Yahoo Finance.</p>
+  <div class="topics-columns">
+    
+    <section class="topic-section" id="topic-india-—-national-politics--news">
+        <div class="topic-header">
+            <span class="topic-icon">🇮🇳</span>
+            <h2 class="topic-name">India — National Politics &amp; News</h2>
+        </div>
+        <div class="topic-grid">
+            
+    <article class="lead-card">
+        <div class="lead-meta">
+            <span class="source-tag">Sun. Guardian</span>
+            <span class="time-tag">2m ago</span>
+        </div>
+        <h3 class="lead-title">
+            <a href="https://sundayguardianlive.com/world/delaney-hall-detention-centre-protests-why-are-protests-happening-at-newark-as-new-jersey-mayor-announces-curfew-around-the-detention-centre-199524/" target="_blank" rel="noopener">Delaney Hall Detention Centre Protests: Why are Protests Happening at Newark as New Jersey Mayor Announces Curfew around the Detention Centre</a>
+        </h3>
+        <p class="lead-summary">A curfew has been imposed around the Delaney Hall immigration detention facility in Newark after protests over alleged detainee mistreatment escalated into clashes with law enforcement. While detainees and advocates…</p>
+    </article>
+            <div class="side-list">
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">News18</span>
+                <span class="time-tag">4m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.news18.com/india/the-vanishing-cadres-why-mamata-banerjees-biggest-challenge-may-not-be-bjp-but-her-own-ws-l-10123221.html" target="_blank" rel="noopener">The Vanishing Cadres: Why Mamata Banerjee&#x27;s Biggest Challenge May Not Be BJP, But Her Own</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hindu</span>
+                <span class="time-tag">6m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thehindu.com/news/cities/bangalore/699-booked-for-drunk-driving-in-bengaluru-during-week-long-police-crackdown/article71046819.ece" target="_blank" rel="noopener">699 booked for drunk driving in Bengaluru during week-long police crackdown</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hindu</span>
+                <span class="time-tag">11m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thehindu.com/business/Economy/19-kg-commercial-lpg-hike-5-kg-ftl-hike/article71046835.ece" target="_blank" rel="noopener">Prices of commercial cylinders, FTL hiked</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">HT</span>
+                <span class="time-tag">11m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.hindustantimes.com/india-news/just-0-52-per-cent-of-us-students-going-abroad-chose-india-101780280817817.html" target="_blank" rel="noopener">Just 0.52% of US students going abroad chose India</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hindu</span>
+                <span class="time-tag">14m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thehindu.com/news/national/people-held-in-jammu-and-kashmir-while-trying-to-exfiltrate-to-pakistan/article71044354.ece" target="_blank" rel="noopener">Three detained in Kashmir while trying to cross into Pakistan</a>
+            </h4>
+        </article></div>
+        </div>
     </section>
-
-    <style>
-    .stock-section { margin-bottom: 40px; }
-    .stock-section h2 { border-bottom: 3px solid #111827; padding-bottom: 8px; font-size: 26px; }
-    .stock-subtitle { color: #6b7280; font-size: 13px; margin-top: -8px; margin-bottom: 18px; }
-
-    .stock-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 16px;
-        margin-bottom: 28px;
-    }
-
-    .stock-card {
-        background: white;
-        border-radius: 14px;
-        padding: 18px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        border-top: 4px solid #111827;
-    }
-
-    .sc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-    .sc-ticker { font-size: 22px; font-weight: 800; color: #111827; margin-right: 6px; }
-    .sc-name { font-size: 12px; color: #6b7280; display: block; margin-top: 2px; }
-    .sc-sector { font-size: 11px; color: #9ca3af; display: block; }
-    .sc-grade-badge { font-size: 15px; font-weight: 700; padding: 4px 10px; border-radius: 8px; white-space: nowrap; }
-
-    .sc-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-    .sc-price { font-size: 24px; font-weight: 700; color: #111827; }
-    .upside { font-size: 12px; background: #f0fdf4; color: #15803d; padding: 2px 8px; border-radius: 20px; }
-
-    .sc-bar-wrap { background: #e5e7eb; border-radius: 999px; height: 6px; margin-bottom: 12px; }
-    .sc-bar { height: 6px; border-radius: 999px; transition: width 0.4s; }
-
-    .sc-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
-    .sc-metric { background: #f9fafb; border-radius: 8px; padding: 6px 8px; text-align: center; }
-    .sc-metric span { font-size: 10px; color: #6b7280; display: block; }
-    .sc-metric strong { font-size: 13px; color: #111827; }
-
-    .sc-ma { font-size: 11px; color: #6b7280; margin-bottom: 8px; }
-    .disq { font-size: 12px; color: #b91c1c; background: #fef2f2; padding: 4px 8px; border-radius: 6px; margin-bottom: 6px; }
-    .sc-updated { font-size: 10px; color: #9ca3af; text-align: right; }
-
-    .stock-table-wrap { overflow-x: auto; margin-bottom: 16px; }
-    .stock-table { width: 100%; border-collapse: collapse; font-size: 13px; background: white;
-                    border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
-    .stock-table th { background: #111827; color: white; padding: 10px 12px; text-align: left; white-space: nowrap; }
-    .stock-table td { padding: 9px 12px; border-bottom: 1px solid #f3f4f6; white-space: nowrap; }
-    .stock-table tr:last-child td { border-bottom: none; }
-    .stock-table tr:hover td { background: #f9fafb; }
-    .t-rank { color: #9ca3af; font-weight: 600; }
-    .t-ticker { font-size: 14px; }
-
-    .best-pick-bar { background: #f0fdf4; border-left: 5px solid #16a34a; padding: 12px 16px;
-                      border-radius: 8px; font-size: 14px; color: #15803d; margin-bottom: 12px; }
-    .stock-disclaimer { font-size: 11px; color: #9ca3af; }
-    </style>
-    </div>
-
-        <div id="summary">
-    <section class="ai-summary">
-        <h2>AI Executive Summary</h2>
-        <div class="ai-box">
-            ## Executive Summary<br>- US regulatory actions are impacting the AI chip market, with new restrictions on Nvidia&#x27;s sales to Chinese firms outside China (Stock Market News).<br>- Competition in the personal computing market is intensifying, as Dell launches its XPS 13 to directly challenge Apple&#x27;s MacBook Neo (Stock Market News, WIRED, ZDNet).<br>- Significant delays are impacting Blue Origin&#x27;s space programs following a rocket explosion, which could affect NASA&#x27;s lunar mission (Stock Market News, Nature).<br>- India faces concerns over a major data breach in the CBSE examination system, exposing nearly two million students&#x27; answer sheets (The Hindu).<br>- Geopolitical tensions persist, with French President Macron urging a US-Iran deal to address ongoing conflict and the closure of the Strait of Hormuz, influencing US stock futures (The Hill News, Stock Market News).<br><br>## Top Opportunities<br>- **Leverage competitive market dynamics:** The aggressive competition between Dell and Apple in the budget laptop segment (Dell XPS 13 vs. MacBook Neo) presents opportunities for market analysis and potential investment or strategic partnerships in the consumer electronics space (Stock Market News, WIRED, ZDNet).<br>- **Explore advancements in biotech/gene therapy:** New gene therapies aimed at repairing failing hearts are gaining traction, indicating a growing and potentially lucrative area within the biomedical field (Nature).<br>- **Monitor resolution of supply chain issues:** Tesla&#x27;s successful resolution of its graphite supply default with Syrah Resources highlights the importance of resilient supply chains and potential for stable commodity markets (Stock Market News).<br><br>## Top Risks<br>- **Increased AI chip export restrictions:** The US government&#x27;s move to block Nvidia AI chip sales to Chinese firms outside China signals escalating tech trade tensions and potential market fragmentation for AI hardware (Stock Market News).<br>- **Data privacy and security vulnerabilities:** A major data breach in India&#x27;s CBSE examination system and environmental activist Erin Brockovich targeting data center secrecy underscore significant risks related to data integrity and privacy across large-scale systems (The Hindu, TechCrunch).<br>- **Geopolitical instability affecting global markets:** Ongoing Middle East conflicts and the closure of the Strait of Hormuz, despite calls for peace, pose a risk to global trade and oil prices (The Hill News, Stock Market News).<br><br>## Health Score<br>55 / 100<br><br>## Why It Matters<br>Chai should pay close attention to the escalating US restrictions on AI chip sales, as this signals a significant shift in the global AI hardware market and could influence strategic investments and supply chain planning for AI/LLM initiatives. The intensifying competition in the laptop market, particularly Dell&#x27;s direct challenge to Apple&#x27;s MacBook Neo, highlights evolving consumer demand and the importance of competitive product strategies. Furthermore, the substantial data breach in India&#x27;s CBSE system and concerns over data center secrecy underscore the critical need for robust data analytics and security measures, while Blue Origin&#x27;s delays and threats to space-based astronomy call for vigilance in the broader STEM and robotics sectors.
+    <section class="topic-section" id="topic-telugu--andhra-pradesh">
+        <div class="topic-header">
+            <span class="topic-icon">🏛️</span>
+            <h2 class="topic-name">Telugu &amp; Andhra Pradesh</h2>
+        </div>
+        <div class="topic-grid">
+            
+    <article class="lead-card">
+        <div class="lead-meta">
+            <span class="source-tag">M9.news</span>
+            <span class="time-tag">14m ago</span>
+        </div>
+        <h3 class="lead-title">
+            <a href="https://www.m9.news/movienews/dhurandhar-2-allu-arjun-pan-india-reach/" target="_blank" rel="noopener">Dhurandhar 2 Reveals Real BO Potential of Allu Arjun?</a>
+        </h3>
+        <p class="lead-summary">For a long time, many people have debated the true reason behind the historic success of Pushpa 2. Some credited the film’s performance entirely to franchise and recall value, along with aggressive marketing. However,…</p>
+    </article>
+            <div class="side-list">
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">M9.news</span>
+                <span class="time-tag">43m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.m9.news/what-to-watch-on-ott/karisma-kapoor-brown-series-zee5-thriller/" target="_blank" rel="noopener">Star Heroine Takes a Risky Turn on OTT: Will It Work?</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">M9.news</span>
+                <span class="time-tag">7h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.m9.news/sports/rcb-back-to-back-ipl-titles-vs-gt-final/" target="_blank" rel="noopener">IPL 2026 Final: GT Choke, Virat’s RCB Create History</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">M9.news</span>
+                <span class="time-tag">11h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.m9.news/tamil-movie-news/vignesh-shivan-comments-lik-failure-debate/" target="_blank" rel="noopener">Vignesh Shivan’s Shocking Excuse for LIK Flop</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">M9.news</span>
+                <span class="time-tag">11h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.m9.news/tamil-movie-news/sobhita-dhulipala-vettuvam-first-look-avatar/" target="_blank" rel="noopener">Sobhita’s Craziest Avatar as Dragon: Who’s the Target?</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">M9.news</span>
+                <span class="time-tag">11h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.m9.news/movienews/ram-charan-future-lineup-peddi-success/" target="_blank" rel="noopener">Dream Lineup but Ram Charan’s Future Hangs on Peddi?</a>
+            </h4>
+        </article></div>
         </div>
     </section>
-    </div>
-
-        <div id="topic-0">
-        <section class="topic">
-            <h2>India — National Politics &amp; News</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>The Hindu: Latest News today from India and the World, Breaking news, Top Headlines and Trending News Videos.</span>
-                    <span>Jun 01, 2026 01:30 AM</span>
-                </div>
-                <h3>Retired judge expresses concern over inordinate delay in implementing women’s quota</h3>
-                <p>Male dominated political parties fear of losing power if 33% quota is implemented, she said</p>
-                <a href="https://www.thehindu.com/news/national/telangana/retired-judge-expresses-concern-over-inordinate-delay-in-implementing-womens-quota/article71044973.ece" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hindu: Latest News today from India and the World, Breaking news, Top Headlines and Trending News Videos.</span>
-                    <span>Jun 01, 2026 01:28 AM</span>
-                </div>
-                <h3>West Bengal Cabinet expansion: 35 more Ministers to be sworn in on June 1</h3>
-                <p>With this expansion on June 1, Cabinet strength will rise to 41; along with seniority, the BJP is likely to give considerations to regional and community-wise representations</p>
-                <a href="https://www.thehindu.com/news/national/west-bengal/west-bengal-cabinet-expansion-35-more-ministers-to-be-sworn-in-on-june-1/article71045179.ece" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hindu: Latest News today from India and the World, Breaking news, Top Headlines and Trending News Videos.</span>
-                    <span>Jun 01, 2026 01:26 AM</span>
-                </div>
-                <h3>15-day ultimatum to Rabri Devi to vacate Patna bungalow</h3>
-                <p>RJD leaders say Minister Ram should question why government is repeatedly changing his residence, after he claimed Rabri Devi was refusing to vacate because he was from the Dalit community</p>
-                <a href="https://www.thehindu.com/news/national/bihar/15-day-ultimatum-to-rabri-devi-to-vacate-patna-bungalow/article71044684.ece" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hindu: Latest News today from India and the World, Breaking news, Top Headlines and Trending News Videos.</span>
-                    <span>Jun 01, 2026 01:24 AM</span>
-                </div>
-                <h3>Rahul targets Centre over CBSE OSM row, alleges ‘fraud’ in scanning process</h3>
-                <p>In a separate social media post, Congress communication chief Jairam Ramesh alleged a major data breach in the CBSE’s Class 12 examination system, claiming that answer sheets of nearly two million students were available in the public domain.</p>
-                <a href="https://www.thehindu.com/news/national/revealing-chat-with-fellow-anti-national-soros-agents-rahuls-dig-at-govt-over-cbse-osm-row/article71044736.ece" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hindu: Latest News today from India and the World, Breaking news, Top Headlines and Trending News Videos.</span>
-                    <span>Jun 01, 2026 01:19 AM</span>
-                </div>
-                <h3>Karnataka CM Siddaramaiah resigns, but won’t budge from State politics</h3>
-                <p>Going down memory lane, he said he was an ‘accidental politician’, with none in the family being in politics</p>
-                <a href="https://www.thehindu.com/news/national/karnataka/karnataka-cm-siddaramaiah-submits-resignation-to-governor/article71032874.ece" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hindu: Latest News today from India and the World, Breaking news, Top Headlines and Trending News Videos.</span>
-                    <span>Jun 01, 2026 01:17 AM</span>
-                </div>
-                <h3>D.K. Shivakumar to be sworn-in as Karnataka Chief Minister at Glass House in Lok Bhavan on June 3</h3>
-                <p>KPCC Working President G.C. Chandrashekar appeals to party workers not to come to venue to reduce inconvenience to people</p>
-                <a href="https://www.thehindu.com/news/national/karnataka/swearing-in-of-dk-shivakumar-as-karnataka-cm-at-glass-house-in-lok-bhavan-in-bengaluru-on-june-3/article71040913.ece" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
-        </div><div id="topic-1">
-        <section class="topic">
-            <h2>Telugu &amp; Andhra Pradesh Politics</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>M9.news</span>
-                    <span>May 31, 2026 06:54 PM</span>
-                </div>
-                <h3>IPL 2026 Final: GT Choke, Virat’s RCB Create History</h3>
-                <p>Royal Challengers Bengaluru defeated Gujarat Titans by five wickets in the IPL 2026 final at the Narendra Modi Stadium in Ahmedabad. Chasing 156 runs, RCB reached the target with 12 balls to spare. The victory secured the franchise’s second consecutive IPL title and marked...</p>
-                <a href="https://www.m9.news/sports/rcb-back-to-back-ipl-titles-vs-gt-final/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>M9.news</span>
-                    <span>May 31, 2026 03:43 PM</span>
-                </div>
-                <h3>Vignesh Shivan’s Shocking Excuse for LIK Flop</h3>
-                <p>Vignesh Shivan, best known as the husband of Lady Superstar Nayanthara, recently delivered a major box office flop with Tamil star Pradeep Ranganathan. Their film LIK failed to make any impact in theaters and disappeared from the box office almost immediately. Now that the film...</p>
-                <a href="https://www.m9.news/tamil-movie-news/vignesh-shivan-comments-lik-failure-debate/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>M9.news</span>
-                    <span>May 31, 2026 03:15 PM</span>
-                </div>
-                <h3>Sobhita’s Craziest Avatar as Dragon: Who’s the Target?</h3>
-                <p>Sobhita Dhulipala received a special birthday surprise from the makers of Vettuvam, who unveiled her first-look poster, presenting the actress in a strikingly different avatar. In the poster, Sobhita is seen standing atop a brick wall under dark, stormy clouds. Dressed in black...</p>
-                <a href="https://www.m9.news/tamil-movie-news/sobhita-dhulipala-vettuvam-first-look-avatar/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>M9.news</span>
-                    <span>May 31, 2026 03:00 PM</span>
-                </div>
-                <h3>Dream Lineup but Ram Charan’s Future Hangs on Peddi?</h3>
-                <p>Peddi is easily one of the most important films of Ram Charan’s career following the disastrous box-office performance of Game Changer. As a result, both the actor and the team are leaving no stone unturned in their promotional campaign. While all focus is currently on Peddi...</p>
-                <a href="https://www.m9.news/movienews/ram-charan-future-lineup-peddi-success/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Politics Archives - Telugu360</span>
-                    <span>May 31, 2026 02:23 PM</span>
-                </div>
-                <h3>Internet Usage Doubles in Four Years, Underscoring Growing Influence of Social Media</h3>
-                <p>India has witnessed a remarkable digital transformation over the past four years, with internet usage surging across both urban and rural populations, according to data from the National Family Health Survey-6 (NFHS-6). The survey shows that the share of people who have ever...</p>
-                <a href="https://www.telugu360.com/internet-usage-doubles-in-four-years-underscoring-growing-influence-of-social-media/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>M9.news</span>
-                    <span>May 31, 2026 02:00 PM</span>
-                </div>
-                <h3>Obsession: A Theater Experience You Shouldn’t Miss</h3>
-                <p>From the U.S. to India, everyone seems to be talking about Obsession, the tiny budget film that has turned into a huge but genuine sensation. It has stunned Hollywood and became one of the most talked-about movies in recent time. But the real question is: Is it just hype, or is...</p>
-                <a href="https://www.m9.news/hollywood/obsession-movie-review-theatre-experience/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
-        </div><div id="topic-2">
-        <section class="topic">
-            <h2>Pakistan &amp; South Asia</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>The News International - National</span>
-                    <span>Nov 21, 2025 01:33 AM</span>
-                </div>
-                <h3>Punjab by-polls: Notices served on minister, SAPM for &#x27;violating&#x27; election code of conduct</h3>
-                <p>This collage of pictures show Federal Minister of Power Sardar Awais Ahmad Khan Leghari and Special Assistant to the Prime Minister Huzaifa Rehman. —APP/NA website/FileShow-cause notices have been issued to Minister for Power Sardar Awais Ahmad Khan Leghari and Special Assistant...</p>
-                <a href="https://www.thenews.com.pk/latest/1381918-notices-served-on-minister-sapm-for-violating-election-code-of-conduct" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The News International - National</span>
-                    <span>Nov 20, 2025 07:59 PM</span>
-                </div>
-                <h3>27th Amendment empowers FCC to hear all constitutional cases: minister</h3>
-                <p>Minister of State for Law and Justice Barrister Aqeel Malik addressing an event on December 21, 2024. — Facebook@BarristerAqeelMalikState Minister for Law Aqeel Malik said on Thursday that the 27th Amendment has vested authority to hear constitutional matters in the Federal...</p>
-                <a href="https://www.thenews.com.pk/latest/1381786-27th-amendment-empowers-fcc-to-hear-all-constitutional-cases-minister" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The News International - National</span>
-                    <span>Nov 20, 2025 05:25 PM</span>
-                </div>
-                <h3>JF-17 attracts strong attention at Dubai Airshow as friendly country inks procurement MoU</h3>
-                <p>Pakistan Air Force JF-17 Thunder fighter jet during World Defence Air Show 2024 held in Riyadh, Saudi Arabia, February 7, 2024. — PPI Pakistan&#x27;s JF-17 Thunder garnered significant attention at the Dubai Airshow 2025, leading to the signing of a memorandum of understanding with...</p>
-                <a href="https://www.thenews.com.pk/latest/1381731-jf-17-attracts-strong-attention-at-dubai-airshow-as-friendly-country-inks-procurement-mou" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The News International - National</span>
-                    <span>Nov 20, 2025 04:39 PM</span>
-                </div>
-                <h3>US lawmakers laud Punjab govt&#x27;s initiative to modernise brick-kiln</h3>
-                <p>Punjab Chief Minister Maryam Nawaz attends ceremony in this undated image. — Facebook/@MaryamNSharifISLAMABAD: The Congressional Pakistan Caucus has applauded Punjab’s drive to modernise its brick-kiln sector, saying the reforms could serve as a pilot for eliminating bonded...</p>
-                <a href="https://www.thenews.com.pk/latest/1381705-us-lawmakers-laud-punjab-govts-initiative-to-modernise-brick-kiln" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The News International - National</span>
-                    <span>Nov 20, 2025 04:38 PM</span>
-                </div>
-                <h3>Security forces gun down 30 terrorists in multiple IBOs in KP: ISPR</h3>
-                <p>Frontier Constabulary and army personnel gather stand guard in Kurram, January 17, 2025. — AFPSecurity forces killed 30 Indian proxy Fitna al-Khawarij terrorists during multiple intelligence-based operations carried out by security forces in Khyber Pakhtunkhwa , the military&#x27;s...</p>
-                <a href="https://www.thenews.com.pk/latest/1381698-security-forces-gun-down-30-terrorists-in-multiple-ibos-in-kp-ispr" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The News International - National</span>
-                    <span>Nov 20, 2025 03:56 PM</span>
-                </div>
-                <h3>MQM-P calls for new province in Sindh</h3>
-                <p>Muttahida Qaumi Movement-Pakistan Convener Khalid Maqbool Siddiqui addresses a press conference in Karachi, November 20, 2025. — Screengrab via YouTube/Geo NewsKARACHI: With discussions on the 28th Amendment gaining momentum, the Muttahida Qaumi Movement–Pakistan has once...</p>
-                <a href="https://www.thenews.com.pk/latest/1381701-mqm-p-calls-for-new-province-in-sindh" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
-        </div><div id="topic-3">
-        <section class="topic">
-            <h2>Geopolitics &amp; International Affairs</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>Jun 01, 2026 12:48 AM</span>
-                </div>
-                <h3>Macron says opportunity for US, Iran deal ‘must be seized now’</h3>
-                <p>French President Emmanuel Macron on Sunday urged leaders in the Middle East to help the U.S. and Iran seize the opportunity for a peace deal after months of war resulting in the closure of the Strait of Hormuz. Macron said he met with Saudi Crown Prince Mohammed bin Salman,...</p>
-                <a href="https://thehill.com/policy/international/5903438-macron-urges-middle-east-peace/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>May 31, 2026 11:32 PM</span>
-                </div>
-                <h3>Family visitation resumes at Delaney Hall after protests</h3>
-                <p>New Jersey Gov. Mikie Sherrill (D) on Sunday said the Department of Homeland Security (DHS) will resume family visits at the Delaney Hall Detention Center in Newark following a string of protests over immigrants’ treatment at the facility. “Starting today, limited visitation...</p>
-                <a href="https://thehill.com/homenews/state-watch/5903396-protests-immigrants-delaney-hall/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>May 31, 2026 10:12 PM</span>
-                </div>
-                <h3>Trump responds to NYT article, says it’s ‘very good’ administration is losing legal talent</h3>
-                <p>President Trump on Sunday said it is “very good” that thousands of lawyers have chosen to no longer work for the administration, referring to The New York Times’s reporting on the exodus. The Times story reported that more than 10,000 lawyers working for the federal government...</p>
-                <a href="https://thehill.com/homenews/administration/5903296-lawyers-leaving-trump-administration/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>May 31, 2026 09:34 PM</span>
-                </div>
-                <h3>Pence: There’s ‘clearly’ been an effort to ‘rewrite’ Jan. 6 history</h3>
-                <p>Former Vice President Mike Pence on Sunday said there has “clearly” been an effort to “rewrite” the history of the Jan. 6, 2021, Capitol riot. “Look, I’m very confident that of the judgment of history in the years ahead about our role, about all the Republicans and Democrats who...</p>
-                <a href="https://thehill.com/homenews/administration/5903309-mike-pence-capitol-riot-rewrite/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>May 31, 2026 09:00 PM</span>
-                </div>
-                <h3>Rare, endangered bee gets habitat protection across 6 states: Here’s where</h3>
-                <p>The bee was once found in roughly half of the U.S. Now, rare sightings have been limited to about a dozen states.</p>
-                <a href="https://thehill.com/homenews/state-watch/5903208-rare-bee-habitat-protection/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>May 31, 2026 09:00 PM</span>
-                </div>
-                <h3>Republicans battle déjà vu as they return to tackle reconciliation bill, FISA extension</h3>
-                <p>Republicans on Capitol Hill are battling a bad case of déjà vu, as intraparty disputes over an immigration enforcement funding package and an extension of the government’s warrantless spying powers have left lawmakers no closer to a resolution on the two matters than they were a...</p>
-                <a href="https://thehill.com/homenews/house/5901883-republicans-immigration-reconciliation-fisa/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
-        </div><div id="topic-4">
-        <section class="topic">
-            <h2>US Politics &amp; Policy</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>Jun 01, 2026 12:48 AM</span>
-                </div>
-                <h3>Macron says opportunity for US, Iran deal ‘must be seized now’</h3>
-                <p>French President Emmanuel Macron on Sunday urged leaders in the Middle East to help the U.S. and Iran seize the opportunity for a peace deal after months of war resulting in the closure of the Strait of Hormuz. Macron said he met with Saudi Crown Prince Mohammed bin Salman,...</p>
-                <a href="https://thehill.com/policy/international/5903438-macron-urges-middle-east-peace/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>NYT &gt; U.S. &gt; Politics</span>
-                    <span>May 31, 2026 11:36 PM</span>
-                </div>
-                <h3>Cory Booker Has ‘Concerns’ About Platner Revelations in Maine Senate Race</h3>
-                <p>Mr. Booker and other Senate Democrats faced questions Sunday about reports that Mr. Platner’s wife previously told his campaign he had exchanged sexual messages with women outside his marriage.</p>
-                <a href="https://www.nytimes.com/2026/05/31/us/politics/booker-platner-democrats-senate-midterms.html" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>May 31, 2026 11:32 PM</span>
-                </div>
-                <h3>Family visitation resumes at Delaney Hall after protests</h3>
-                <p>New Jersey Gov. Mikie Sherrill (D) on Sunday said the Department of Homeland Security (DHS) will resume family visits at the Delaney Hall Detention Center in Newark following a string of protests over immigrants’ treatment at the facility. “Starting today, limited visitation...</p>
-                <a href="https://thehill.com/homenews/state-watch/5903396-protests-immigrants-delaney-hall/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>May 31, 2026 10:12 PM</span>
-                </div>
-                <h3>Trump responds to NYT article, says it’s ‘very good’ administration is losing legal talent</h3>
-                <p>President Trump on Sunday said it is “very good” that thousands of lawyers have chosen to no longer work for the administration, referring to The New York Times’s reporting on the exodus. The Times story reported that more than 10,000 lawyers working for the federal government...</p>
-                <a href="https://thehill.com/homenews/administration/5903296-lawyers-leaving-trump-administration/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>May 31, 2026 09:34 PM</span>
-                </div>
-                <h3>Pence: There’s ‘clearly’ been an effort to ‘rewrite’ Jan. 6 history</h3>
-                <p>Former Vice President Mike Pence on Sunday said there has “clearly” been an effort to “rewrite” the history of the Jan. 6, 2021, Capitol riot. “Look, I’m very confident that of the judgment of history in the years ahead about our role, about all the Republicans and Democrats who...</p>
-                <a href="https://thehill.com/homenews/administration/5903309-mike-pence-capitol-riot-rewrite/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The Hill News</span>
-                    <span>May 31, 2026 09:00 PM</span>
-                </div>
-                <h3>Rare, endangered bee gets habitat protection across 6 states: Here’s where</h3>
-                <p>The bee was once found in roughly half of the U.S. Now, rare sightings have been limited to about a dozen states.</p>
-                <a href="https://thehill.com/homenews/state-watch/5903208-rare-bee-habitat-protection/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
-        </div><div id="topic-5">
-        <section class="topic">
-            <h2>Business &amp; Markets</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>Stock Market News</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Tesla withdraws termination notice on graphite supply deal with Australia’s Syrah</h3>
-                <p>This story discusses: Tesla withdraws termination notice on graphite supply deal with Australia’s Syrah</p>
-                <a href="https://www.investing.com/news/stock-market-news/tesla-withdraws-termination-notice-on-graphite-supply-deal-with-australias-syrah-4717959" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Stock Market News</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>US moves to block Nvidia AI chip sales to Chinese firms outside China</h3>
-                <p>This story discusses: US moves to block Nvidia AI chip sales to Chinese firms outside China</p>
-                <a href="https://www.investing.com/news/stock-market-news/us-moves-to-block-nvidia-ai-chip-sales-to-chinese-firms-outside-china-4717960" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Stock Market News</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Tesla resolves graphite supply default with Australia’s Syrah Resources</h3>
-                <p>This story discusses: Tesla resolves graphite supply default with Australia’s Syrah Resources</p>
-                <a href="https://www.investing.com/news/stock-market-news/tesla-resolves-graphite-supply-default-with-australias-syrah-resources-4717966" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Stock Market News</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Dell launches $699 XPS 13 laptop to compete with Apple’s MacBook Neo</h3>
-                <p>This story discusses: Dell launches $699 XPS 13 laptop to compete with Apple’s MacBook Neo</p>
-                <a href="https://www.investing.com/news/stock-market-news/dell-launches-699-xps-13-laptop-to-compete-with-apples-macbook-neo-93CH-4717971" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Stock Market News</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Blue Origin faces months of delays after rocket explosion damages launch pad</h3>
-                <p>This story discusses: Blue Origin faces months of delays after rocket explosion damages launch pad</p>
-                <a href="https://www.investing.com/news/stock-market-news/blue-origin-faces-months-of-delays-after-rocket-explosion-damages-launch-pad-4717973" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Stock Market News</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>US stock futures rise with focus on Iran peace deal, payrolls</h3>
-                <p>This story discusses: US stock futures rise with focus on Iran peace deal, payrolls</p>
-                <a href="https://www.investing.com/news/stock-market-news/us-stock-futures-rise-with-focus-on-iran-peace-deal-payrolls-4717974" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
-        </div><div id="topic-6">
-        <section class="topic">
-            <h2>AI, Data &amp; Analytics</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>WIRED</span>
-                    <span>May 31, 2026 11:00 PM</span>
-                </div>
-                <h3>Everyone Has Their Targets Set on the MacBook Neo</h3>
-                <p>Dell, Microsoft, and others are unveiling new laptops to compete directly with the Neo, but not all are learning the right lessons from Apple.</p>
-                <a href="https://www.wired.com/story/everyone-has-their-targets-set-on-the-macbook-neo/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>TechCrunch</span>
-                    <span>May 31, 2026 09:05 PM</span>
-                </div>
-                <h3>Erin Brockovich takes aim at data center secrecy</h3>
-                <p>Environmental activist Erin Brockovich has a new mission.</p>
-                <a href="https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>TechCrunch</span>
-                    <span>May 31, 2026 06:34 PM</span>
-                </div>
-                <h3>This weekend’s two biggest movies were both directed by YouTubers</h3>
-                <p>The YouTube-to-prestige-horror pipeline is looking very strong.</p>
-                <a href="https://techcrunch.com/2026/05/31/this-weekends-two-biggest-movies-were-both-directed-by-youtubers/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>TechCrunch</span>
-                    <span>May 31, 2026 06:28 PM</span>
-                </div>
-                <h3>‘This is fine’ artist KC Green reaches agreement with AI startup Artisan</h3>
-                <p>The startup has apparently taken down the ads using KC Green&#x27;s &quot;This is fine&quot; meme.</p>
-                <a href="https://techcrunch.com/2026/05/31/this-is-fine-artist-kc-green-reaches-agreement-with-ai-startup-artisan/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>TechCrunch</span>
-                    <span>May 31, 2026 04:05 PM</span>
-                </div>
-                <h3>TechCrunch Mobility: It doesn’t matter that people hate the Ferrari Luce</h3>
-                <p>Welcome back to TechCrunch Mobility, your hub for the future of transportation and now, more than ever, how AI is playing a part.</p>
-                <a href="https://techcrunch.com/2026/05/31/techcrunch-mobility-it-doesnt-matter-that-people-hate-the-ferrari-luce/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>TechCrunch</span>
-                    <span>May 31, 2026 03:30 PM</span>
-                </div>
-                <h3>Making sense of the debate over AI psychosis</h3>
-                <p>On the latest episode of Equity, we debate whether tech CEOs are &quot;uniquely prone to AI psychosis.&quot;</p>
-                <a href="https://techcrunch.com/2026/05/31/making-sense-of-the-debate-over-ai-psychosis/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
-        </div><div id="topic-7">
-        <section class="topic">
-            <h2>Cloud, Data Platforms &amp; SaaS</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>Latest news</span>
-                    <span>Jun 01, 2026 01:32 AM</span>
-                </div>
-                <h3>This Lenovo Yoga rivaled my MacBook Air in ways I didn&#x27;t expect it to</h3>
-                <p>The Slim 7x (2026) has impressive performance improvements, but its target user - the modern professional - remains the same.</p>
-                <a href="https://www.zdnet.com/article/lenovo-yoga-slim-7x-review/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Latest news</span>
-                    <span>Jun 01, 2026 01:27 AM</span>
-                </div>
-                <h3>I switched to MyRadar as my main Android Auto weather app and don&#x27;t regret it</h3>
-                <p>There aren&#x27;t many weather apps for Android Auto, but there&#x27;s one that easily rises above the rest.</p>
-                <a href="https://www.zdnet.com/article/best-android-auto-weather-apps/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Latest news</span>
-                    <span>Jun 01, 2026 12:00 AM</span>
-                </div>
-                <h3>I put my smart TV setup behind a router-based VPN and never looked back - here&#x27;s why</h3>
-                <p>Installing a VPN on your smart TV blocks hackers from accessing your network and stealing your data. But there are benefits to the content, too.</p>
-                <a href="https://www.zdnet.com/article/how-to-add-a-vpn-to-your-smart-tv/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Latest news</span>
-                    <span>May 31, 2026 11:01 PM</span>
-                </div>
-                <h3>Dell&#x27;s new XPS 13 is a MacBook Neo rival that costs $599 and retains premium features</h3>
-                <p>Announced at Computex, Dell&#x27;s new XPS 13 takes aim at the MacBook Neo with a touchscreen display and backlit keyboard.</p>
-                <a href="https://www.zdnet.com/article/dell-xps-13-2026-macbook-neo-competitor/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Latest news</span>
-                    <span>May 31, 2026 11:00 PM</span>
-                </div>
-                <h3>Dell XPS 13 (2026) vs. MacBook Neo: I compared both budget laptops, here&#x27;s which one I&#x27;d buy</h3>
-                <p>Dell just announced its new 13-inch XPS for $599 with student pricing, making it a direct competitor to the Neo.</p>
-                <a href="https://www.zdnet.com/article/dell-xps-13-2026-vs-macbook-neo/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>TechCrunch</span>
-                    <span>May 31, 2026 09:05 PM</span>
-                </div>
-                <h3>Erin Brockovich takes aim at data center secrecy</h3>
-                <p>Environmental activist Erin Brockovich has a new mission.</p>
-                <a href="https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
-        </div><div id="topic-8">
-        <section class="topic">
-            <h2>Bay Area &amp; California</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>ABC7 RSS Feed</span>
-                    <span>Jun 01, 2026 01:24 AM</span>
-                </div>
-                <h3>AccuWeather Forecast: Mostly clear overnight; warm-to-hot tomorrow</h3>
-                <p>Skies will remain mostly clear overnight, with just a thin, shallow patch of low clouds along the Peninsula coastline. Low temperatures will be mainly in the lower 50s.</p>
-                <a href="https://abc7news.com/post/weather-bay-area-forecast-temperatures/39468/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>The San Francisco Standard</span>
-                    <span>Jun 01, 2026 01:00 AM</span>
-                </div>
-                <h3>Election day is almost here. Read Power Play’s most important things to watch on Tuesday</h3>
-                <p>Also in today’s Power Play: Join a post-election debriefing with your two favorite journalists named Joe.</p>
-                <a href="https://sfstandard.com/2026/05/31/election-day-almost-read-power-play-s-important-things-watch-tuesday/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>ABC7 RSS Feed</span>
-                    <span>Jun 01, 2026 12:23 AM</span>
-                </div>
-                <h3>New poll shows Steyer edging Hilton in CA governor&#x27;s race as battle for 2nd tightens</h3>
-                <p>The Emerson College poll found former U.S. Health and Human Services Secretary Xavier Becerra is leading the field with 28% support. Steyer followed with 22%, while Hilton was close behind at 21%. The results differ from a closely watched Berkeley Institute of Governmental...</p>
-                <a href="https://abc7news.com/post/california-governors-race-new-poll-shows-tom-steyer-edging-hilton-battle-2nd-tightens/19207787/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>ABC7 RSS Feed</span>
-                    <span>May 31, 2026 10:00 PM</span>
-                </div>
-                <h3>Rohnert Park police searching for driver after hit-and-run injures 2 children riding scooters</h3>
-                <p>Police are searching for a driver who fled the scene after hitting two girls in a hit-and-run crash in Rohnert Park Friday night. Surveillance video shows the vehicle involved leaving the area immediately after the collision. According to police, the suspect&#x27;s vehicle resembles...</p>
-                <a href="https://abc7news.com/post/rohnert-park-police-searching-driver-hit-run-injures-2-children-riding-scooters-bodway-pkwy-waterside-ln/19203401/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>ABC7 RSS Feed</span>
-                    <span>May 31, 2026 08:09 PM</span>
-                </div>
-                <h3>Man arrested in Union City after barricading himself for 2+ hours in stolen SUV, police say</h3>
-                <p>A man with a record for being armed was taken into custody after he barricaded himself in a stolen vehicle Friday afternoon, Union City police said. A 26-year-old Milpitas man held police at bay for more than two hours before he was arrested with the help of a police dog in the...</p>
-                <a href="https://abc7news.com/post/man-arrested-union-city-barricading-himself-2-hours-stolen-suv-san-jose-police-say/19207150/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>ABC7 RSS Feed</span>
-                    <span>May 31, 2026 07:45 PM</span>
-                </div>
-                <h3>French capital hosts Paris Saint-Germain parade after clashes marred Champions League win</h3>
-                <p>Paris Saint-Germain fans have gathered near the Eiffel Tower to celebrate their Champions League win.</p>
-                <a href="https://abc7.com/post/french-capital-hosts-paris-saint-germain-parade-clashes-marred-champions-league-win/19206991/" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
-        </div><div id="topic-9">
-        <section class="topic">
-            <h2>Debate, Education &amp; STEM</h2>
-            <div class="grid">
-                
-            <article class="card">
-                <div class="meta">
-                    <span>Nature</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Author Correction: Satellite megaconstellations will threaten space-based astronomy</h3>
-                <p>Nature, Published online: 27 May 2026; doi:10.1038/s41586-026-10553-0 Author Correction: Satellite megaconstellations will threaten space-based astronomy</p>
-                <a href="https://www.nature.com/articles/s41586-026-10553-0" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Nature</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Author Correction: Modelling late gastrulation in stem cell-derived monkey embryo models</h3>
-                <p>Nature, Published online: 27 May 2026; doi:10.1038/s41586-026-10700-7 Author Correction: Modelling late gastrulation in stem cell-derived monkey embryo models</p>
-                <a href="https://www.nature.com/articles/s41586-026-10700-7" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Nature</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Gene therapies to fix failing hearts gain steam after years in the doldrums</h3>
-                <p>Nature, Published online: 28 May 2026; doi:10.1038/d41586-026-01598-2 Treatments aim to bulk up failing hearts to restore their vigour — but can the field move on from past controversy?</p>
-                <a href="https://www.nature.com/articles/d41586-026-01598-2" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Nature</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Bridget Ogilvie obituary: parasitologist who championed biomedical labs and scientific evidence</h3>
-                <p>Nature, Published online: 28 May 2026; doi:10.1038/d41586-026-01733-z As a director of the Wellcome Trust and charity founder, the labs she built sequenced the human genome and more.</p>
-                <a href="https://www.nature.com/articles/d41586-026-01733-z" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Nature</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Share the highs and lows of your career in science: take Nature ’s global survey</h3>
-                <p>Nature, Published online: 28 May 2026; doi:10.1038/d41586-026-01589-3 Science and society are undergoing rapid change. Nature wants to know how this is affecting careers, workplace culture and salaries.</p>
-                <a href="https://www.nature.com/articles/d41586-026-01589-3" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            <article class="card">
-                <div class="meta">
-                    <span>Nature</span>
-                    <span>Jun 01, 2026 01:42 AM</span>
-                </div>
-                <h3>Blue Origin rocket explosion rattles NASA’s mission to put humans back on the Moon</h3>
-                <p>Nature, Published online: 29 May 2026; doi:10.1038/d41586-026-01732-0 Failure will likely delay US space agency’s efforts to beat China to the lunar surface.</p>
-                <a href="https://www.nature.com/articles/d41586-026-01732-0" target="_blank" rel="noopener noreferrer">
-                    Read original source / citation →
-                </a>
-            </article>
-            
-            </div>
-        </section>
+    <section class="topic-section" id="topic-pakistan--south-asia">
+        <div class="topic-header">
+            <span class="topic-icon">🌏</span>
+            <h2 class="topic-name">Pakistan &amp; South Asia</h2>
         </div>
-    </main>
+        <div class="topic-grid">
+            
+    <article class="lead-card">
+        <div class="lead-meta">
+            <span class="source-tag">The News International - Nat</span>
+            <span class="time-tag">192d ago</span>
+        </div>
+        <h3 class="lead-title">
+            <a href="https://www.thenews.com.pk/latest/1381918-notices-served-on-minister-sapm-for-violating-election-code-of-conduct" target="_blank" rel="noopener">Punjab by-polls: Notices served on minister, SAPM for &#x27;violating&#x27; election code of conduct</a>
+        </h3>
+        <p class="lead-summary">This collage of pictures show Federal Minister of Power Sardar Awais Ahmad Khan Leghari and Special Assistant to the Prime Minister Huzaifa Rehman. —APP/NA website/FileShow-cause notices have been issued to Minister for…</p>
+    </article>
+            <div class="side-list">
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The News International - Nat</span>
+                <span class="time-tag">192d ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thenews.com.pk/latest/1381786-27th-amendment-empowers-fcc-to-hear-all-constitutional-cases-minister" target="_blank" rel="noopener">27th Amendment empowers FCC to hear all constitutional cases: minister</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The News International - Nat</span>
+                <span class="time-tag">192d ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thenews.com.pk/latest/1381731-jf-17-attracts-strong-attention-at-dubai-airshow-as-friendly-country-inks-procurement-mou" target="_blank" rel="noopener">JF-17 attracts strong attention at Dubai Airshow as friendly country inks procurement MoU</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The News International - Nat</span>
+                <span class="time-tag">192d ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thenews.com.pk/latest/1381705-us-lawmakers-laud-punjab-govts-initiative-to-modernise-brick-kiln" target="_blank" rel="noopener">US lawmakers laud Punjab govt&#x27;s initiative to modernise brick-kiln</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The News International - Nat</span>
+                <span class="time-tag">192d ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thenews.com.pk/latest/1381698-security-forces-gun-down-30-terrorists-in-multiple-ibos-in-kp-ispr" target="_blank" rel="noopener">Security forces gun down 30 terrorists in multiple IBOs in KP: ISPR</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The News International - Nat</span>
+                <span class="time-tag">192d ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thenews.com.pk/latest/1381701-mqm-p-calls-for-new-province-in-sindh" target="_blank" rel="noopener">MQM-P calls for new province in Sindh</a>
+            </h4>
+        </article></div>
+        </div>
+    </section>
+    <section class="topic-section" id="topic-geopolitics">
+        <div class="topic-header">
+            <span class="topic-icon">🌍</span>
+            <h2 class="topic-name">Geopolitics</h2>
+        </div>
+        <div class="topic-grid">
+            
+    <article class="lead-card">
+        <div class="lead-meta">
+            <span class="source-tag">The Hill</span>
+            <span class="time-tag">53m ago</span>
+        </div>
+        <h3 class="lead-title">
+            <a href="https://thehill.com/homenews/campaign/5903466-texas-ag-ken-paxton-senate/" target="_blank" rel="noopener">Paxton set to meet with Thune after Cornyn loss</a>
+        </h3>
+        <p class="lead-summary">Texas Attorney General Ken Paxton (R) on Sunday said he will meet with Senate Majority Leader John Thune (R) after winning the GOP runoff to replace incumbent Sen. John Cornyn. Since beating Cornyn, a four-term…</p>
+    </article>
+            <div class="side-list">
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hill</span>
+                <span class="time-tag">1h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://thehill.com/policy/international/5903438-macron-urges-middle-east-peace/" target="_blank" rel="noopener">Macron says opportunity for US, Iran deal ‘must be seized now’</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hill</span>
+                <span class="time-tag">3h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://thehill.com/homenews/state-watch/5903396-protests-immigrants-delaney-hall/" target="_blank" rel="noopener">Family visitation resumes at Delaney Hall after protests</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hill</span>
+                <span class="time-tag">4h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://thehill.com/homenews/administration/5903296-lawyers-leaving-trump-administration/" target="_blank" rel="noopener">Trump responds to NYT article, says it’s ‘very good’ administration is losing legal talent</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hill</span>
+                <span class="time-tag">5h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://thehill.com/homenews/administration/5903309-mike-pence-capitol-riot-rewrite/" target="_blank" rel="noopener">Pence: There’s ‘clearly’ been an effort to ‘rewrite’ Jan. 6 history</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hill</span>
+                <span class="time-tag">5h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://thehill.com/homenews/state-watch/5903208-rare-bee-habitat-protection/" target="_blank" rel="noopener">Rare, endangered bee gets habitat protection across 6 states: Here’s where</a>
+            </h4>
+        </article></div>
+        </div>
+    </section>
+    <section class="topic-section" id="topic-us-politics">
+        <div class="topic-header">
+            <span class="topic-icon">🇺🇸</span>
+            <h2 class="topic-name">US Politics</h2>
+        </div>
+        <div class="topic-grid">
+            
+    <article class="lead-card">
+        <div class="lead-meta">
+            <span class="source-tag">The Hill</span>
+            <span class="time-tag">53m ago</span>
+        </div>
+        <h3 class="lead-title">
+            <a href="https://thehill.com/homenews/campaign/5903466-texas-ag-ken-paxton-senate/" target="_blank" rel="noopener">Paxton set to meet with Thune after Cornyn loss</a>
+        </h3>
+        <p class="lead-summary">Texas Attorney General Ken Paxton (R) on Sunday said he will meet with Senate Majority Leader John Thune (R) after winning the GOP runoff to replace incumbent Sen. John Cornyn. Since beating Cornyn, a four-term…</p>
+    </article>
+            <div class="side-list">
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hill</span>
+                <span class="time-tag">1h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://thehill.com/policy/international/5903438-macron-urges-middle-east-peace/" target="_blank" rel="noopener">Macron says opportunity for US, Iran deal ‘must be seized now’</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">NYT &gt; U.S. &gt; Politics</span>
+                <span class="time-tag">3h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.nytimes.com/2026/05/31/us/politics/booker-platner-democrats-senate-midterms.html" target="_blank" rel="noopener">Cory Booker Has ‘Concerns’ About Platner Revelations in Maine Senate Race</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hill</span>
+                <span class="time-tag">3h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://thehill.com/homenews/state-watch/5903396-protests-immigrants-delaney-hall/" target="_blank" rel="noopener">Family visitation resumes at Delaney Hall after protests</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hill</span>
+                <span class="time-tag">4h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://thehill.com/homenews/administration/5903296-lawyers-leaving-trump-administration/" target="_blank" rel="noopener">Trump responds to NYT article, says it’s ‘very good’ administration is losing legal talent</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hill</span>
+                <span class="time-tag">5h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://thehill.com/homenews/administration/5903309-mike-pence-capitol-riot-rewrite/" target="_blank" rel="noopener">Pence: There’s ‘clearly’ been an effort to ‘rewrite’ Jan. 6 history</a>
+            </h4>
+        </article></div>
+        </div>
+    </section>
+    <section class="topic-section" id="topic-business--markets">
+        <div class="topic-header">
+            <span class="topic-icon">📊</span>
+            <h2 class="topic-name">Business &amp; Markets</h2>
+        </div>
+        <div class="topic-grid">
+            
+    <article class="lead-card">
+        <div class="lead-meta">
+            <span class="source-tag">Stock Market News</span>
+            <span class="time-tag">0m ago</span>
+        </div>
+        <h3 class="lead-title">
+            <a href="https://www.investing.com/news/stock-market-news/tesla-resolves-graphite-supply-default-with-australias-syrah-resources-4717966" target="_blank" rel="noopener">Tesla resolves graphite supply default with Australia’s Syrah Resources</a>
+        </h3>
+        <p class="lead-summary">This story discusses: Tesla resolves graphite supply default with Australia’s Syrah Resources</p>
+    </article>
+            <div class="side-list">
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">Stock Market News</span>
+                <span class="time-tag">0m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.investing.com/news/stock-market-news/dell-launches-699-xps-13-laptop-to-compete-with-apples-macbook-neo-93CH-4717971" target="_blank" rel="noopener">Dell launches $699 XPS 13 laptop to compete with Apple’s MacBook Neo</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">Stock Market News</span>
+                <span class="time-tag">0m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.investing.com/news/stock-market-news/blue-origin-faces-months-of-delays-after-rocket-explosion-damages-launch-pad-4717973" target="_blank" rel="noopener">Blue Origin faces months of delays after rocket explosion damages launch pad</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">Stock Market News</span>
+                <span class="time-tag">0m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.investing.com/news/stock-market-news/us-stock-futures-rise-with-focus-on-iran-peace-deal-payrolls-4717974" target="_blank" rel="noopener">US stock futures rise with focus on Iran peace deal, payrolls</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">Stock Market News</span>
+                <span class="time-tag">0m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.investing.com/news/stock-market-news/visits-to-restart-at-new-jersey-migrant-detention-center-as-police-expand-restricted-area-4717935" target="_blank" rel="noopener">Visits to restart at New Jersey migrant detention center as police expand restricted area</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">Stock Market News</span>
+                <span class="time-tag">0m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.investing.com/news/stock-market-news/asia-stocks-count-on-ai-boom-to-offset-gulf-risks-4717975" target="_blank" rel="noopener">Asia stocks count on AI boom to offset Gulf risks</a>
+            </h4>
+        </article></div>
+        </div>
+    </section>
+    <section class="topic-section" id="topic-ai--tech">
+        <div class="topic-header">
+            <span class="topic-icon">🤖</span>
+            <h2 class="topic-name">AI &amp; Tech</h2>
+        </div>
+        <div class="topic-grid">
+            
+    <article class="lead-card">
+        <div class="lead-meta">
+            <span class="source-tag">WIRED</span>
+            <span class="time-tag">3h ago</span>
+        </div>
+        <h3 class="lead-title">
+            <a href="https://www.wired.com/story/everyone-has-their-targets-set-on-the-macbook-neo/" target="_blank" rel="noopener">Everyone Has Their Targets Set on the MacBook Neo</a>
+        </h3>
+        <p class="lead-summary">Dell, Microsoft, and others are unveiling new laptops to compete directly with the Neo, but not all are learning the right lessons from Apple.</p>
+    </article>
+            <div class="side-list">
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">TechCrunch</span>
+                <span class="time-tag">5h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy/" target="_blank" rel="noopener">Erin Brockovich takes aim at data center secrecy</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">TechCrunch</span>
+                <span class="time-tag">8h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://techcrunch.com/2026/05/31/this-weekends-two-biggest-movies-were-both-directed-by-youtubers/" target="_blank" rel="noopener">This weekend’s two biggest movies were both directed by YouTubers</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">TechCrunch</span>
+                <span class="time-tag">8h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://techcrunch.com/2026/05/31/this-is-fine-artist-kc-green-reaches-agreement-with-ai-startup-artisan/" target="_blank" rel="noopener">‘This is fine’ artist KC Green reaches agreement with AI startup Artisan</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">TechCrunch</span>
+                <span class="time-tag">10h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://techcrunch.com/2026/05/31/techcrunch-mobility-it-doesnt-matter-that-people-hate-the-ferrari-luce/" target="_blank" rel="noopener">TechCrunch Mobility: It doesn’t matter that people hate the Ferrari Luce</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">TechCrunch</span>
+                <span class="time-tag">11h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://techcrunch.com/2026/05/31/making-sense-of-the-debate-over-ai-psychosis/" target="_blank" rel="noopener">Making sense of the debate over AI psychosis</a>
+            </h4>
+        </article></div>
+        </div>
+    </section>
+    <section class="topic-section" id="topic-cloud--saas">
+        <div class="topic-header">
+            <span class="topic-icon">☁️</span>
+            <h2 class="topic-name">Cloud &amp; SaaS</h2>
+        </div>
+        <div class="topic-grid">
+            
+    <article class="lead-card">
+        <div class="lead-meta">
+            <span class="source-tag">Latest news</span>
+            <span class="time-tag">1h ago</span>
+        </div>
+        <h3 class="lead-title">
+            <a href="https://www.zdnet.com/article/lenovo-yoga-slim-7x-review/" target="_blank" rel="noopener">This Lenovo Yoga rivaled my MacBook Air in ways I didn&#x27;t expect it to</a>
+        </h3>
+        <p class="lead-summary">The Slim 7x (2026) has impressive performance improvements, but its target user - the modern professional - remains the same.</p>
+    </article>
+            <div class="side-list">
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">Latest news</span>
+                <span class="time-tag">1h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.zdnet.com/article/best-android-auto-weather-apps/" target="_blank" rel="noopener">I switched to MyRadar as my main Android Auto weather app and don&#x27;t regret it</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">Latest news</span>
+                <span class="time-tag">2h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.zdnet.com/article/how-to-add-a-vpn-to-your-smart-tv/" target="_blank" rel="noopener">I put my smart TV setup behind a router-based VPN and never looked back - here&#x27;s why</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">Latest news</span>
+                <span class="time-tag">3h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.zdnet.com/article/dell-xps-13-2026-macbook-neo-competitor/" target="_blank" rel="noopener">Dell&#x27;s new XPS 13 is a MacBook Neo rival that costs $599 and retains premium features</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">Latest news</span>
+                <span class="time-tag">3h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.zdnet.com/article/dell-xps-13-2026-vs-macbook-neo/" target="_blank" rel="noopener">Dell XPS 13 (2026) vs. MacBook Neo: I compared both budget laptops, here&#x27;s which one I&#x27;d buy</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">TechCrunch</span>
+                <span class="time-tag">5h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy/" target="_blank" rel="noopener">Erin Brockovich takes aim at data center secrecy</a>
+            </h4>
+        </article></div>
+        </div>
+    </section>
+    <section class="topic-section" id="topic-bay-area">
+        <div class="topic-header">
+            <span class="topic-icon">🌉</span>
+            <h2 class="topic-name">Bay Area</h2>
+        </div>
+        <div class="topic-grid">
+            
+    <article class="lead-card">
+        <div class="lead-meta">
+            <span class="source-tag">ABC7</span>
+            <span class="time-tag">9m ago</span>
+        </div>
+        <h3 class="lead-title">
+            <a href="https://abc7news.com/post/san-francisco-hit-run-driver-crashes-castro-districts-caf-mystique-destroys-indian-restaurant-bar-parklet/19208434/" target="_blank" rel="noopener">SF hit-and-run driver crashes into Castro District cafe, destroys nearby parklet, police say</a>
+        </h3>
+        <p class="lead-summary">Surveillance video captured the moment a sedan veered off the roadway and slammed into the front of Café Mystique in San Francisco, after first plowing through a streetside parklet belonging to Castro Indian Restaurant…</p>
+    </article>
+            <div class="side-list">
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">ABC7</span>
+                <span class="time-tag">12m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://abc13.com/post/carnival-data-breach-passengers-information-including-passport-details-impacted-cybersecurity-incident-cruise-line-says/19208632/" target="_blank" rel="noopener">Carnival customer information, including passport details, impacted by data breach, cruise line says</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">ABC7</span>
+                <span class="time-tag">18m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://abc7news.com/post/california-governors-race-new-poll-shows-tom-steyer-edging-hilton-battle-2nd-tightens/19207787/" target="_blank" rel="noopener">New poll shows Steyer edging Hilton in CA governor&#x27;s race as battle for 2nd tightens</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">ABC7</span>
+                <span class="time-tag">1h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://abc7news.com/post/weather-bay-area-forecast-temperatures/39468/" target="_blank" rel="noopener">AccuWeather Forecast: Mostly clear overnight; warm-to-hot tomorrow</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The San Francisco Standard</span>
+                <span class="time-tag">1h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://sfstandard.com/2026/05/31/election-day-almost-read-power-play-s-important-things-watch-tuesday/" target="_blank" rel="noopener">Election day is almost here. Read Power Play’s most important things to watch on Tuesday</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">ABC7</span>
+                <span class="time-tag">4h ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://abc7news.com/post/rohnert-park-police-searching-driver-hit-run-injures-2-children-riding-scooters-bodway-pkwy-waterside-ln/19203401/" target="_blank" rel="noopener">Rohnert Park police searching for driver after hit-and-run injures 2 children riding scooters</a>
+            </h4>
+        </article></div>
+        </div>
+    </section>
+  </div>
 
-    <footer>
-        Built from RSS feeds + AI executive summary. Each story links to the original source as citation.
-    </footer>
+</main>
+
+<footer class="site-footer">
+  Chai's Briefing · RSS + Yahoo Finance · Links cite original sources
+</footer>
+
 </body>
 </html>
