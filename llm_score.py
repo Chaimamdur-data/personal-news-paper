@@ -1,6 +1,4 @@
 import os
-import json
-import re
 import google.generativeai as genai
 
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
@@ -9,50 +7,70 @@ MODEL_NAME = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 model = genai.GenerativeModel(MODEL_NAME)
 
 
-def _extract_json(text):
-    text = text.strip()
-    text = text.replace("```json", "").replace("```", "").strip()
-    match = re.search(r"\{.*\}", text, re.DOTALL)
-    if match:
-        text = match.group(0)
-    return json.loads(text)
-
-
-def score_article(article, topic_name):
+def summarize_news(news_text):
     prompt = f"""
 You are Chai's personal executive intelligence analyst.
 
-Use ONLY the article data below. Do not invent facts.
-Score the article for Chai, who cares about AI, data analytics, GTM/RevOps, stocks, Bay Area, debate, robotics, and education.
+Chai cares about:
+- AI and LLMs
+- Data analytics, Databricks, Snowflake, dbt, Tableau
+- GTM, RevOps, Salesforce, Pure Storage
+- Stocks and market-moving business news
+- Bay Area
+- Debate, robotics, education, STEM
 
-Return valid JSON only.
+Use ONLY the news items provided below.
+Do not invent facts.
+Cite sources by mentioning source names from the provided news.
+Keep it concise and executive-friendly.
 
-JSON fields:
-{{
-  "health_score": 0-100,
-  "signal": "High" or "Medium" or "Low",
-  "category": "Opportunity" or "Risk" or "Watch",
-  "why_it_matters": "one short sentence",
-  "executive_takeaway": "one short sentence",
-  "confidence": "High" or "Medium" or "Low"
-}}
+Return this exact format:
 
-Topic: {topic_name}
-Title: {article.get("title")}
-Source: {article.get("source")}
-Summary: {article.get("summary")}
-URL: {article.get("link")}
+## Executive Summary
+- Bullet 1
+- Bullet 2
+- Bullet 3
+- Bullet 4
+- Bullet 5
+
+## Top Opportunities
+- Opportunity 1
+- Opportunity 2
+- Opportunity 3
+
+## Top Risks
+- Risk 1
+- Risk 2
+- Risk 3
+
+## Health Score
+XX / 100
+
+## Why It Matters
+Short paragraph explaining what Chai should pay attention to.
+
+News items:
+{news_text}
 """
 
     try:
         response = model.generate_content(prompt)
-        return _extract_json(response.text)
+        return response.text
     except Exception as e:
-        return {
-            "health_score": 50,
-            "signal": "Medium",
-            "category": "Watch",
-            "why_it_matters": "AI scoring unavailable or data limited.",
-            "executive_takeaway": "Review original source.",
-            "confidence": "Low",
-        }
+        return f"""## Executive Summary
+- AI summary unavailable.
+
+## Top Opportunities
+- Review the latest article links manually.
+
+## Top Risks
+- Gemini API call failed or quota/model access is unavailable.
+
+## Health Score
+50 / 100
+
+## Why It Matters
+The RSS newspaper still works, but AI summarization failed.
+
+Error: {str(e)}
+"""
