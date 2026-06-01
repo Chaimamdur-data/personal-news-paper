@@ -1,7 +1,4 @@
 import feedparser
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
-
 import yaml
 from bs4 import BeautifulSoup
 from datetime import datetime, timezone
@@ -10,6 +7,11 @@ from html import escape
 from pathlib import Path
 import re
 import hashlib
+import ssl
+
+from llm_score import summarize_news
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 CONFIG_FILE = "config.yml"
 OUTPUT_FILE = "index.html"
@@ -28,41 +30,22 @@ def get_published(entry):
     for key in ["published", "updated", "created"]:
         if key in entry:
             try:
-                return parsedate_to_datetime(entry[key])
+                dt = parsedate_to_datetime(entry[key])
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=timezone.utc)
+                return dt
             except Exception:
                 pass
     return datetime.now(timezone.utc)
 
 
 def simple_summary(title: str, description: str) -> str:
-    """
-    Free version: no paid AI call.
-    This creates a short summary from RSS title + description.
-    Later you can add OpenAI/Gemini here.
-    """
     description = clean_html(description)
     if not description:
         return f"This story discusses: {title}"
     if len(description) > 280:
         return description[:280].rsplit(" ", 1)[0] + "..."
     return description
-
-
-def score_article(article, keywords):
-    text = f"{article['title']} {article['summary']}".lower()
-    score = 0
-    for kw in keywords:
-        if kw.lower() in text:
-            score += 3
-    # freshness boost
-    age_hours = max((datetime.now(timezone.utc) - article["published"]).total_seconds() / 3600, 0)
-    if age_hours <= 6:
-        score += 5
-    elif age_hours <= 24:
-        score += 3
-    elif age_hours <= 72:
-        score += 1
-    return score
 
 
 def article_id(title, link):
@@ -73,7 +56,6 @@ def article_id(title, link):
 def fetch_topic_articles(topic):
     articles = []
     seen = set()
-    keywords = topic.get("keywords", [])
 
     for feed_url in topic.get("feeds", []):
         parsed = feedparser.parse(feed_url)
@@ -91,19 +73,17 @@ def fetch_topic_articles(topic):
             unique_id = article_id(title, link)
             if unique_id in seen:
                 continue
+
             seen.add(unique_id)
 
-            summary = simple_summary(title, description)
-
-            article = {
+            articles.append({
                 "title": title,
                 "link": link,
                 "source": feed_title,
                 "published": published,
-                "summary": summary,
-            }
-            article["score"] = score_article(article, keywords)
-            articles.append(article)
+                "summary": simple_summary(title, description),
+                "topic": topic.get("name", "General")
+            })
 
     articles.sort(key=lambda x: x["published"], reverse=True)
     return articles
@@ -116,7 +96,47 @@ def format_date(dt):
         return "Unknown time"
 
 
-def render_html(config, all_topics):
+def build_ai_input(all_topics):
+    lines = []
+    for topic_name, articles in all_topics.items():
+        lines.append(f"\nTOPIC: {topic_name}")
+        for i, article in enumerate(articles[:6], start=1):
+            lines.append(
+                f"{i}. Title: {article['title']}\n"
+                f"Source: {article['source']}\n"
+                f"Published: {format_date(article['published'])}\n"
+                f"Summary: {article['summary']}\n"
+                f"URL: {article['link']}\n"
+            )
+    return "\n".join(lines)
+
+
+def safe_ai_summary(all_topics):
+    news_text = build_ai_input(all_topics)
+
+    if not news_text.strip():
+        return "No news articles found to summarize."
+
+    try:
+        return summarize_news(news_text)
+    except Exception as e:
+        return f"AI summary unavailable. Reason: {str(e)}"
+
+
+def render_ai_summary(ai_summary):
+    safe = escape(ai_summary)
+    safe = safe.replace("\n", "<br>")
+    return f"""
+    <section class="ai-summary">
+        <h2>AI Executive Summary</h2>
+        <div class="ai-box">
+            {safe}
+        </div>
+    </section>
+    """
+
+
+def render_html(config, all_topics, ai_summary):
     now = datetime.now().strftime("%b %d, %Y %I:%M %p")
 
     title = escape(config["site"].get("title", "Personal Newspaper"))
@@ -126,6 +146,7 @@ def render_html(config, all_topics):
 
     for topic_name, articles in all_topics.items():
         cards = []
+
         for article in articles:
             cards.append(f"""
             <article class="card">
@@ -133,8 +154,11 @@ def render_html(config, all_topics):
                     <span>{escape(article["source"])}</span>
                     <span>{format_date(article["published"])}</span>
                 </div>
+
                 <h3>{escape(article["title"])}</h3>
+
                 <p>{escape(article["summary"])}</p>
+
                 <a href="{escape(article["link"])}" target="_blank" rel="noopener noreferrer">
                     Read original source / citation →
                 </a>
@@ -185,6 +209,23 @@ def render_html(config, all_topics):
             max-width: 1180px;
             margin: 0 auto;
             padding: 24px;
+        }}
+        .ai-summary {{
+            margin-bottom: 36px;
+        }}
+        .ai-summary h2 {{
+            font-size: 28px;
+            border-bottom: 3px solid #111827;
+            padding-bottom: 8px;
+        }}
+        .ai-box {{
+            background: #ffffff;
+            border-left: 6px solid #0f766e;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            line-height: 1.6;
+            font-size: 16px;
         }}
         .topic {{
             margin-bottom: 36px;
@@ -244,11 +285,12 @@ def render_html(config, all_topics):
     </header>
 
     <main>
+        {render_ai_summary(ai_summary)}
         {''.join(topic_blocks)}
     </main>
 
     <footer>
-        Built from RSS feeds. Summaries are generated from public RSS snippets. Each story links to the original source as citation.
+        Built from RSS feeds + AI executive summary. Each story links to the original source as citation.
     </footer>
 </body>
 </html>
@@ -262,14 +304,19 @@ def main():
     max_articles = config["site"].get("max_articles_per_topic", 6)
 
     all_topics = {}
+
     for topic in config.get("topics", []):
         name = topic["name"]
         print(f"Fetching: {name}")
         articles = fetch_topic_articles(topic)
         all_topics[name] = articles[:max_articles]
 
-    html = render_html(config, all_topics)
+    print("Generating AI executive summary...")
+    ai_summary = safe_ai_summary(all_topics)
+
+    html = render_html(config, all_topics, ai_summary)
     Path(OUTPUT_FILE).write_text(html, encoding="utf-8")
+
     print(f"Done. Open {OUTPUT_FILE}")
 
 
