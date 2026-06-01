@@ -4,22 +4,6 @@ site:
   max_articles_per_topic: 6
 
 topics:
-  - name: "AI, Data & Analytics"
-    keywords:
-      - AI
-      - artificial intelligence
-      - data
-      - analytics
-      - machine learning
-      - LLM
-      - generative AI
-      - data engineering
-    feeds:
-      - "https://feeds.arstechnica.com/arstechnica/index"
-      - "https://www.wired.com/feed/rss"
-      - "https://techcrunch.com/feed/"
-      - "https://www.technologyreview.com/feed/"
-      - "https://venturebeat.com/category/ai/feed/"
 
   - name: "India — National Politics & News"
     keywords:
