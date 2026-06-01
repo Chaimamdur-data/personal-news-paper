@@ -1,26 +1,58 @@
 import os
+import json
+import re
 import google.generativeai as genai
 
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 
-model = genai.GenerativeModel("gemini-1.5-flash")
+MODEL_NAME = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+model = genai.GenerativeModel(MODEL_NAME)
 
-def summarize_news(news_text):
+
+def _extract_json(text):
+    text = text.strip()
+    text = text.replace("```json", "").replace("```", "").strip()
+    match = re.search(r"\{.*\}", text, re.DOTALL)
+    if match:
+        text = match.group(0)
+    return json.loads(text)
+
+
+def score_article(article, topic_name):
     prompt = f"""
-You are my personal executive news analyst.
+You are Chai's personal executive intelligence analyst.
 
-Analyze these news stories.
+Use ONLY the article data below. Do not invent facts.
+Score the article for Chai, who cares about AI, data analytics, GTM/RevOps, stocks, Bay Area, debate, robotics, and education.
 
-Return:
-1. Executive Summary (5 bullets)
-2. Top Opportunities
-3. Top Risks
-4. Health Score (0-100)
-5. Why It Matters
+Return valid JSON only.
 
-News:
-{news_text}
+JSON fields:
+{{
+  "health_score": 0-100,
+  "signal": "High" or "Medium" or "Low",
+  "category": "Opportunity" or "Risk" or "Watch",
+  "why_it_matters": "one short sentence",
+  "executive_takeaway": "one short sentence",
+  "confidence": "High" or "Medium" or "Low"
+}}
+
+Topic: {topic_name}
+Title: {article.get("title")}
+Source: {article.get("source")}
+Summary: {article.get("summary")}
+URL: {article.get("link")}
 """
 
-    response = model.generate_content(prompt)
-    return response.text
+    try:
+        response = model.generate_content(prompt)
+        return _extract_json(response.text)
+    except Exception as e:
+        return {
+            "health_score": 50,
+            "signal": "Medium",
+            "category": "Watch",
+            "why_it_matters": "AI scoring unavailable or data limited.",
+            "executive_takeaway": "Review original source.",
+            "confidence": "Low",
+        }
