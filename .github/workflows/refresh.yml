@@ -2,8 +2,8 @@ name: Refresh Personal Newspaper
 
 on:
   schedule:
-    - cron: "0 * * * *"
-  workflow_dispatch:
+    - cron: "0 * * * *"   # every hour
+  workflow_dispatch:       # manual trigger from GitHub UI
 
 permissions:
   contents: write
@@ -24,12 +24,7 @@ jobs:
       - name: Install packages
         run: pip install -r requirements.txt
 
-      - name: List Gemini models
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python list_models.py
-
-      - name: Generate newspaper
+      - name: Generate newspaper + stock dashboard
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python generate_newspaper.py
@@ -39,5 +34,5 @@ jobs:
           git config user.name "personal-newspaper-bot"
           git config user.email "bot@example.com"
           git add index.html
-          git commit -m "Refresh personal newspaper" || echo "No changes"
+          git commit -m "Refresh newspaper + stocks $(date -u '+%Y-%m-%d %H:%M UTC')" || echo "No changes"
           git push
