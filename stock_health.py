@@ -22,7 +22,7 @@ try:
 except ImportError:
     YF_AVAILABLE = False
 
-DEFAULT_TICKERS = ["NVDA", "MU", "MSFT", "META", "AMZN", "AAPL", "VUG", "SMH", "CRM", "NFLX","GOOGL","UAL","AVGO","TTWO"]
+DEFAULT_TICKERS = ["NVDA", "MU", "MSFT", "META", "AMZN", "AAPL", "VUG", "SMH", "CRM", "NFLX"]
 
 GRADE_MAP = [
     (80, "A", "Excellent"),
