@@ -2,9 +2,20 @@ site:
   title: "Chai's Personal Newspaper"
   subtitle: "Hourly refreshed personal news with citations"
   max_articles_per_topic: 6
+  # ── Add/remove tickers here to update your stock dashboard ──
+  stock_tickers:
+    - NVDA
+    - MU
+    - MSFT
+    - META
+    - AMZN
+    - AAPL
+    - VUG
+    - SMH
+    - CRM
+    - NFLX
 
 topics:
-
   - name: "India — National Politics & News"
     keywords:
       - India
@@ -87,7 +98,6 @@ topics:
   - name: "US Politics & Policy"
     keywords:
       - Trump
-      - Biden
       - Congress
       - Senate
       - White House
@@ -121,6 +131,23 @@ topics:
       - "https://www.cnbc.com/id/10000664/device/rss/rss.html"
       - "https://www.livemint.com/rss/news"
       - "https://economictimes.indiatimes.com/rssfeedsdefault.cms"
+
+  - name: "AI, Data & Analytics"
+    keywords:
+      - AI
+      - artificial intelligence
+      - data
+      - analytics
+      - machine learning
+      - LLM
+      - generative AI
+      - data engineering
+    feeds:
+      - "https://feeds.arstechnica.com/arstechnica/index"
+      - "https://www.wired.com/feed/rss"
+      - "https://techcrunch.com/feed/"
+      - "https://www.technologyreview.com/feed/"
+      - "https://venturebeat.com/category/ai/feed/"
 
   - name: "Cloud, Data Platforms & SaaS"
     keywords:
