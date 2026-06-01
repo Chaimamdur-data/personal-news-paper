@@ -8,8 +8,11 @@ from pathlib import Path
 import re
 import hashlib
 import ssl
+import os
 
 from llm_score import summarize_news
+from stock_health import run_watchlist
+from render_stocks import render_stock_section
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -113,10 +116,8 @@ def build_ai_input(all_topics):
 
 def safe_ai_summary(all_topics):
     news_text = build_ai_input(all_topics)
-
     if not news_text.strip():
         return "No news articles found to summarize."
-
     try:
         return summarize_news(news_text)
     except Exception as e:
@@ -136,17 +137,15 @@ def render_ai_summary(ai_summary):
     """
 
 
-def render_html(config, all_topics, ai_summary):
+def render_html(config, all_topics, ai_summary, stock_html):
     now = datetime.now().strftime("%b %d, %Y %I:%M %p")
 
-    title = escape(config["site"].get("title", "Personal Newspaper"))
+    title    = escape(config["site"].get("title",    "Personal Newspaper"))
     subtitle = escape(config["site"].get("subtitle", "Hourly refreshed news"))
 
     topic_blocks = []
-
     for topic_name, articles in all_topics.items():
         cards = []
-
         for article in articles:
             cards.append(f"""
             <article class="card">
@@ -154,17 +153,13 @@ def render_html(config, all_topics, ai_summary):
                     <span>{escape(article["source"])}</span>
                     <span>{format_date(article["published"])}</span>
                 </div>
-
                 <h3>{escape(article["title"])}</h3>
-
                 <p>{escape(article["summary"])}</p>
-
                 <a href="{escape(article["link"])}" target="_blank" rel="noopener noreferrer">
                     Read original source / citation →
                 </a>
             </article>
             """)
-
         if not cards:
             cards.append("<p>No articles found for this topic.</p>")
 
@@ -185,96 +180,27 @@ def render_html(config, all_topics, ai_summary):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="3600">
     <style>
-        body {{
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f1ea;
-            color: #1f2933;
-        }}
-        header {{
-            background: #111827;
-            color: white;
-            padding: 32px 20px;
-            text-align: center;
-        }}
-        header h1 {{
-            margin: 0;
-            font-size: 36px;
-        }}
-        header p {{
-            margin: 8px 0 0;
-            color: #d1d5db;
-        }}
-        main {{
-            max-width: 1180px;
-            margin: 0 auto;
-            padding: 24px;
-        }}
-        .ai-summary {{
-            margin-bottom: 36px;
-        }}
-        .ai-summary h2 {{
-            font-size: 28px;
-            border-bottom: 3px solid #111827;
-            padding-bottom: 8px;
-        }}
-        .ai-box {{
-            background: #ffffff;
-            border-left: 6px solid #0f766e;
-            padding: 22px;
-            border-radius: 14px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            line-height: 1.6;
-            font-size: 16px;
-        }}
-        .topic {{
-            margin-bottom: 36px;
-        }}
-        .topic h2 {{
-            border-bottom: 3px solid #111827;
-            padding-bottom: 8px;
-            font-size: 26px;
-        }}
-        .grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 18px;
-        }}
-        .card {{
-            background: white;
-            padding: 18px;
-            border-radius: 14px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }}
-        .card h3 {{
-            margin: 10px 0;
-            font-size: 20px;
-            line-height: 1.3;
-        }}
-        .card p {{
-            line-height: 1.5;
-            color: #374151;
-        }}
-        .card a {{
-            display: inline-block;
-            margin-top: 10px;
-            color: #0f766e;
-            font-weight: bold;
-            text-decoration: none;
-        }}
-        .meta {{
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            font-size: 12px;
-            color: #6b7280;
-        }}
-        footer {{
-            text-align: center;
-            padding: 24px;
-            color: #6b7280;
-            font-size: 13px;
-        }}
+        body {{ margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f4f1ea; color: #1f2933; }}
+        header {{ background: #111827; color: white; padding: 32px 20px; text-align: center; }}
+        header h1 {{ margin: 0; font-size: 36px; }}
+        header p {{ margin: 8px 0 0; color: #d1d5db; }}
+        nav {{ background: #1f2937; padding: 10px 20px; text-align: center; position: sticky; top: 0; z-index: 100; }}
+        nav a {{ color: #d1d5db; text-decoration: none; margin: 0 12px; font-size: 14px; }}
+        nav a:hover {{ color: white; }}
+        main {{ max-width: 1180px; margin: 0 auto; padding: 24px; }}
+        .ai-summary {{ margin-bottom: 36px; }}
+        .ai-summary h2 {{ font-size: 28px; border-bottom: 3px solid #111827; padding-bottom: 8px; }}
+        .ai-box {{ background: #ffffff; border-left: 6px solid #0f766e; padding: 22px; border-radius: 14px;
+                   box-shadow: 0 4px 12px rgba(0,0,0,0.08); line-height: 1.6; font-size: 16px; }}
+        .topic {{ margin-bottom: 36px; }}
+        .topic h2 {{ border-bottom: 3px solid #111827; padding-bottom: 8px; font-size: 26px; }}
+        .grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }}
+        .card {{ background: white; padding: 18px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }}
+        .card h3 {{ margin: 10px 0; font-size: 20px; line-height: 1.3; }}
+        .card p {{ line-height: 1.5; color: #374151; }}
+        .card a {{ display: inline-block; margin-top: 10px; color: #0f766e; font-weight: bold; text-decoration: none; }}
+        .meta {{ display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: #6b7280; }}
+        footer {{ text-align: center; padding: 24px; color: #6b7280; font-size: 13px; }}
     </style>
 </head>
 <body>
@@ -284,9 +210,18 @@ def render_html(config, all_topics, ai_summary):
         <p>Last refreshed: {escape(now)}</p>
     </header>
 
+    <nav>
+        <a href="#stocks">📈 Stocks</a>
+        <a href="#summary">🧠 AI Summary</a>
+        {''.join(f'<a href="#topic-{i}">{escape(name)}</a>' for i, name in enumerate(all_topics.keys()))}
+    </nav>
+
     <main>
-        {render_ai_summary(ai_summary)}
-        {''.join(topic_blocks)}
+        <div id="stocks">{stock_html}</div>
+
+        <div id="summary">{render_ai_summary(ai_summary)}</div>
+
+        {''.join(f'<div id="topic-{i}">{block}</div>' for i, block in enumerate(topic_blocks))}
     </main>
 
     <footer>
@@ -303,21 +238,29 @@ def main():
 
     max_articles = config["site"].get("max_articles_per_topic", 6)
 
-    all_topics = {}
+    # ── Stock health dashboard ─────────────────────────────────────────────────
+    stock_tickers = config["site"].get(
+        "stock_tickers",
+        ["NVDA", "MU", "MSFT", "META", "AMZN", "AAPL", "VUG", "SMH", "CRM", "NFLX"]
+    )
+    print(f"Fetching stock health for: {stock_tickers}")
+    stock_data = run_watchlist(stock_tickers)
+    stock_html = render_stock_section(stock_data)
 
+    # ── News topics ────────────────────────────────────────────────────────────
+    all_topics = {}
     for topic in config.get("topics", []):
         name = topic["name"]
-        print(f"Fetching: {name}")
+        print(f"Fetching news: {name}")
         articles = fetch_topic_articles(topic)
         all_topics[name] = articles[:max_articles]
 
     print("Generating AI executive summary...")
     ai_summary = safe_ai_summary(all_topics)
 
-    html = render_html(config, all_topics, ai_summary)
+    html = render_html(config, all_topics, ai_summary, stock_html)
     Path(OUTPUT_FILE).write_text(html, encoding="utf-8")
-
-    print(f"Done. Open {OUTPUT_FILE}")
+    print(f"✅ Done. Open {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":
