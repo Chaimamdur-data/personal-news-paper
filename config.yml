@@ -7,13 +7,116 @@ topics:
   - name: "AI, Data & Analytics"
     keywords:
       - AI
+      - artificial intelligence
       - data
       - analytics
       - machine learning
+      - LLM
+      - generative AI
+      - data engineering
     feeds:
       - "https://feeds.arstechnica.com/arstechnica/index"
       - "https://www.wired.com/feed/rss"
       - "https://techcrunch.com/feed/"
+      - "https://www.technologyreview.com/feed/"
+      - "https://venturebeat.com/category/ai/feed/"
+
+  - name: "India — National Politics & News"
+    keywords:
+      - India
+      - Modi
+      - BJP
+      - Congress
+      - Parliament
+      - Delhi
+      - Indian economy
+      - Lok Sabha
+      - Supreme Court India
+    feeds:
+      - "https://feeds.feedburner.com/ndtvnews-top-stories"
+      - "https://www.thehindu.com/feeder/default.rss"
+      - "https://www.indiatoday.in/rss/home"
+      - "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml"
+      - "https://www.firstpost.com/rss/politics.xml"
+      - "https://www.news18.com/rss/politics.xml"
+      - "https://theprint.in/feed/"
+      - "https://sundayguardianlive.com/feed"
+
+  - name: "Telugu & Andhra Pradesh Politics"
+    keywords:
+      - Andhra Pradesh
+      - Telangana
+      - Telugu
+      - TDP
+      - YSRCP
+      - BRS
+      - Chandrababu
+      - Jagan
+      - Hyderabad
+      - KTR
+      - Revanth
+    feeds:
+      - "https://www.gulte.com/feed"
+      - "https://www.greatandhra.com/rss.xml"
+      - "https://english.tupaki.com/rss.xml"
+      - "https://www.telugu360.com/category/politics/feed/"
+      - "https://www.m9.news/feed"
+
+  - name: "Pakistan & South Asia"
+    keywords:
+      - Pakistan
+      - Imran Khan
+      - PTI
+      - Islamabad
+      - Karachi
+      - PMLN
+      - Pakistan Army
+      - South Asia
+      - Bangladesh
+      - Sri Lanka
+    feeds:
+      - "https://tribune.com.pk/feed"
+      - "https://www.pakistantoday.com.pk/feed/"
+      - "https://www.nation.com.pk/rss/home"
+      - "https://www.thenews.com.pk/rss/1/1"
+
+  - name: "Geopolitics & International Affairs"
+    keywords:
+      - geopolitics
+      - NATO
+      - China
+      - Russia
+      - Middle East
+      - Iran
+      - Israel
+      - Ukraine
+      - Indo-Pacific
+      - US foreign policy
+      - sanctions
+    feeds:
+      - "https://eurasiantimes.com/feed/"
+      - "https://www.arabnews.com/rss.xml"
+      - "https://thehill.com/feed/"
+      - "https://www.tribuneindia.com/rss/feed"
+      - "https://www.deccanchronicle.com/rss_feed/news/rss.xml"
+
+  - name: "US Politics & Policy"
+    keywords:
+      - Trump
+      - Biden
+      - Congress
+      - Senate
+      - White House
+      - Democrat
+      - Republican
+      - US election
+      - Washington DC
+      - Supreme Court
+    feeds:
+      - "https://thehill.com/feed/"
+      - "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml"
+      - "https://feeds.washingtonpost.com/rss/politics"
+      - "https://www.politico.com/rss/politicopicks.xml"
 
   - name: "Business & Markets"
     keywords:
@@ -21,9 +124,19 @@ topics:
       - stocks
       - economy
       - earnings
+      - investing
+      - S&P 500
+      - interest rates
+      - Fed
+      - Bloomberg
+      - rupee
+      - India GDP
     feeds:
       - "https://www.investing.com/rss/news_25.rss"
       - "https://feeds.marketwatch.com/marketwatch/topstories/"
+      - "https://www.cnbc.com/id/10000664/device/rss/rss.html"
+      - "https://www.livemint.com/rss/news"
+      - "https://economictimes.indiatimes.com/rssfeedsdefault.cms"
 
   - name: "Cloud, Data Platforms & SaaS"
     keywords:
@@ -32,18 +145,28 @@ topics:
       - Databricks
       - cloud
       - SaaS
+      - AWS
+      - Azure
+      - Google Cloud
+      - dbt
     feeds:
       - "https://techcrunch.com/feed/"
       - "https://www.zdnet.com/news/rss.xml"
+      - "https://thenewstack.io/feed/"
 
   - name: "Bay Area & California"
     keywords:
       - California
       - Bay Area
       - San Francisco
+      - Silicon Valley
+      - Oakland
+      - San Jose
     feeds:
       - "https://www.kqed.org/news/rss"
       - "https://abc7news.com/feed/"
+      - "https://www.mercurynews.com/feed/"
+      - "https://sfstandard.com/feed/"
 
   - name: "Debate, Education & STEM"
     keywords:
@@ -51,6 +174,9 @@ topics:
       - education
       - robotics
       - STEM
+      - science
+      - math competition
     feeds:
       - "https://www.edweek.org/feeds/education-week"
       - "https://www.sciencedaily.com/rss/top/science.xml"
+      - "https://www.nature.com/nature.rss"
