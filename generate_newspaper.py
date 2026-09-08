@@ -1,16 +1,20 @@
 import feedparser
 import yaml
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, MarkupResemblesLocatorWarning
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from html import escape
 from pathlib import Path
-import re, hashlib, ssl, os
+import re, hashlib, ssl, os, warnings
+import urllib.request
+from urllib.error import HTTPError, URLError
+from http.client import RemoteDisconnected
 
 from stock_health import run_watchlist
 from render_stocks import render_stock_section
 
 ssl._create_default_https_context = ssl._create_unverified_context
+warnings.filterwarnings("ignore", category=MarkupResemblesLocatorWarning)
 CONFIG_FILE = "config.yml"
 OUTPUT_FILE = "index.html"
 
@@ -57,27 +61,112 @@ def article_id(title, link):
     return hashlib.md5(f"{title}|{link}".encode()).hexdigest()
 
 def fetch_topic_articles(topic):
+    """
+    Fetch articles for one topic without letting one bad RSS feed
+    crash the entire newspaper refresh.
+    """
     articles = []
     seen = set()
+
     for feed_url in topic.get("feeds", []):
-        parsed = feedparser.parse(feed_url)
-        feed_title = parsed.feed.get("title", "Unknown Source")
-        for entry in parsed.entries[:20]:
-            title = clean_html(entry.get("title", "Untitled"))
-            link = entry.get("link", "")
-            description = entry.get("summary", entry.get("description", ""))
-            published = get_published(entry)
-            if not title or not link: continue
-            uid = article_id(title, link)
-            if uid in seen: continue
-            seen.add(uid)
-            articles.append({
-                "title": title, "link": link,
-                "source": feed_title, "published": published,
-                "summary": simple_summary(title, description),
-                "topic": topic.get("name", "General")
-            })
+        print(f"  Reading feed: {feed_url}")
+
+        try:
+            request = urllib.request.Request(
+                feed_url,
+                headers={
+                    "User-Agent": (
+                        "Mozilla/5.0 (compatible; ChaiPersonalNewspaper/1.0; "
+                        "+https://github.com/Chaimamdur-data/personal-news-paper)"
+                    ),
+                    "Accept": (
+                        "application/rss+xml, application/atom+xml, "
+                        "application/xml, text/xml, */*"
+                    ),
+                },
+            )
+
+            with urllib.request.urlopen(request, timeout=25) as response:
+                feed_data = response.read()
+
+            parsed = feedparser.parse(feed_data)
+
+            if getattr(parsed, "bozo", False) and not parsed.entries:
+                reason = getattr(parsed, "bozo_exception", "Unknown feed parsing error")
+                print(f"  ⚠️ Skipping broken feed: {feed_url}")
+                print(f"     Reason: {reason}")
+                continue
+
+            if not parsed.entries:
+                print(f"  ⚠️ No articles returned: {feed_url}")
+                continue
+
+            feed_title = parsed.feed.get("title", "Unknown Source")
+
+            for entry in parsed.entries[:20]:
+                try:
+                    title = clean_html(entry.get("title", "Untitled"))
+                    link = entry.get("link", "")
+                    description = entry.get(
+                        "summary",
+                        entry.get("description", "")
+                    )
+                    published = get_published(entry)
+
+                    if not title or not link:
+                        continue
+
+                    uid = article_id(title, link)
+                    if uid in seen:
+                        continue
+
+                    seen.add(uid)
+
+                    articles.append({
+                        "title": title,
+                        "link": link,
+                        "source": feed_title,
+                        "published": published,
+                        "summary": simple_summary(title, description),
+                        "topic": topic.get("name", "General"),
+                    })
+
+                except Exception as entry_error:
+                    print(
+                        f"  ⚠️ Skipping malformed article from {feed_url}: "
+                        f"{entry_error}"
+                    )
+                    continue
+
+        except HTTPError as e:
+            print(f"  ⚠️ Feed HTTP error, skipping: {feed_url}")
+            print(f"     HTTP {e.code}: {e.reason}")
+            continue
+
+        except URLError as e:
+            print(f"  ⚠️ Feed connection error, skipping: {feed_url}")
+            print(f"     Reason: {e.reason}")
+            continue
+
+        except RemoteDisconnected as e:
+            print(f"  ⚠️ Feed disconnected, skipping: {feed_url}")
+            print(f"     Reason: {e}")
+            continue
+
+        except TimeoutError:
+            print(f"  ⚠️ Feed timed out, skipping: {feed_url}")
+            continue
+
+        except Exception as e:
+            print(f"  ⚠️ Feed failed, skipping: {feed_url}")
+            print(f"     Reason: {type(e).__name__}: {e}")
+            continue
+
     articles.sort(key=lambda x: x["published"], reverse=True)
+    print(
+        f"  ✅ Collected {len(articles)} articles for "
+        f"{topic.get('name', 'General')}"
+    )
     return articles
 
 def format_time_ago(dt):
