@@ -379,7 +379,7 @@ body {
     <div class="site-subtitle">Entry zones · 6-month targets · action signals</div>
   </div>
   <div class="header-right">
-    <span class="refresh-badge">🔄 Sep 12, 2026 · 09:18 PM</span>
+    <span class="refresh-badge">🔄 Sep 12, 2026 · 09:19 PM</span>
   </div>
 </header>
 
@@ -392,546 +392,404 @@ body {
 
   <div id="stocks">
     <style>
-      .portfolio-watch{--pw-ink:#172033;--pw-muted:#667085;--pw-line:#e7eaf0;--pw-green:#087a55;--pw-green-bg:#e8f8f0;--pw-blue:#155eef;--pw-blue-bg:#edf4ff;--pw-purple:#6d4aff;--pw-purple-bg:#f3efff;--pw-amber:#9a5b00;--pw-amber-bg:#fff4df;--pw-red:#c4324f;--pw-red-bg:#fff0f2;--pw-slate:#475467;--pw-slate-bg:#f2f4f7;margin-bottom:36px;color:var(--pw-ink);font-family:'Source Sans 3',system-ui,sans-serif}
-      .portfolio-watch *{box-sizing:border-box}
-      .pw-hero{position:relative;overflow:hidden;border-radius:22px;padding:28px 30px;color:#fff;background:linear-gradient(135deg,#07111f 0%,#142846 55%,#263f70 100%);box-shadow:0 18px 45px rgba(15,23,42,.18);margin-bottom:14px}
-      .pw-hero:after{content:'';position:absolute;width:420px;height:420px;right:-160px;top:-245px;border-radius:50%;background:radial-gradient(circle,rgba(109,74,255,.46),rgba(109,74,255,0) 68%)}
-      .pw-kicker{font-size:12px;font-weight:850;text-transform:uppercase;letter-spacing:1.35px;color:#b8c7ff;margin-bottom:5px}
-      .pw-hero h2{font-family:'Playfair Display',Georgia,serif;font-size:31px;line-height:1.12;margin:0 0 7px;letter-spacing:-.5px}
-      .pw-hero p{max-width:790px;margin:0;color:#d0d8e8;font-size:14px;line-height:1.55}
-      .pw-hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px} .pw-hero-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.11);color:#eef2ff;font-size:12px;font-weight:700}
-      .pw-alert-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-      .pw-alert{border-radius:14px;padding:13px 15px;border:1px solid var(--pw-line);box-shadow:0 4px 15px rgba(15,23,42,.04)} .pw-alert strong{display:block;font-size:14px} .pw-alert span{display:block;font-size:12px;margin-top:2px}
-      .pw-alert-hot{background:linear-gradient(135deg,#fff0eb,#fff7e8);border-color:#ffc7a8} .pw-alert-near{background:var(--pw-blue-bg);border-color:#c9dcff}
-      .pw-cheat{background:#fff;border:1px solid var(--pw-line);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 5px 20px rgba(15,23,42,.04)}
-      .pw-cheat-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:10px} .pw-cheat-head h3{margin:0;font-size:16px} .pw-cheat-head span{font-size:11px;color:var(--pw-muted)}
-      .pw-cheat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px} .pw-cheat-item{border-radius:11px;padding:10px 11px;min-height:76px;border:1px solid #edf0f4;background:#fafbfc}
-      .pw-cheat-item b{display:block;font-size:11px;letter-spacing:.25px;margin-bottom:3px} .pw-cheat-item span{display:block;color:#556176;font-size:11px;line-height:1.32}
-      .pw-cheat-item:nth-child(4n+1){background:var(--pw-purple-bg)} .pw-cheat-item:nth-child(4n+2){background:var(--pw-blue-bg)} .pw-cheat-item:nth-child(4n+3){background:var(--pw-green-bg)} .pw-cheat-item:nth-child(4n){background:var(--pw-amber-bg)}
-      .pw-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 18px} .pw-summary-card{background:#fff;border:1px solid var(--pw-line);border-radius:14px;padding:13px 15px;box-shadow:0 4px 15px rgba(15,23,42,.035)} .pw-summary-card span{display:block;color:var(--pw-muted);font-size:10px;text-transform:uppercase;letter-spacing:.55px;font-weight:800} .pw-summary-card strong{display:block;margin-top:2px;font-size:21px} .pw-summary-card small{display:block;color:var(--pw-muted);font-size:10.5px;margin-top:2px}
-      .pw-category{background:#fff;border:1px solid var(--pw-line);border-radius:18px;margin-bottom:18px;overflow:hidden;box-shadow:0 5px 20px rgba(15,23,42,.04)} .pw-category-head{display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:20px;align-items:center;padding:19px 20px 17px;border-bottom:1px solid var(--pw-line)} .pw-category-title-wrap{display:flex;gap:12px;align-items:flex-start} .pw-category-icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:19px;flex:0 0 auto;background:#f5f7fb} .pw-category h3{margin:0 0 4px;font-family:'Playfair Display',Georgia,serif;font-size:19px} .pw-category-head p{margin:0;color:var(--pw-muted);font-size:12px;line-height:1.45;max-width:700px}
-      .pw-tone-purple .pw-category-icon{background:var(--pw-purple-bg)} .pw-tone-blue .pw-category-icon{background:var(--pw-blue-bg)} .pw-tone-green .pw-category-icon{background:var(--pw-green-bg)} .pw-tone-amber .pw-category-icon{background:var(--pw-amber-bg)} .pw-tone-rose .pw-category-icon{background:var(--pw-red-bg)}
-      .pw-health-card{border-left:1px solid var(--pw-line);padding-left:18px} .pw-health-label{display:inline-flex;padding:4px 9px;border-radius:999px;font-size:10px;font-weight:850;text-transform:uppercase;margin-bottom:8px} .pw-health-strong,.pw-health-healthy{color:var(--pw-green);background:var(--pw-green-bg)} .pw-health-mixed{color:var(--pw-amber);background:var(--pw-amber-bg)} .pw-health-caution{color:var(--pw-red);background:var(--pw-red-bg)} .pw-health-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px} .pw-health-grid span{display:block;color:var(--pw-muted);font-size:9px;text-transform:uppercase;font-weight:800} .pw-health-grid strong{display:block;margin-top:1px;font-size:12px;white-space:nowrap}
-      .pw-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0} .pw-card{padding:12px 14px 16px;min-width:0;border-right:1px solid var(--pw-line);border-bottom:1px solid var(--pw-line);background:#fff;transition:.15s} .pw-card:nth-child(3n){border-right:none} .pw-card-in-zone{background:linear-gradient(180deg,#fff8ee 0,#fff 32%)} .pw-card-near-zone{background:linear-gradient(180deg,#f2f7ff 0,#fff 30%)}
-      .pw-action{display:flex;gap:8px;align-items:center;border-radius:10px;padding:8px 9px;margin-bottom:10px;border:1px solid transparent} .pw-action-fire{font-size:19px;line-height:1} .pw-action strong{display:block;font-size:11px;letter-spacing:.35px} .pw-action small{display:block;margin-top:1px;font-size:9.5px;line-height:1.25;color:#556176} .pw-action-in-zone{background:linear-gradient(90deg,#fff1df,#fff8e8);border-color:#ffba75;box-shadow:0 0 0 2px rgba(255,132,0,.07)} .pw-action-in-zone strong{color:#a23d00;font-size:12px} .pw-action-near-zone{background:var(--pw-blue-bg);border-color:#bdd3ff} .pw-action-near-zone strong{color:var(--pw-blue)} .pw-action-below-zone{background:var(--pw-red-bg);border-color:#ffd1d9} .pw-action-wait{background:var(--pw-slate-bg);border-color:#e4e7ec} .pw-action-no-data{background:var(--pw-amber-bg)}
-      .pw-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;min-height:43px} .pw-symbol-row{display:flex;align-items:center;gap:6px} .pw-symbol{font-size:17px;font-weight:900} .pw-role{font-size:8.8px;color:var(--pw-muted);background:#f6f7f9;padding:3px 5px;border-radius:6px;font-weight:750;white-space:nowrap} .pw-company{margin-top:2px;color:var(--pw-muted);font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px} .pw-status{flex:0 0 auto;font-size:8.8px;font-weight:900;border-radius:999px;padding:5px 7px;white-space:nowrap} .pw-status-in-zone{color:#9b3d00;background:#fff0d9} .pw-status-near-zone{color:var(--pw-blue);background:var(--pw-blue-bg)} .pw-status-wait{color:var(--pw-slate);background:var(--pw-slate-bg)} .pw-status-below-zone{color:var(--pw-red);background:var(--pw-red-bg)} .pw-status-no-data{color:var(--pw-amber);background:var(--pw-amber-bg)}
-      .pw-price-row{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin:10px 0 7px} .pw-price{font-size:22px;font-weight:900;line-height:1} .pw-change{margin-top:4px;color:var(--pw-muted);font-size:10px} .pw-up{color:var(--pw-green)!important;font-weight:800} .pw-down{color:var(--pw-red)!important;font-weight:800} .pw-muted{color:var(--pw-muted)} .pw-zone-box{text-align:right;padding:6px 8px;background:#f8fafc;border:1px solid #edf0f4;border-radius:9px} .pw-zone-label{font-size:7.8px;color:var(--pw-muted);font-weight:850;letter-spacing:.45px} .pw-zone-value{font-size:13px;font-weight:850;margin-top:1px} .pw-zone-detail{font-size:10px;color:var(--pw-muted);padding:6px 8px;border-radius:8px;background:#fbfcfe;border:1px solid #f0f2f5}
-      .pw-mini-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:9px 0 10px} .pw-mini-metrics span{display:block;color:var(--pw-muted);font-size:8px;text-transform:uppercase;font-weight:800} .pw-mini-metrics strong{display:block;margin-top:1px;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .pw-mini-metrics small{color:var(--pw-muted);font-size:8px} .pw-why-title{padding-top:9px;border-top:1px solid #f0f2f5;font-size:9px;font-weight:900;text-transform:uppercase;color:#344054} .pw-reasons{margin:6px 0 0 15px;padding:0;color:#475467;font-size:10.5px;line-height:1.38} .pw-reasons li{margin:2px 0}
-      .pw-foot{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;padding:12px 3px 0;color:var(--pw-muted);font-size:10px;line-height:1.45} .pw-foot strong{color:#475467}
-      @media(max-width:1050px){.pw-category-head{grid-template-columns:1fr}.pw-health-card{border-left:none;padding-left:50px}.pw-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pw-card:nth-child(3n){border-right:1px solid var(--pw-line)}.pw-card:nth-child(2n){border-right:none}.pw-cheat-grid{grid-template-columns:repeat(2,1fr)}}
-      @media(max-width:720px){.pw-hero{padding:22px 18px;border-radius:16px}.pw-hero h2{font-size:25px}.pw-alert-strip,.pw-summary{grid-template-columns:repeat(2,1fr)}.pw-cheat{padding:13px}.pw-cheat-head{align-items:flex-start;flex-direction:column;gap:3px}.pw-cheat-grid{grid-template-columns:repeat(2,1fr);gap:6px}.pw-cheat-item{padding:8px;min-height:70px}.pw-category-head{padding:14px}.pw-health-card{padding-left:0}.pw-health-grid{grid-template-columns:repeat(2,1fr)}.pw-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pw-card{padding:10px}.pw-card,.pw-card:nth-child(2n),.pw-card:nth-child(3n){border-right:1px solid var(--pw-line)}.pw-card:nth-child(2n){border-right:none}.pw-action{padding:7px 6px;gap:5px}.pw-action-fire{font-size:15px}.pw-action small{font-size:8px}.pw-symbol{font-size:15px}.pw-role{display:none}.pw-company{max-width:105px}.pw-status{font-size:7.4px;padding:4px 5px}.pw-price{font-size:18px}.pw-zone-box{padding:5px}.pw-zone-label{font-size:6.5px}.pw-zone-value{font-size:10.5px}.pw-mini-metrics{gap:3px}.pw-reasons{font-size:9.5px;margin-left:13px}.pw-foot{flex-direction:column;gap:6px}}
+      .portfolio-watch{--pw-ink:#172033;--pw-muted:#667085;--pw-line:#e7eaf0;--pw-green:#0f8a5f;--pw-green-bg:#e8f8f1;--pw-blue:#2563eb;--pw-blue-bg:#edf4ff;--pw-red:#c24157;--pw-red-bg:#fff0f2;--pw-amber:#9a5a00;--pw-amber-bg:#fff4df;--pw-slate:#475467;--pw-slate-bg:#f2f4f7;color:var(--pw-ink);font-family:'Source Sans 3',system-ui,sans-serif}
+      .portfolio-watch *{box-sizing:border-box} .pw-hero{border-radius:22px;padding:26px;color:white;background:linear-gradient(135deg,#07111f,#172a46 55%,#273f69);box-shadow:0 18px 45px rgba(15,23,42,.16);margin-bottom:14px}
+      .pw-kicker{font-size:11px;font-weight:850;letter-spacing:1.2px;text-transform:uppercase;color:#b8c6ff} .pw-hero h2{font-family:'Playfair Display',Georgia,serif;font-size:30px;margin:3px 0 6px} .pw-hero p{color:#d5deeb;font-size:13px;max-width:850px}
+      .pw-alerts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0} .pw-alert{border-radius:13px;padding:12px 14px;font-size:12px;font-weight:700} .pw-alert.hot{background:#fff0ec;border:1px solid #ffd2c8;color:#a6341f} .pw-alert.near{background:#edf4ff;border:1px solid #cfe0ff;color:#2459a9}
+      .pw-rules{background:#fff;border:1px solid var(--pw-line);border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 4px 18px rgba(15,23,42,.04)} .pw-rules h3{margin:0 0 10px;font-size:16px} .pw-rule-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px} .pw-rule{padding:10px;border-radius:10px;background:#f8fafc;border:1px solid #eef1f5;font-size:11.5px;line-height:1.4} .pw-rule strong{display:block;color:#243247;margin-bottom:2px}
+      .pw-cheat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:18px} .pw-cheat div{background:#fff;border:1px solid var(--pw-line);border-radius:10px;padding:9px 10px;font-size:11px} .pw-cheat b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#344054}
+      .pw-category{background:#fff;border:1px solid var(--pw-line);border-radius:18px;margin-bottom:18px;overflow:hidden;box-shadow:0 5px 20px rgba(15,23,42,.04)} .pw-category-head{padding:16px 18px;border-bottom:1px solid var(--pw-line)} .pw-category-title-wrap{display:flex;gap:10px} .pw-category-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:#f4f6fa;font-size:18px} .pw-category h3{margin:0 0 3px;font-family:'Playfair Display',Georgia,serif;font-size:18px} .pw-category p{margin:0;color:var(--pw-muted);font-size:11.5px}
+      .pw-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))} .pw-card{padding:15px;border-right:1px solid var(--pw-line);border-bottom:1px solid var(--pw-line);min-width:0} .pw-card:nth-child(3n){border-right:none} .pw-card-in-zone{background:linear-gradient(180deg,#fff7f3,#fff)} .pw-card-near-zone{background:linear-gradient(180deg,#f4f8ff,#fff)}
+      .pw-card-top{display:flex;justify-content:space-between;gap:8px} .pw-symbol-row{display:flex;align-items:center;gap:6px} .pw-symbol{font-size:17px;font-weight:850} .pw-role{font-size:9px;background:#f2f4f7;color:#667085;border-radius:6px;padding:3px 5px} .pw-company{font-size:10.5px;color:var(--pw-muted);max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .pw-status{font-size:9px;font-weight:900;padding:5px 7px;border-radius:999px;white-space:nowrap} .pw-status-in-zone{color:#9f2d18;background:#ffe5dd;box-shadow:0 0 0 2px rgba(255,94,53,.08)} .pw-status-near-zone{color:#2459a9;background:#e6efff} .pw-status-wait{color:var(--pw-slate);background:var(--pw-slate-bg)} .pw-status-below-zone{color:var(--pw-red);background:var(--pw-red-bg)} .pw-status-no-data{color:var(--pw-amber);background:var(--pw-amber-bg)}
+      .pw-price-row{display:flex;justify-content:space-between;align-items:end;gap:9px;margin:12px 0 8px} .pw-price{font-size:23px;font-weight:850} .pw-change{font-size:10.5px;color:var(--pw-muted)} .pw-up{color:var(--pw-green)!important;font-weight:750} .pw-down{color:var(--pw-red)!important;font-weight:750} .pw-zone-box{text-align:right;background:#f8fafc;border:1px solid #edf0f4;border-radius:9px;padding:7px 9px} .pw-zone-label{font-size:8px;color:var(--pw-muted);font-weight:850;letter-spacing:.5px} .pw-zone-value{font-size:13px;font-weight:850}
+      .pw-action-line{font-size:10.5px;color:#475467;background:#fbfcfe;border:1px solid #f0f2f5;border-radius:8px;padding:7px 8px} .pw-target-box{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:9px 0;background:#0f172a;color:#fff;border-radius:10px;padding:9px} .pw-target-box span{display:block;font-size:8px;color:#aab4c5;font-weight:800;letter-spacing:.45px} .pw-target-box strong{display:block;font-size:14px;margin-top:1px}
+      .pw-mini-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0} .pw-mini-metrics span{display:block;font-size:8px;color:var(--pw-muted);text-transform:uppercase;font-weight:800} .pw-mini-metrics strong{display:block;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .pw-mini-metrics small{color:var(--pw-muted);font-size:8px} .pw-why-title{border-top:1px solid #f0f2f5;padding-top:9px;font-size:9px;font-weight:850;text-transform:uppercase} .pw-reasons{margin:6px 0 0 15px;padding:0;font-size:10.5px;line-height:1.4;color:#475467}
+      .pw-foot{font-size:10px;color:var(--pw-muted);padding:4px 2px 0;line-height:1.45}
+      @media(max-width:1050px){.pw-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pw-card:nth-child(3n){border-right:1px solid var(--pw-line)}.pw-card:nth-child(2n){border-right:none}}
+      @media(max-width:720px){.pw-hero{padding:20px 16px;border-radius:16px}.pw-hero h2{font-size:24px}.pw-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pw-card{padding:11px}.pw-symbol{font-size:15px}.pw-role{display:none}.pw-status{font-size:7.5px;padding:4px 5px}.pw-price{font-size:19px}.pw-zone-value{font-size:11px}.pw-target-box strong{font-size:12px}.pw-rule-grid,.pw-cheat,.pw-alerts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:430px){.pw-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pw-company{max-width:105px}.pw-mini-metrics{grid-template-columns:1fr 1fr}.pw-mini-metrics div:last-child{grid-column:1/-1}}
     </style>
-
     <section class="portfolio-watch" id="stocks">
-      <div class="pw-hero">
-        <div class="pw-kicker">Personal market dashboard</div>
-        <h2>Chai's Entry-Zone Watchlist</h2>
-        <p>Fast, action-first view of your predefined entry ranges. Bright fire signals mean price has reached or is approaching a range you already set; they are not a guarantee that the stock will rise.</p>
-        <div class="pw-hero-meta"><span class="pw-hero-chip">17 stocks</span><span class="pw-hero-chip">5 focused buckets</span><span class="pw-hero-chip">33% tranche framework</span><span class="pw-hero-chip">Live Yahoo Finance inputs</span></div>
-      </div>
-
-      <div class="pw-alert-strip">
-        <div class="pw-alert pw-alert-hot"><strong>🔥🔥 ENTRY ZONE HIT</strong><span>None right now · predefined range active</span></div>
-        <div class="pw-alert pw-alert-near"><strong>🔥 NEAR ENTRY</strong><span>NVDA, GOOGL, AMZN, V, MA, DAL · within 3% above your range</span></div>
-      </div>
-
+      <div class="pw-hero"><div class="pw-kicker">Stocks only · action first</div><h2>Chai's Stock Command Center</h2><p>Entry zones, live prices, six-month planning targets and simple action signals in one compact view.</p></div>
+      <div class="pw-alerts"><div class="pw-alert hot">🔥🔥 ENTRY ZONE HIT: None right now</div><div class="pw-alert near">🔥 NEAR ENTRY: NVDA, GOOGL, AMZN, V, MA, DAL</div></div>
+      <div class="pw-rules"><h3>How an entry signal is defined</h3><div class="pw-rule-grid">
+        <div class="pw-rule"><strong>🔥🔥 Entry Zone Hit</strong>Current price is inside the defined buy zone. This is the strongest price-based action signal.</div>
+        <div class="pw-rule"><strong>🔥 Near Entry</strong>Current price is no more than 3% above the zone ceiling. Watch closely rather than chase.</div>
+        <div class="pw-rule"><strong>⏳ Wait</strong>Price is more than 3% above the zone. Wait for a pullback instead of buying extended.</div>
+        <div class="pw-rule"><strong>⚠️ Below Range</strong>Price has fallen below the zone floor. Treat this as a thesis/news recheck, not an automatic bargain.</div>
+        <div class="pw-rule"><strong>33% Tranche Rule</strong>When you choose to act, deploy in thirds rather than all at once: roughly 33% / 33% / 33%.</div>
+        <div class="pw-rule"><strong>ORCL / PSTG Rule</strong>Their zones are derived from the nearest useful 50-day or 200-day moving-average support, ±1.5% around that support.</div>
+      </div></div>
       <div class="pw-cheat">
-        <div class="pw-cheat-head"><h3>📌 Quick Cheat Sheet — plain English</h3><span>Keep this at the top so every signal is instantly understandable.</span></div>
-        <div class="pw-cheat-grid">
-          <div class="pw-cheat-item"><b>ENTRY ZONE</b><span>Your planned price range for starting a position.</span></div>
-          <div class="pw-cheat-item"><b>TRANCHE</b><span>One piece of the buy. Your framework uses roughly 33% at a time.</span></div>
-          <div class="pw-cheat-item"><b>MA50</b><span>Average closing price over 50 trading days — a medium-term trend guide.</span></div>
-          <div class="pw-cheat-item"><b>MA200</b><span>Average closing price over 200 trading days — a long-term trend/support guide.</span></div>
-          <div class="pw-cheat-item"><b>ROE</b><span>Return on equity — how efficiently a company turns shareholder capital into profit.</span></div>
-          <div class="pw-cheat-item"><b>UPSIDE</b><span>How far the analyst target sits above today's price. It is an estimate, not a promise.</span></div>
-          <div class="pw-cheat-item"><b>WATCHLIST SCORE</b><span>Combined model health score. Higher means the underlying signals look stronger.</span></div>
-          <div class="pw-cheat-item"><b>SUPPORT</b><span>A price area where buyers have historically stepped in and declines may slow.</span></div>
-        </div>
+        <div><b>MA50</b>Average price over the last 50 trading days — short/medium-term trend support.</div><div><b>MA200</b>Average price over the last 200 trading days — long-term trend support.</div>
+        <div><b>Entry Zone</b>The price band where the risk/reward becomes attractive enough to consider a tranche.</div><div><b>6M Target</b>Current analyst mean price target used here as a practical six-month planning proxy.</div>
+        <div><b>Upside</b>Percent gain from today's price to the six-month target.</div><div><b>Watchlist Score</b>Composite quality/valuation/growth/technical score from the stock-health model.</div>
       </div>
-
-      <div class="pw-summary">
-        <div class="pw-summary-card"><span>🔥 Entry zone hit</span><strong>0</strong><small>Your range is active</small></div>
-        <div class="pw-summary-card"><span>🔥 Near zone</span><strong>6</strong><small>Within 3% above ceiling</small></div>
-        <div class="pw-summary-card"><span>⏳ Wait</span><strong>10</strong><small>Still above target</small></div>
-        <div class="pw-summary-card"><span>⚠️ Below zone</span><strong>1</strong><small>Recheck thesis/news first</small></div>
-      </div>
-
       
         <section class="pw-category pw-tone-purple">
-          <div class="pw-category-head">
-            <div class="pw-category-title-wrap"><div class="pw-category-icon">⚡</div><div><h3>AI Compute &amp; Semis</h3><p>AI infrastructure demand is the secular driver. Peer participation matters: strength across memory, accelerators and networking is healthier than a one-stock move.</p></div></div>
-            <div class="pw-health-card"><span class="pw-health-label pw-health-strong">Strong</span><div class="pw-health-grid">
-              <div><span>Group score</span><strong>88.2</strong></div><div><span>Today</span><strong class="pw-up">+0.02%</strong></div>
-              <div><span>Leader</span><strong>AVGO +0.32%</strong></div><div><span>In / near zone</span><strong>1/3</strong></div>
-            </div></div>
-          </div><div class="pw-card-grid">
+          <div class="pw-category-head"><div class="pw-category-title-wrap"><div class="pw-category-icon">⚡</div><div><h3>AI Compute &amp; Semis</h3><p>AI infrastructure leaders. Best entries usually come on pullbacks toward support, not after vertical moves.</p></div></div></div>
+          <div class="pw-card-grid">
     <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">MU</span><span class="pw-role">High priority</span></div>
-          <div class="pw-company">Micron Technology, Inc.</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">MU</span><span class="pw-role">High priority</span></div><div class="pw-company">Micron Technology, Inc.</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$975.26</div><div class="pw-change"><span class="pw-down">▼ 0.22%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$935–$945</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$935–$945</div></div>
       </div>
-      <div class="pw-zone-detail">3.2% above target ceiling</div>
+      <div class="pw-action-line">3.2% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$1,512.63</strong></div><div><span>UPSIDE TO TARGET</span><strong>+55.1%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>91.6 <small>A</small></strong></div>
+        <div><span>Watchlist score</span><strong>91.6 <small>A</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+55.1%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>HBM and AI-memory demand</li><li>Memory pricing and mix leverage</li><li>High upside potential, but cyclical</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>HBM and AI-memory demand</li><li>Memory pricing leverage</li><li>Higher cyclicality = stricter entry discipline</li></ul>
     </article>
     <article class="pw-card pw-card-near-zone">
-      <div class="pw-action pw-action-near-zone">
-        <span class="pw-action-fire">🔥</span>
-        <div><strong>NEAR ENTRY</strong><small>Within 3% of your range · keep this at the top of the watchlist</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">NVDA</span><span class="pw-role">High priority</span></div>
-          <div class="pw-company">NVIDIA Corporation</div>
-        </div>
-        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">NVDA</span><span class="pw-role">High priority</span></div><div class="pw-company">NVIDIA Corporation</div></div>
+        <span class="pw-status pw-status-near-zone">🔥 NEAR ENTRY</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$218.29</div><div class="pw-change"><span class="pw-down">▼ 0.03%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$205–$212</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$205–$212</div></div>
       </div>
-      <div class="pw-zone-detail">3.0% above target ceiling</div>
+      <div class="pw-action-line">Only 3.0% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$327.22</strong></div><div><span>UPSIDE TO TARGET</span><strong>+49.9%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>89.7 <small>A</small></strong></div>
+        <div><span>Watchlist score</span><strong>89.7 <small>A</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+49.9%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>AI accelerator leadership</li><li>CUDA + software ecosystem moat</li><li>Hyperscaler AI capex remains key demand driver</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>AI accelerator leadership</li><li>CUDA ecosystem moat</li><li>Hyperscaler AI capex remains the demand engine</li></ul>
     </article>
     <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">AVGO</span><span class="pw-role">High priority</span></div>
-          <div class="pw-company">Broadcom Inc.</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">AVGO</span><span class="pw-role">High priority</span></div><div class="pw-company">Broadcom Inc.</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$361.99</div><div class="pw-change"><span class="pw-up">▲ 0.32%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$340–$350</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$340–$350</div></div>
       </div>
-      <div class="pw-zone-detail">3.4% above target ceiling</div>
+      <div class="pw-action-line">3.4% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$531.76</strong></div><div><span>UPSIDE TO TARGET</span><strong>+46.9%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>83.4 <small>A</small></strong></div>
+        <div><span>Watchlist score</span><strong>83.4 <small>A</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+46.9%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>AI networking + custom silicon exposure</li><li>VMware adds recurring software cash flow</li><li>Strong free-cash-flow profile</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>AI networking + custom silicon</li><li>VMware recurring software cash flow</li><li>Strong free-cash-flow profile</li></ul>
     </article></div>
         </section>
         <section class="pw-category pw-tone-blue">
-          <div class="pw-category-head">
-            <div class="pw-category-title-wrap"><div class="pw-category-icon">☁️</div><div><h3>Mega-cap Platforms</h3><p>Cloud, ads, AI distribution and ecosystem cash flows. The bucket is strongest when several platforms participate instead of one name carrying the group.</p></div></div>
-            <div class="pw-health-card"><span class="pw-health-label pw-health-healthy">Healthy</span><div class="pw-health-grid">
-              <div><span>Group score</span><strong>75.0</strong></div><div><span>Today</span><strong class="pw-up">+1.34%</strong></div>
-              <div><span>Leader</span><strong>AMZN +1.94%</strong></div><div><span>In / near zone</span><strong>2/5</strong></div>
-            </div></div>
-          </div><div class="pw-card-grid">
+          <div class="pw-category-head"><div class="pw-category-title-wrap"><div class="pw-category-icon">☁️</div><div><h3>Mega-cap Platforms</h3><p>Cloud, AI distribution and durable cash-flow platforms. Oracle is included here for cloud and database AI exposure.</p></div></div></div>
+          <div class="pw-card-grid">
     <article class="pw-card pw-card-near-zone">
-      <div class="pw-action pw-action-near-zone">
-        <span class="pw-action-fire">🔥</span>
-        <div><strong>NEAR ENTRY</strong><small>Within 3% of your range · keep this at the top of the watchlist</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">GOOGL</span><span class="pw-role">High priority</span></div>
-          <div class="pw-company">Alphabet Inc.</div>
-        </div>
-        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">GOOGL</span><span class="pw-role">High priority</span></div><div class="pw-company">Alphabet Inc.</div></div>
+        <span class="pw-status pw-status-near-zone">🔥 NEAR ENTRY</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$338.50</div><div class="pw-change"><span class="pw-up">▲ 1.77%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$325–$335</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$325–$335</div></div>
       </div>
-      <div class="pw-zone-detail">1.0% above target ceiling</div>
+      <div class="pw-action-line">Only 1.0% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$428.20</strong></div><div><span>UPSIDE TO TARGET</span><strong>+26.5%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>83.2 <small>A</small></strong></div>
+        <div><span>Watchlist score</span><strong>83.2 <small>A</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+26.5%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Search + YouTube cash engine</li><li>Cloud and AI growth optionality</li><li>Mega-cap quality with valuation support</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Search + YouTube cash engine</li><li>Cloud and AI growth optionality</li><li>Mega-cap quality</li></ul>
     </article>
     <article class="pw-card pw-card-near-zone">
-      <div class="pw-action pw-action-near-zone">
-        <span class="pw-action-fire">🔥</span>
-        <div><strong>NEAR ENTRY</strong><small>Within 3% of your range · keep this at the top of the watchlist</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">AMZN</span><span class="pw-role">High priority</span></div>
-          <div class="pw-company">Amazon.com, Inc.</div>
-        </div>
-        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">AMZN</span><span class="pw-role">High priority</span></div><div class="pw-company">Amazon.com, Inc.</div></div>
+        <span class="pw-status pw-status-near-zone">🔥 NEAR ENTRY</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$256.78</div><div class="pw-change"><span class="pw-up">▲ 1.94%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$248–$254</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$248–$254</div></div>
       </div>
-      <div class="pw-zone-detail">1.1% above target ceiling</div>
+      <div class="pw-action-line">Only 1.1% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$328.16</strong></div><div><span>UPSIDE TO TARGET</span><strong>+27.8%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>77.2 <small>B</small></strong></div>
+        <div><span>Watchlist score</span><strong>77.2 <small>B</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+27.8%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>AWS cloud + AI demand</li><li>Retail margin expansion</li><li>Advertising is a high-margin growth engine</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>AWS cloud + AI demand</li><li>Retail margin expansion</li><li>Advertising is a high-margin engine</li></ul>
     </article>
     <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">MSFT</span><span class="pw-role">Core compounder</span></div>
-          <div class="pw-company">Microsoft Corporation</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">MSFT</span><span class="pw-role">Core compounder</span></div><div class="pw-company">Microsoft Corporation</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$495.63</div><div class="pw-change"><span class="pw-up">▲ 0.65%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$440–$450</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$440–$450</div></div>
       </div>
-      <div class="pw-zone-detail">10.1% above target ceiling</div>
+      <div class="pw-action-line">10.1% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$572.95</strong></div><div><span>UPSIDE TO TARGET</span><strong>+15.6%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>75.6 <small>B</small></strong></div>
+        <div><span>Watchlist score</span><strong>75.6 <small>B</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+15.6%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Azure + enterprise AI distribution</li><li>Durable recurring software revenue</li><li>Balance-sheet and cash-flow quality</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Azure + enterprise AI distribution</li><li>Recurring software revenue</li><li>Balance-sheet quality</li></ul>
     </article>
     <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">META</span><span class="pw-role">Core compounder</span></div>
-          <div class="pw-company">Meta Platforms, Inc.</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">META</span><span class="pw-role">Core compounder</span></div><div class="pw-company">Meta Platforms, Inc.</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$648.03</div><div class="pw-change"><span class="pw-up">▲ 0.57%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$585–$595</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$585–$595</div></div>
       </div>
-      <div class="pw-zone-detail">8.9% above target ceiling</div>
+      <div class="pw-action-line">8.9% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$757.55</strong></div><div><span>UPSIDE TO TARGET</span><strong>+16.9%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>69.7 <small>B</small></strong></div>
+        <div><span>Watchlist score</span><strong>69.7 <small>B</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+16.9%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>AI improves ad targeting and efficiency</li><li>Large engagement + monetization base</li><li>Strong cash generation and capital returns</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>AI improves ad efficiency</li><li>Large engagement base</li><li>Strong cash generation</li></ul>
     </article>
     <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">AAPL</span><span class="pw-role">Core compounder</span></div>
-          <div class="pw-company">Apple Inc.</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">AAPL</span><span class="pw-role">Core compounder</span></div><div class="pw-company">Apple Inc.</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$332.27</div><div class="pw-change"><span class="pw-up">▲ 1.75%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$305–$315</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$305–$315</div></div>
       </div>
-      <div class="pw-zone-detail">5.5% above target ceiling</div>
+      <div class="pw-action-line">5.5% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$324.30</strong></div><div><span>UPSIDE TO TARGET</span><strong>+-2.4%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>69.1 <small>B</small></strong></div>
+        <div><span>Watchlist score</span><strong>69.1 <small>B</small></strong></div>
         <div><span>Analyst</span><strong>Buy</strong></div>
-        <div><span>Upside</span><strong>+-2.4%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Sticky device + services ecosystem</li><li>Huge installed base</li><li>Capital returns provide support</li></ul>
-    </article></div>
-        </section>
-        <section class="pw-category pw-tone-green">
-          <div class="pw-category-head">
-            <div class="pw-category-title-wrap"><div class="pw-category-icon">💳</div><div><h3>Payments &amp; Data Moats</h3><p>High-quality transaction and data toll roads. Watch spending, cross-border activity and capital-markets volume for confirmation.</p></div></div>
-            <div class="pw-health-card"><span class="pw-health-label pw-health-healthy">Healthy</span><div class="pw-health-grid">
-              <div><span>Group score</span><strong>75.5</strong></div><div><span>Today</span><strong class="pw-up">+0.54%</strong></div>
-              <div><span>Leader</span><strong>V +0.88%</strong></div><div><span>In / near zone</span><strong>2/3</strong></div>
-            </div></div>
-          </div><div class="pw-card-grid">
-    <article class="pw-card pw-card-near-zone">
-      <div class="pw-action pw-action-near-zone">
-        <span class="pw-action-fire">🔥</span>
-        <div><strong>NEAR ENTRY</strong><small>Within 3% of your range · keep this at the top of the watchlist</small></div>
-      </div>
-      <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">V</span><span class="pw-role">Core compounder</span></div>
-          <div class="pw-company">Visa Inc.</div>
-        </div>
-        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
-      </div>
-      <div class="pw-price-row">
-        <div><div class="pw-price">$370.45</div><div class="pw-change"><span class="pw-up">▲ 0.88%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$355–$363</div></div>
-      </div>
-      <div class="pw-zone-detail">2.1% above target ceiling</div>
-      <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>78.4 <small>B</small></strong></div>
-        <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+13.2%</strong></div>
-      </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Secular shift to digital payments</li><li>High-margin global network</li><li>Cross-border volume is a strong tailwind</li></ul>
-    </article>
-    <article class="pw-card pw-card-near-zone">
-      <div class="pw-action pw-action-near-zone">
-        <span class="pw-action-fire">🔥</span>
-        <div><strong>NEAR ENTRY</strong><small>Within 3% of your range · keep this at the top of the watchlist</small></div>
-      </div>
-      <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">MA</span><span class="pw-role">Core compounder</span></div>
-          <div class="pw-company">Mastercard Incorporated</div>
-        </div>
-        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
-      </div>
-      <div class="pw-price-row">
-        <div><div class="pw-price">$569.19</div><div class="pw-change"><span class="pw-up">▲ 0.68%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$550–$558</div></div>
-      </div>
-      <div class="pw-zone-detail">2.0% above target ceiling</div>
-      <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>77.8 <small>B</small></strong></div>
-        <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+17.5%</strong></div>
-      </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Global payments network moat</li><li>Strong cross-border economics</li><li>Asset-light compounding model</li></ul>
-    </article>
-    <article class="pw-card pw-card-below-zone">
-      <div class="pw-action pw-action-below-zone">
-        <span class="pw-action-fire">⚠️</span>
-        <div><strong>BELOW RANGE</strong><small>Cheaper than planned · pause and recheck thesis/news before acting</small></div>
-      </div>
-      <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">SPGI</span><span class="pw-role">Data moat</span></div>
-          <div class="pw-company">S&amp;P Global Inc.</div>
-        </div>
-        <span class="pw-status pw-status-below-zone">BELOW ZONE · CHECK</span>
-      </div>
-      <div class="pw-price-row">
-        <div><div class="pw-price">$410.71</div><div class="pw-change"><span class="pw-up">▲ 0.07%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$415–$425</div></div>
-      </div>
-      <div class="pw-zone-detail">1.0% below zone floor · recheck thesis/news</div>
-      <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>70.3 <small>B</small></strong></div>
-        <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+26.7%</strong></div>
-      </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Ratings + indices + market data moat</li><li>Recurring, high-value information products</li><li>Capital-markets recovery can add upside</li></ul>
-    </article></div>
-        </section>
-        <section class="pw-category pw-tone-amber">
-          <div class="pw-category-head">
-            <div class="pw-category-title-wrap"><div class="pw-category-icon">🧠</div><div><h3>AI Software Turnarounds</h3><p>A higher-variance recovery bucket. Better setups require improving growth, durable free cash flow and evidence that AI products are monetizing—not just good narratives.</p></div></div>
-            <div class="pw-health-card"><span class="pw-health-label pw-health-mixed">Mixed</span><div class="pw-health-grid">
-              <div><span>Group score</span><strong>68.9</strong></div><div><span>Today</span><strong class="pw-up">+0.68%</strong></div>
-              <div><span>Leader</span><strong>CRM +1.94%</strong></div><div><span>In / near zone</span><strong>0/3</strong></div>
-            </div></div>
-          </div><div class="pw-card-grid">
-    <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
-      <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">CRM</span><span class="pw-role">Turnaround</span></div>
-          <div class="pw-company">Salesforce, Inc.</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
-      </div>
-      <div class="pw-price-row">
-        <div><div class="pw-price">$247.72</div><div class="pw-change"><span class="pw-up">▲ 1.94%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$220–$230</div></div>
-      </div>
-      <div class="pw-zone-detail">7.7% above target ceiling</div>
-      <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>72.9 <small>B</small></strong></div>
-        <div><span>Analyst</span><strong>Buy</strong></div>
-        <div><span>Upside</span><strong>+10.4%</strong></div>
-      </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Large enterprise installed base</li><li>Margin and free-cash-flow improvement</li><li>AI monetization is the key upside test</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Sticky device + services ecosystem</li><li>Huge installed base</li><li>Capital returns provide support</li></ul>
     </article>
     <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">SNOW</span><span class="pw-role">Turnaround</span></div>
-          <div class="pw-company">Snowflake Inc.</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">ORCL</span><span class="pw-role">Cloud compounder</span></div><div class="pw-company">Oracle Corporation</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
+      </div>
+      <div class="pw-price-row">
+        <div><div class="pw-price">$150.28</div><div class="pw-change"><span class="pw-down">▼ 1.74%</span> today</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$139–$143</div></div>
+      </div>
+      <div class="pw-action-line">5.2% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$241.35</strong></div><div><span>UPSIDE TO TARGET</span><strong>+60.6%</strong></div></div>
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>64.9 <small>C</small></strong></div>
+        <div><span>Analyst</span><strong>Buy</strong></div>
+        <div><span>Entry basis</span><strong>MA support-derived zone</strong></div>
+      </div>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>OCI + database cloud exposure</li><li>AI infrastructure demand</li><li>Large recurring enterprise base</li></ul>
+    </article></div>
+        </section>
+        <section class="pw-category pw-tone-teal">
+          <div class="pw-category-head"><div class="pw-category-title-wrap"><div class="pw-category-icon">💾</div><div><h3>Data Infrastructure</h3><p>Enterprise data, storage and software. Pure Storage adds the physical data layer behind AI workloads.</p></div></div></div>
+          <div class="pw-card-grid">
+    <article class="pw-card pw-card-no-data">
+      <div class="pw-card-top">
+        <div><div class="pw-symbol-row"><span class="pw-symbol">PSTG</span><span class="pw-role">AI data infrastructure</span></div><div class="pw-company">PSTG</div></div>
+        <span class="pw-status pw-status-no-data">NO DATA</span>
+      </div>
+      <div class="pw-price-row">
+        <div><div class="pw-price">—</div><div class="pw-change"><span class="pw-up">▲ 0.00%</span> today</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$0–$0</div></div>
+      </div>
+      <div class="pw-action-line">Price unavailable</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>—</strong></div><div><span>UPSIDE TO TARGET</span><strong>—</strong></div></div>
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>52.8 <small>C</small></strong></div>
+        <div><span>Analyst</span><strong>None</strong></div>
+        <div><span>Entry basis</span><strong>No price data</strong></div>
+      </div>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Flash storage for AI/data workloads</li><li>Subscription mix improves durability</li><li>High-growth infrastructure name needs disciplined entries</li></ul>
+    </article>
+    <article class="pw-card pw-card-wait">
+      <div class="pw-card-top">
+        <div><div class="pw-symbol-row"><span class="pw-symbol">SNOW</span><span class="pw-role">Growth data</span></div><div class="pw-company">Snowflake Inc.</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$328.99</div><div class="pw-change"><span class="pw-down">▼ 0.22%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$285–$300</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$285–$300</div></div>
       </div>
-      <div class="pw-zone-detail">9.7% above target ceiling</div>
+      <div class="pw-action-line">9.7% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$418.15</strong></div><div><span>UPSIDE TO TARGET</span><strong>+27.1%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>61.8 <small>C</small></strong></div>
+        <div><span>Watchlist score</span><strong>61.8 <small>C</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+27.1%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Cloud data platform at center of AI workflows</li><li>Consumption growth can reaccelerate</li><li>Higher valuation sensitivity creates better entry discipline</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Cloud data platform for AI workflows</li><li>Consumption can reaccelerate</li><li>Valuation discipline matters</li></ul>
     </article>
     <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">WDAY</span><span class="pw-role">Turnaround</span></div>
-          <div class="pw-company">Workday, Inc.</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">CRM</span><span class="pw-role">Turnaround</span></div><div class="pw-company">Salesforce, Inc.</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
+      </div>
+      <div class="pw-price-row">
+        <div><div class="pw-price">$247.72</div><div class="pw-change"><span class="pw-up">▲ 1.94%</span> today</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$220–$230</div></div>
+      </div>
+      <div class="pw-action-line">7.7% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$273.48</strong></div><div><span>UPSIDE TO TARGET</span><strong>+10.4%</strong></div></div>
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>72.9 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Buy</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
+      </div>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Large enterprise installed base</li><li>FCF improvement</li><li>AI monetization is the key upside test</li></ul>
+    </article>
+    <article class="pw-card pw-card-wait">
+      <div class="pw-card-top">
+        <div><div class="pw-symbol-row"><span class="pw-symbol">WDAY</span><span class="pw-role">Turnaround</span></div><div class="pw-company">Workday, Inc.</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$185.70</div><div class="pw-change"><span class="pw-up">▲ 0.33%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$165–$175</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$165–$175</div></div>
       </div>
-      <div class="pw-zone-detail">6.1% above target ceiling</div>
+      <div class="pw-action-line">6.1% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$208.73</strong></div><div><span>UPSIDE TO TARGET</span><strong>+12.4%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>71.9 <small>B</small></strong></div>
+        <div><span>Watchlist score</span><strong>71.9 <small>B</small></strong></div>
         <div><span>Analyst</span><strong>Buy</strong></div>
-        <div><span>Upside</span><strong>+12.4%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Sticky HR + finance subscriptions</li><li>Buybacks can support per-share value</li><li>Your thesis watches the ~$170 support area</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Sticky HR + finance subscriptions</li><li>Buybacks support per-share value</li><li>Support area matters</li></ul>
+    </article></div>
+        </section>
+        <section class="pw-category pw-tone-green">
+          <div class="pw-category-head"><div class="pw-category-title-wrap"><div class="pw-category-icon">💳</div><div><h3>Payments &amp; Data Moats</h3><p>High-quality transaction and information toll roads with durable margins and recurring demand.</p></div></div></div>
+          <div class="pw-card-grid">
+    <article class="pw-card pw-card-near-zone">
+      <div class="pw-card-top">
+        <div><div class="pw-symbol-row"><span class="pw-symbol">V</span><span class="pw-role">Core compounder</span></div><div class="pw-company">Visa Inc.</div></div>
+        <span class="pw-status pw-status-near-zone">🔥 NEAR ENTRY</span>
+      </div>
+      <div class="pw-price-row">
+        <div><div class="pw-price">$370.45</div><div class="pw-change"><span class="pw-up">▲ 0.88%</span> today</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$355–$363</div></div>
+      </div>
+      <div class="pw-action-line">Only 2.1% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$419.35</strong></div><div><span>UPSIDE TO TARGET</span><strong>+13.2%</strong></div></div>
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>78.4 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
+      </div>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Digital payments tailwind</li><li>High-margin global network</li><li>Cross-border volume</li></ul>
+    </article>
+    <article class="pw-card pw-card-near-zone">
+      <div class="pw-card-top">
+        <div><div class="pw-symbol-row"><span class="pw-symbol">MA</span><span class="pw-role">Core compounder</span></div><div class="pw-company">Mastercard Incorporated</div></div>
+        <span class="pw-status pw-status-near-zone">🔥 NEAR ENTRY</span>
+      </div>
+      <div class="pw-price-row">
+        <div><div class="pw-price">$569.19</div><div class="pw-change"><span class="pw-up">▲ 0.68%</span> today</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$550–$558</div></div>
+      </div>
+      <div class="pw-action-line">Only 2.0% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$668.80</strong></div><div><span>UPSIDE TO TARGET</span><strong>+17.5%</strong></div></div>
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>77.8 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
+      </div>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Global payments moat</li><li>Strong cross-border economics</li><li>Asset-light compounding model</li></ul>
+    </article>
+    <article class="pw-card pw-card-below-zone">
+      <div class="pw-card-top">
+        <div><div class="pw-symbol-row"><span class="pw-symbol">SPGI</span><span class="pw-role">Data moat</span></div><div class="pw-company">S&amp;P Global Inc.</div></div>
+        <span class="pw-status pw-status-below-zone">⚠️ BELOW RANGE</span>
+      </div>
+      <div class="pw-price-row">
+        <div><div class="pw-price">$410.71</div><div class="pw-change"><span class="pw-up">▲ 0.07%</span> today</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$415–$425</div></div>
+      </div>
+      <div class="pw-action-line">1.0% below the zone floor — recheck thesis/news before acting.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$520.37</strong></div><div><span>UPSIDE TO TARGET</span><strong>+26.7%</strong></div></div>
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>70.3 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
+      </div>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Ratings + indices + market data moat</li><li>Recurring information products</li><li>Capital-markets recovery upside</li></ul>
     </article></div>
         </section>
         <section class="pw-category pw-tone-rose">
-          <div class="pw-category-head">
-            <div class="pw-category-title-wrap"><div class="pw-category-icon">✈️</div><div><h3>Travel &amp; Cyclicals</h3><p>Peer confirmation matters here. DAL and UAL moving together is a stronger industry signal than either airline moving alone; EXPE adds a broader travel-demand check.</p></div></div>
-            <div class="pw-health-card"><span class="pw-health-label pw-health-healthy">Healthy</span><div class="pw-health-grid">
-              <div><span>Group score</span><strong>72.1</strong></div><div><span>Today</span><strong class="pw-up">+2.23%</strong></div>
-              <div><span>Leader</span><strong>UAL +3.13%</strong></div><div><span>In / near zone</span><strong>1/3</strong></div>
-            </div></div>
-          </div><div class="pw-card-grid">
+          <div class="pw-category-head"><div class="pw-category-title-wrap"><div class="pw-category-icon">✈️</div><div><h3>Travel &amp; Cyclicals</h3><p>More cyclical names where peer confirmation and disciplined entry prices matter most.</p></div></div></div>
+          <div class="pw-card-grid">
     <article class="pw-card pw-card-near-zone">
-      <div class="pw-action pw-action-near-zone">
-        <span class="pw-action-fire">🔥</span>
-        <div><strong>NEAR ENTRY</strong><small>Within 3% of your range · keep this at the top of the watchlist</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">DAL</span><span class="pw-role">Cyclical value</span></div>
-          <div class="pw-company">Delta Air Lines, Inc.</div>
-        </div>
-        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">DAL</span><span class="pw-role">Cyclical value</span></div><div class="pw-company">Delta Air Lines, Inc.</div></div>
+        <span class="pw-status pw-status-near-zone">🔥 NEAR ENTRY</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$79.91</div><div class="pw-change"><span class="pw-up">▲ 2.13%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$72–$78</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$72–$78</div></div>
       </div>
-      <div class="pw-zone-detail">2.4% above target ceiling</div>
+      <div class="pw-action-line">Only 2.4% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$104.20</strong></div><div><span>UPSIDE TO TARGET</span><strong>+30.4%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>73.7 <small>B</small></strong></div>
+        <div><span>Watchlist score</span><strong>73.7 <small>B</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+30.4%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Premium travel + loyalty economics</li><li>Operating leverage when demand is firm</li><li>UAL peer confirmation improves the signal</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Premium travel + loyalty economics</li><li>Operating leverage</li><li>UAL confirmation improves signal</li></ul>
     </article>
     <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">UAL</span><span class="pw-role">Cyclical value</span></div>
-          <div class="pw-company">United Airlines Holdings, Inc.</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">UAL</span><span class="pw-role">Cyclical value</span></div><div class="pw-company">United Airlines Holdings, Inc.</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$109.82</div><div class="pw-change"><span class="pw-up">▲ 3.13%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$92–$98</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$92–$98</div></div>
       </div>
-      <div class="pw-zone-detail">12.1% above target ceiling</div>
+      <div class="pw-action-line">12.1% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$159.24</strong></div><div><span>UPSIDE TO TARGET</span><strong>+45.0%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>64.3 <small>C</small></strong></div>
+        <div><span>Watchlist score</span><strong>64.3 <small>C</small></strong></div>
         <div><span>Analyst</span><strong>Strong Buy</strong></div>
-        <div><span>Upside</span><strong>+45.0%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Strong international network</li><li>Capacity discipline can support margins</li><li>DAL peer confirmation matters</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Strong international network</li><li>Capacity discipline</li><li>DAL confirmation matters</li></ul>
     </article>
     <article class="pw-card pw-card-wait">
-      <div class="pw-action pw-action-wait">
-        <span class="pw-action-fire">⏳</span>
-        <div><strong>WAIT</strong><small>Still above your target · no chase</small></div>
-      </div>
       <div class="pw-card-top">
-        <div>
-          <div class="pw-symbol-row"><span class="pw-symbol">EXPE</span><span class="pw-role">Travel platform</span></div>
-          <div class="pw-company">Expedia Group, Inc.</div>
-        </div>
-        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+        <div><div class="pw-symbol-row"><span class="pw-symbol">EXPE</span><span class="pw-role">Travel platform</span></div><div class="pw-company">Expedia Group, Inc.</div></div>
+        <span class="pw-status pw-status-wait">⏳ WAIT</span>
       </div>
       <div class="pw-price-row">
         <div><div class="pw-price">$280.83</div><div class="pw-change"><span class="pw-up">▲ 1.43%</span> today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">YOUR ENTRY ZONE</div><div class="pw-zone-value">$240–$250</div></div>
+        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">$240–$250</div></div>
       </div>
-      <div class="pw-zone-detail">12.3% above target ceiling</div>
+      <div class="pw-action-line">12.3% above the zone ceiling.</div>
+      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>$339.80</strong></div><div><span>UPSIDE TO TARGET</span><strong>+21.0%</strong></div></div>
       <div class="pw-mini-metrics">
-        <div><span>Score</span><strong>78.4 <small>B</small></strong></div>
+        <div><span>Watchlist score</span><strong>78.4 <small>B</small></strong></div>
         <div><span>Analyst</span><strong>Buy</strong></div>
-        <div><span>Upside</span><strong>+21.0%</strong></div>
+        <div><span>Entry basis</span><strong>Curated target zone</strong></div>
       </div>
-      <div class="pw-why-title">Why it stays on the watchlist</div>
-      <ul class="pw-reasons"><li>Scaled online travel platform</li><li>B2B + Vrbo provide multiple growth levers</li><li>Your thesis also watches the 200-day MA area</li></ul>
+      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons"><li>Scaled travel platform</li><li>B2B + Vrbo growth levers</li><li>200-day MA is useful support context</li></ul>
     </article></div>
         </section>
-
-      <div class="pw-foot">
-        <div><strong>Signal logic:</strong> 🔥🔥 means current price is inside your predefined zone; 🔥 means it is within 3% above the ceiling. The signal is price math, not a prediction.</div>
-        <div>Informational dashboard only. Revalidate the company thesis, diversification, taxes and risk before placing an order.</div>
-      </div>
+      <div class="pw-foot">* The 6-month target is not a guaranteed forecast. It uses the latest analyst mean target available from Yahoo Finance as a planning proxy and refreshes with the page.</div>
     </section></div>
 
   <div class="topics-columns">
