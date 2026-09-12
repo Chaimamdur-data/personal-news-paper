@@ -1,7 +1,7 @@
 site:
-  title: "Chai's Briefing"
-  subtitle: "Markets · World · India · Bay Area"
-  max_articles_per_topic: 6
+  title: "Chai's Stock Command Center"
+  subtitle: "Entry zones · 6-month targets · action signals"
+  max_articles_per_topic: 0
   stock_tickers:
     - MU
     - NVDA
@@ -9,6 +9,8 @@ site:
     - GOOGL
     - AMZN
     - MSFT
+    - ORCL
+    - PSTG
     - V
     - MA
     - META
@@ -21,73 +23,4 @@ site:
     - EXPE
     - SPGI
 
-topics:
-  - name: "India — National Politics & News"
-    feeds:
-      - "https://feeds.feedburner.com/ndtvnews-top-stories"
-      - "https://www.thehindu.com/feeder/default.rss"
-      - "https://www.indiatoday.in/rss/home"
-      - "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml"
-      - "https://www.firstpost.com/rss/politics.xml"
-      - "https://www.news18.com/rss/politics.xml"
-      - "https://theprint.in/feed/"
-      - "https://sundayguardianlive.com/feed"
-
-  - name: "Telugu & Andhra Pradesh"
-    feeds:
-      - "https://www.gulte.com/feed"
-      - "https://www.greatandhra.com/rss.xml"
-      - "https://english.tupaki.com/rss.xml"
-      - "https://www.telugu360.com/category/politics/feed/"
-      - "https://www.m9.news/feed"
-
-  - name: "Pakistan & South Asia"
-    feeds:
-      - "https://tribune.com.pk/feed"
-      - "https://www.pakistantoday.com.pk/feed/"
-      - "https://www.nation.com.pk/rss/home"
-      - "https://www.thenews.com.pk/rss/1/1"
-
-  - name: "Geopolitics"
-    feeds:
-      - "https://eurasiantimes.com/feed/"
-      - "https://www.arabnews.com/rss.xml"
-      - "https://thehill.com/feed/"
-      - "https://www.tribuneindia.com/rss/feed"
-      - "https://www.deccanchronicle.com/rss_feed/news/rss.xml"
-
-  - name: "US Politics"
-    feeds:
-      - "https://thehill.com/feed/"
-      - "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml"
-      - "https://feeds.washingtonpost.com/rss/politics"
-      - "https://www.politico.com/rss/politicopicks.xml"
-
-  - name: "Business & Markets"
-    feeds:
-      - "https://www.investing.com/rss/news_25.rss"
-      - "https://feeds.marketwatch.com/marketwatch/topstories/"
-      - "https://www.cnbc.com/id/10000664/device/rss/rss.html"
-      - "https://www.livemint.com/rss/news"
-      - "https://economictimes.indiatimes.com/rssfeedsdefault.cms"
-
-  - name: "AI & Tech"
-    feeds:
-      - "https://feeds.arstechnica.com/arstechnica/index"
-      - "https://www.wired.com/feed/rss"
-      - "https://techcrunch.com/feed/"
-      - "https://www.technologyreview.com/feed/"
-      - "https://venturebeat.com/category/ai/feed/"
-
-  - name: "Cloud & SaaS"
-    feeds:
-      - "https://techcrunch.com/feed/"
-      - "https://www.zdnet.com/news/rss.xml"
-      - "https://thenewstack.io/feed/"
-
-  - name: "Bay Area"
-    feeds:
-      - "https://www.kqed.org/news/rss"
-      - "https://abc7news.com/feed/"
-      - "https://www.mercurynews.com/feed/"
-      - "https://sfstandard.com/feed/"
+topics: []
