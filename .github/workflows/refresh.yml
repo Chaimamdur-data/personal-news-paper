@@ -1,6 +1,14 @@
 name: Refresh Personal Newspaper
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "config.yml"
+      - "generate_newspaper.py"
+      - "render_stocks.py"
+      - "stock_health.py"
+      - "requirements.txt"
   schedule:
     - cron: "0 * * * *"   # every hour
   workflow_dispatch:       # manual trigger from GitHub UI
