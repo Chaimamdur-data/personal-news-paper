@@ -379,7 +379,7 @@ body {
     <div class="site-subtitle">Markets · World · India · Bay Area</div>
   </div>
   <div class="header-right">
-    <span class="refresh-badge">🔄 Sep 12, 2026 · 06:55 PM</span>
+    <span class="refresh-badge">🔄 Sep 12, 2026 · 07:09 PM</span>
   </div>
 </header>
 
@@ -391,621 +391,823 @@ body {
 <main class="main-wrap">
 
   <div id="stocks">
-    <div class="stock-section" id="stocks">
-      <div class="stock-section-header">
-        <span class="stock-section-title">📈 Markets & Portfolio</span>
-        <span class="stock-meta-note">Yahoo Finance · 20 stocks · Scored across 16 parameters</span>
-      </div>
+    <style>
+      .portfolio-watch {
+        --pw-navy:#0b1220; --pw-ink:#172033; --pw-muted:#667085; --pw-line:#e7eaf0;
+        --pw-green:#12805c; --pw-green-bg:#e9f8f1; --pw-blue:#2563eb; --pw-blue-bg:#edf4ff;
+        --pw-purple:#6d4aff; --pw-purple-bg:#f3efff; --pw-amber:#a15c00; --pw-amber-bg:#fff4df;
+        --pw-red:#c24157; --pw-red-bg:#fff0f2; --pw-slate:#475467; --pw-slate-bg:#f2f4f7;
+        margin-bottom:36px; color:var(--pw-ink); font-family:'Source Sans 3',system-ui,sans-serif;
+      }
+      .portfolio-watch * { box-sizing:border-box; }
+      .pw-hero {
+        position:relative; overflow:hidden; border-radius:22px; padding:28px 30px;
+        color:white; background:linear-gradient(135deg,#09101d 0%,#15233d 52%,#24365b 100%);
+        box-shadow:0 18px 45px rgba(15,23,42,.16); margin-bottom:18px;
+      }
+      .pw-hero:after { content:''; position:absolute; width:420px; height:420px; right:-160px; top:-245px;
+        border-radius:50%; background:radial-gradient(circle,rgba(109,74,255,.42),rgba(109,74,255,0) 68%); }
+      .pw-kicker { font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1.35px; color:#aebeff; margin-bottom:5px; }
+      .pw-hero h2 { font-family:'Playfair Display',Georgia,serif; font-size:30px; line-height:1.12; margin:0 0 7px; letter-spacing:-.5px; }
+      .pw-hero p { max-width:760px; margin:0; color:#cbd5e1; font-size:14px; line-height:1.55; }
+      .pw-hero-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+      .pw-hero-chip { display:inline-flex; align-items:center; gap:6px; padding:7px 11px; border-radius:999px;
+        background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.10); color:#eef2ff; font-size:12px; font-weight:650; }
 
-      <div class="stock-ticker-strip">
-        
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">MU</span>
-            <span class="chip-price">$975.26</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-neg">▼ 0.22%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-a">91.6</span>
-            <span class="chip-rec">S.Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">NVDA</span>
-            <span class="chip-price">$218.29</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-neg">▼ 0.03%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-a">89.7</span>
-            <span class="chip-rec">S.Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">AVGO</span>
-            <span class="chip-price">$361.99</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 0.32%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-a">83.4</span>
-            <span class="chip-rec">S.Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">GOOGL</span>
-            <span class="chip-price">$338.50</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 1.77%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-a">83.2</span>
-            <span class="chip-rec">S.Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">MPWR</span>
-            <span class="chip-price">$1,234.46</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 4.08%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-a">80.4</span>
-            <span class="chip-rec">S.Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">V</span>
-            <span class="chip-price">$370.45</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 0.88%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">78.4</span>
-            <span class="chip-rec">Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">MA⚠️</span>
-            <span class="chip-price">$569.19</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 0.68%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">77.8</span>
-            <span class="chip-rec">Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">AMZN</span>
-            <span class="chip-price">$256.78</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 1.94%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">77.2</span>
-            <span class="chip-rec">Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">MSFT</span>
-            <span class="chip-price">$495.63</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 0.65%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">75.6</span>
-            <span class="chip-rec">Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">DAL</span>
-            <span class="chip-price">$79.91</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 2.13%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">73.7</span>
-            <span class="chip-rec">Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">CRM</span>
-            <span class="chip-price">$247.72</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 1.94%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">72.9</span>
-            <span class="chip-rec">Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">SPGI</span>
-            <span class="chip-price">$410.71</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 0.07%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">70.3</span>
-            <span class="chip-rec">Buy</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">META</span>
-            <span class="chip-price">$648.03</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 0.57%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">69.7</span>
-            <span class="chip-rec">Hold</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">NFLX</span>
-            <span class="chip-price">$77.40</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 1.83%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">69.6</span>
-            <span class="chip-rec">Hold</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">AAPL</span>
-            <span class="chip-price">$332.27</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 1.75%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">69.1</span>
-            <span class="chip-rec">Hold</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">WYNN</span>
-            <span class="chip-price">$87.70</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-neg">▼ 0.81%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">68.2</span>
-            <span class="chip-rec">Hold</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">BSX</span>
-            <span class="chip-price">$42.98</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-neg">▼ 0.28%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-b">67.8</span>
-            <span class="chip-rec">Hold</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">TTWO</span>
-            <span class="chip-price">$215.47</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-neg">▼ 0.69%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-c">59.0</span>
-            <span class="chip-rec">Hold</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">VUG</span>
-            <span class="chip-price">$88.02</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 0.93%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-c">58.7</span>
-            <span class="chip-rec">Hold</span>
-          </div>
-        </div>
-        <div class="stock-chip">
-          <div class="chip-top">
-            <span class="chip-ticker">SMH</span>
-            <span class="chip-price">$568.53</span>
-          </div>
-          <div class="chip-top" style="margin-bottom:4px">
-            <span class="chip-change-pos">▲ 1.47%</span>
-          </div>
-          <div class="chip-bottom">
-            <span class="chip-score score-c">56.3</span>
-            <span class="chip-rec">Hold</span>
-          </div>
+      .pw-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:0 0 22px; }
+      .pw-summary-card { background:#fff; border:1px solid var(--pw-line); border-radius:14px; padding:13px 15px; box-shadow:0 4px 15px rgba(15,23,42,.035); }
+      .pw-summary-card span { display:block; color:var(--pw-muted); font-size:11px; text-transform:uppercase; letter-spacing:.55px; font-weight:750; }
+      .pw-summary-card strong { display:block; margin-top:2px; font-size:20px; line-height:1.15; }
+      .pw-summary-card small { display:block; color:var(--pw-muted); font-size:11px; margin-top:2px; }
+
+      .pw-category { background:#fff; border:1px solid var(--pw-line); border-radius:18px; margin-bottom:18px; overflow:hidden; box-shadow:0 5px 20px rgba(15,23,42,.04); }
+      .pw-category-head { display:grid; grid-template-columns:minmax(0,1fr) 370px; gap:20px; align-items:center; padding:19px 20px 17px; border-bottom:1px solid var(--pw-line); }
+      .pw-category-title-wrap { display:flex; gap:12px; align-items:flex-start; }
+      .pw-category-icon { width:38px; height:38px; border-radius:11px; display:grid; place-items:center; font-size:19px; flex:0 0 auto; background:#f5f7fb; }
+      .pw-category h3 { margin:0 0 4px; font-family:'Playfair Display',Georgia,serif; font-size:19px; line-height:1.15; }
+      .pw-category-head p { margin:0; color:var(--pw-muted); font-size:12.5px; line-height:1.45; max-width:700px; }
+      .pw-tone-purple .pw-category-icon { background:var(--pw-purple-bg); }
+      .pw-tone-blue .pw-category-icon { background:var(--pw-blue-bg); }
+      .pw-tone-green .pw-category-icon { background:var(--pw-green-bg); }
+      .pw-tone-amber .pw-category-icon { background:var(--pw-amber-bg); }
+      .pw-tone-rose .pw-category-icon { background:var(--pw-red-bg); }
+
+      .pw-health-card { border-left:1px solid var(--pw-line); padding-left:18px; }
+      .pw-health-label { display:inline-flex; padding:4px 9px; border-radius:999px; font-size:10px; font-weight:800; letter-spacing:.35px; text-transform:uppercase; margin-bottom:8px; }
+      .pw-health-strong,.pw-health-healthy { color:var(--pw-green); background:var(--pw-green-bg); }
+      .pw-health-mixed { color:var(--pw-amber); background:var(--pw-amber-bg); }
+      .pw-health-caution { color:var(--pw-red); background:var(--pw-red-bg); }
+      .pw-health-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+      .pw-health-grid span { display:block; color:var(--pw-muted); font-size:9.5px; text-transform:uppercase; font-weight:750; letter-spacing:.25px; }
+      .pw-health-grid strong { display:block; margin-top:1px; font-size:12px; white-space:nowrap; }
+
+      .pw-card-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; }
+      .pw-card { padding:17px 18px 18px; min-width:0; border-right:1px solid var(--pw-line); border-bottom:1px solid var(--pw-line); background:#fff; transition:transform .15s ease,box-shadow .15s ease; }
+      .pw-card:nth-child(3n) { border-right:none; }
+      .pw-card:hover { position:relative; z-index:2; box-shadow:0 12px 30px rgba(15,23,42,.09); transform:translateY(-1px); }
+      .pw-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; min-height:46px; }
+      .pw-symbol-row { display:flex; align-items:center; gap:7px; }
+      .pw-symbol { font-size:17px; font-weight:850; letter-spacing:.2px; }
+      .pw-role { font-size:9.5px; color:var(--pw-muted); background:#f6f7f9; padding:3px 6px; border-radius:6px; font-weight:700; white-space:nowrap; }
+      .pw-company { margin-top:2px; color:var(--pw-muted); font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:185px; }
+      .pw-status { flex:0 0 auto; font-size:9.5px; font-weight:850; letter-spacing:.35px; border-radius:999px; padding:5px 8px; white-space:nowrap; }
+      .pw-status-in-zone { color:var(--pw-green); background:var(--pw-green-bg); }
+      .pw-status-near-zone { color:var(--pw-blue); background:var(--pw-blue-bg); }
+      .pw-status-wait { color:var(--pw-slate); background:var(--pw-slate-bg); }
+      .pw-status-below-zone { color:var(--pw-red); background:var(--pw-red-bg); }
+      .pw-status-no-data { color:var(--pw-amber); background:var(--pw-amber-bg); }
+
+      .pw-price-row { display:flex; justify-content:space-between; align-items:flex-end; gap:12px; margin:12px 0 8px; }
+      .pw-price { font-size:24px; font-weight:850; line-height:1; letter-spacing:-.35px; }
+      .pw-change { margin-top:4px; color:var(--pw-muted); font-size:11px; }
+      .pw-up { color:var(--pw-green)!important; font-weight:750; }
+      .pw-down { color:var(--pw-red)!important; font-weight:750; }
+      .pw-muted { color:var(--pw-muted); }
+      .pw-zone-box { text-align:right; padding:7px 9px; background:#f8fafc; border:1px solid #edf0f4; border-radius:9px; }
+      .pw-zone-label { font-size:8.5px; color:var(--pw-muted); font-weight:800; letter-spacing:.55px; }
+      .pw-zone-value { font-size:14px; font-weight:800; margin-top:1px; }
+      .pw-zone-detail { font-size:11px; color:var(--pw-muted); padding:7px 9px; border-radius:8px; background:#fbfcfe; border:1px solid #f0f2f5; }
+
+      .pw-mini-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin:10px 0 12px; }
+      .pw-mini-metrics div { min-width:0; }
+      .pw-mini-metrics span { display:block; color:var(--pw-muted); font-size:9px; text-transform:uppercase; font-weight:750; letter-spacing:.25px; }
+      .pw-mini-metrics strong { display:block; margin-top:1px; font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .pw-mini-metrics small { color:var(--pw-muted); font-size:9px; }
+      .pw-why-title { padding-top:10px; border-top:1px solid #f0f2f5; font-size:10px; font-weight:850; text-transform:uppercase; letter-spacing:.35px; color:#344054; }
+      .pw-reasons { margin:7px 0 0 16px; padding:0; color:#475467; font-size:11.5px; line-height:1.42; }
+      .pw-reasons li { margin:2px 0; }
+
+      .pw-foot { display:flex; justify-content:space-between; gap:16px; align-items:flex-start; padding:12px 3px 0; color:var(--pw-muted); font-size:10.5px; line-height:1.45; }
+      .pw-foot strong { color:#475467; }
+
+      @media (max-width:1050px) {
+        .pw-category-head { grid-template-columns:1fr; }
+        .pw-health-card { border-left:none; padding-left:50px; }
+        .pw-card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+        .pw-card:nth-child(3n) { border-right:1px solid var(--pw-line); }
+        .pw-card:nth-child(2n) { border-right:none; }
+      }
+      @media (max-width:720px) {
+        .pw-hero { padding:23px 20px; border-radius:16px; } .pw-hero h2 { font-size:25px; }
+        .pw-summary { grid-template-columns:repeat(2,1fr); }
+        .pw-category-head { padding:16px; } .pw-health-card { padding-left:0; }
+        .pw-health-grid { grid-template-columns:repeat(2,1fr); }
+        .pw-card-grid { grid-template-columns:1fr; }
+        .pw-card,.pw-card:nth-child(2n),.pw-card:nth-child(3n) { border-right:none; }
+        .pw-foot { flex-direction:column; gap:6px; }
+      }
+    </style>
+
+    <section class="portfolio-watch" id="stocks">
+      <div class="pw-hero">
+        <div class="pw-kicker">Personal market dashboard</div>
+        <h2>Chai's Entry-Zone Watchlist</h2>
+        <p>One-page view of the stocks you actually care about—organized by investment bucket, compared against your predefined entry ranges, and paired with a simple peer-health check.</p>
+        <div class="pw-hero-meta">
+          <span class="pw-hero-chip">17 stocks</span>
+          <span class="pw-hero-chip">5 focused buckets</span>
+          <span class="pw-hero-chip">33% tranche framework</span>
+          <span class="pw-hero-chip">Live Yahoo Finance inputs</span>
         </div>
       </div>
 
-      <div class="stock-table-wrap">
-        <table class="stock-table">
-          <thead>
-            <tr>
-              <th>Ticker</th><th>Company</th><th>Price</th><th>Day</th>
-              <th>Score</th><th>Rec</th><th>Analyst</th>
-              <th>PEG</th><th>Rev↑</th><th>Margin</th>
-              <th>D/E</th><th>ROE</th><th>Upside</th><th>MA50</th>
-            </tr>
-          </thead>
-          <tbody>
-        <tr>
-          <td class="td-ticker">MU</td>
-          <td class="td-name">Micron Technology, Inc</td>
-          <td>$975.26</td>
-          <td><span class="neg">▼ 0.22%</span></td>
-          <td><span class="chip-score score-a" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">91.6</span> A</td>
-          <td>Strong Buy</td>
-          <td>Strong Buy</td>
-          <td>0.14</td>
-          <td>345.7%</td>
-          <td>55.9%</td>
-          <td>0.063</td>
-          <td>66.6%</td>
-          <td><span class="pos">+55.1%</span></td>
-          <td>928.61 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">NVDA</td>
-          <td class="td-name">NVIDIA Corporation</td>
-          <td>$218.29</td>
-          <td><span class="neg">▼ 0.03%</span></td>
-          <td><span class="chip-score score-a" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">89.7</span> A</td>
-          <td>Strong Buy</td>
-          <td>Strong Buy</td>
-          <td>0.59</td>
-          <td>105.9%</td>
-          <td>63.7%</td>
-          <td>0.17</td>
-          <td>117.2%</td>
-          <td><span class="pos">+50.1%</span></td>
-          <td>212.58 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">AVGO</td>
-          <td class="td-name">Broadcom Inc.</td>
-          <td>$361.99</td>
-          <td><span class="pos">▲ 0.32%</span></td>
-          <td><span class="chip-score score-a" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">83.4</span> A</td>
-          <td>Strong Buy</td>
-          <td>Strong Buy</td>
-          <td>0.36</td>
-          <td>85.5%</td>
-          <td>42.9%</td>
-          <td>0.596</td>
-          <td>44.2%</td>
-          <td><span class="pos">+46.9%</span></td>
-          <td>383.09 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">GOOGL</td>
-          <td class="td-name">Alphabet Inc.</td>
-          <td>$338.50</td>
-          <td><span class="pos">▲ 1.77%</span></td>
-          <td><span class="chip-score score-a" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">83.2</span> A</td>
-          <td>Strong Buy</td>
-          <td>Strong Buy</td>
-          <td>1.22</td>
-          <td>24.2%</td>
-          <td>54.8%</td>
-          <td>0.189</td>
-          <td>48.7%</td>
-          <td><span class="pos">+26.5%</span></td>
-          <td>347.18 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">MPWR</td>
-          <td class="td-name">Monolithic Power Syste</td>
-          <td>$1,234.46</td>
-          <td><span class="pos">▲ 4.08%</span></td>
-          <td><span class="chip-score score-a" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">80.4</span> A</td>
-          <td>Strong Buy</td>
-          <td>Strong Buy</td>
-          <td>0.9</td>
-          <td>47.6%</td>
-          <td>24.5%</td>
-          <td>0.005</td>
-          <td>22.0%</td>
-          <td><span class="pos">+49.0%</span></td>
-          <td>1318.59 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">V</td>
-          <td class="td-name">Visa Inc.</td>
-          <td>$370.45</td>
-          <td><span class="pos">▲ 0.88%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">78.4</span> B</td>
-          <td>Buy</td>
-          <td>Strong Buy</td>
-          <td>1.66</td>
-          <td>14.4%</td>
-          <td>50.8%</td>
-          <td>0.678</td>
-          <td>61.2%</td>
-          <td><span class="pos">+13.2%</span></td>
-          <td>365.23 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">MA <span class="disq-flag">⚠️</span></td>
-          <td class="td-name">Mastercard Incorporate</td>
-          <td>$569.19</td>
-          <td><span class="pos">▲ 0.68%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">77.8</span> B</td>
-          <td>Buy</td>
-          <td>Strong Buy</td>
-          <td>1.48</td>
-          <td>14.1%</td>
-          <td>46.3%</td>
-          <td>4.396</td>
-          <td>241.2%</td>
-          <td><span class="pos">+17.5%</span></td>
-          <td>562.28 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">AMZN</td>
-          <td class="td-name">Amazon.com, Inc.</td>
-          <td>$256.78</td>
-          <td><span class="pos">▲ 1.94%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">77.2</span> B</td>
-          <td>Buy</td>
-          <td>Strong Buy</td>
-          <td>1.48</td>
-          <td>19.6%</td>
-          <td>17.4%</td>
-          <td>0.456</td>
-          <td>30.6%</td>
-          <td><span class="pos">+27.8%</span></td>
-          <td>255.25 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">MSFT</td>
-          <td class="td-name">Microsoft Corporation</td>
-          <td>$495.63</td>
-          <td><span class="pos">▲ 0.65%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">75.6</span> B</td>
-          <td>Buy</td>
-          <td>Strong Buy</td>
-          <td>1.6</td>
-          <td>17.7%</td>
-          <td>40.3%</td>
-          <td>0.291</td>
-          <td>34.0%</td>
-          <td><span class="pos">+15.6%</span></td>
-          <td>453.67 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">DAL</td>
-          <td class="td-name">Delta Air Lines, Inc.</td>
-          <td>$79.91</td>
-          <td><span class="pos">▲ 2.13%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">73.7</span> B</td>
-          <td>Buy</td>
-          <td>Strong Buy</td>
-          <td>0.21</td>
-          <td>18.7%</td>
-          <td>5.8%</td>
-          <td>0.966</td>
-          <td>20.1%</td>
-          <td><span class="pos">+30.4%</span></td>
-          <td>85.44 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">CRM</td>
-          <td class="td-name">Salesforce, Inc.</td>
-          <td>$247.72</td>
-          <td><span class="pos">▲ 1.94%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">72.9</span> B</td>
-          <td>Buy</td>
-          <td>Buy</td>
-          <td>0.9</td>
-          <td>10.8%</td>
-          <td>22.0%</td>
-          <td>1.104</td>
-          <td>19.4%</td>
-          <td><span class="pos">+10.4%</span></td>
-          <td>198.61 <span class="neg" style="font-size:10px">↓</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">SPGI</td>
-          <td class="td-name">S&amp;P Global Inc.</td>
-          <td>$410.71</td>
-          <td><span class="pos">▲ 0.07%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">70.3</span> B</td>
-          <td>Buy</td>
-          <td>Strong Buy</td>
-          <td>2.0</td>
-          <td>10.4%</td>
-          <td>30.5%</td>
-          <td>0.43</td>
-          <td>14.3%</td>
-          <td><span class="pos">+26.7%</span></td>
-          <td>428.32 <span class="neg" style="font-size:10px">↓</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">META</td>
-          <td class="td-name">Meta Platforms, Inc.</td>
-          <td>$648.03</td>
-          <td><span class="pos">▲ 0.57%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">69.7</span> B</td>
-          <td>Hold</td>
-          <td>Strong Buy</td>
-          <td>0.86</td>
-          <td>28.0%</td>
-          <td>29.8%</td>
-          <td>0.43</td>
-          <td>29.8%</td>
-          <td><span class="pos">+16.9%</span></td>
-          <td>600.9 <span class="neg" style="font-size:10px">↓</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">NFLX</td>
-          <td class="td-name">Netflix, Inc.</td>
-          <td>$77.40</td>
-          <td><span class="pos">▲ 1.83%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">69.6</span> B</td>
-          <td>Hold</td>
-          <td>None</td>
-          <td>1.41</td>
-          <td>13.4%</td>
-          <td>28.2%</td>
-          <td>0.552</td>
-          <td>49.5%</td>
-          <td><span class="pos">+21.0%</span></td>
-          <td>75.7 <span class="neg" style="font-size:10px">↓</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">AAPL</td>
-          <td class="td-name">Apple Inc.</td>
-          <td>$332.27</td>
-          <td><span class="pos">▲ 1.75%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">69.1</span> B</td>
-          <td>Hold</td>
-          <td>Buy</td>
-          <td>2.48</td>
-          <td>16.4%</td>
-          <td>27.6%</td>
-          <td>0.784</td>
-          <td>148.8%</td>
-          <td><span class="neg">-2.4%</span></td>
-          <td>317.97 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">WYNN</td>
-          <td class="td-name">Wynn Resorts, Limited</td>
-          <td>$87.70</td>
-          <td><span class="neg">▼ 0.81%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">68.2</span> B</td>
-          <td>Hold</td>
-          <td>Strong Buy</td>
-          <td>0.8</td>
-          <td>6.9%</td>
-          <td>6.1%</td>
-          <td>—</td>
-          <td>—</td>
-          <td><span class="pos">+50.9%</span></td>
-          <td>97.3 <span class="neg" style="font-size:10px">↓</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">BSX</td>
-          <td class="td-name">Boston Scientific Corp</td>
-          <td>$42.98</td>
-          <td><span class="neg">▼ 0.28%</span></td>
-          <td><span class="chip-score score-b" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">67.8</span> B</td>
-          <td>Hold</td>
-          <td>Buy</td>
-          <td>0.63</td>
-          <td>7.5%</td>
-          <td>17.5%</td>
-          <td>0.502</td>
-          <td>15.3%</td>
-          <td><span class="pos">+45.2%</span></td>
-          <td>46.94 <span class="neg" style="font-size:10px">↓</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">TTWO</td>
-          <td class="td-name">Take-Two Interactive S</td>
-          <td>$215.47</td>
-          <td><span class="neg">▼ 0.69%</span></td>
-          <td><span class="chip-score score-c" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">59.0</span> C</td>
-          <td>Hold</td>
-          <td>Strong Buy</td>
-          <td>2.89</td>
-          <td>2.0%</td>
-          <td>-4.8%</td>
-          <td>0.816</td>
-          <td>-9.0%</td>
-          <td><span class="pos">+32.9%</span></td>
-          <td>237.09 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">VUG</td>
-          <td class="td-name">Vanguard Morningstar G</td>
-          <td>$88.02</td>
-          <td><span class="pos">▲ 0.93%</span></td>
-          <td><span class="chip-score score-c" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">58.7</span> C</td>
-          <td>Hold</td>
-          <td>None</td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-          <td>87.05 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr>
-        <tr>
-          <td class="td-ticker">SMH</td>
-          <td class="td-name">VanEck Semiconductor E</td>
-          <td>$568.53</td>
-          <td><span class="pos">▲ 1.47%</span></td>
-          <td><span class="chip-score score-c" style="display:inline-block;padding:2px 7px;border-radius:4px;color:white;font-size:11px;font-weight:700">56.3</span> C</td>
-          <td>Hold</td>
-          <td>None</td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-          <td>—</td>
-          <td>569.1 <span class="pos" style="font-size:10px">↑</span></td>
-        </tr></tbody>
-        </table>
+      <div class="pw-summary">
+        <div class="pw-summary-card"><span>Inside entry zone</span><strong>0</strong><small>Closest to your planned range</small></div>
+        <div class="pw-summary-card"><span>Near zone</span><strong>6</strong><small>Within 3% above the ceiling</small></div>
+        <div class="pw-summary-card"><span>Wait / extended</span><strong>10</strong><small>Above your current target range</small></div>
+        <div class="pw-summary-card"><span>Below zone</span><strong>1</strong><small>Price broke under the floor—recheck thesis</small></div>
       </div>
 
       
-        <div style="padding:10px 20px;font-size:12px;color:#137333;background:#f0fdf4;border-top:1px solid #e5e2db">
-          🏆 Top Pick: <strong>MU</strong> · Strong Buy · 91.6/100
-          &nbsp;&nbsp;|&nbsp;&nbsp;
-          <span style="color:#c5221f">⚠️ Lowest: <strong>SMH</strong> · 56.3/100</span>
+        <section class="pw-category pw-tone-purple">
+          <div class="pw-category-head">
+            <div class="pw-category-title-wrap">
+              <div class="pw-category-icon">⚡</div>
+              <div>
+                <h3>AI Compute &amp; Semis</h3>
+                <p>AI infrastructure demand is the secular driver. Peer participation matters: strength across memory, accelerators and networking is healthier than a one-stock move.</p>
+              </div>
+            </div>
+            <div class="pw-health-card">
+              <span class="pw-health-label pw-health-strong">Strong</span>
+              <div class="pw-health-grid">
+                <div><span>Group score</span><strong>88.2</strong></div>
+                <div><span>Today</span><strong class="pw-up">+0.02%</strong></div>
+                <div><span>Leader</span><strong>AVGO +0.32%</strong></div>
+                <div><span>In / near zone</span><strong>1/3</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="pw-card-grid">
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">MU</span>
+            <span class="pw-role">High priority</span>
+          </div>
+          <div class="pw-company">Micron Technology, Inc.</div>
         </div>
-
-      <div class="stock-disclaimer">
-        ⚠️ Not financial advice. Data from Yahoo Finance. Consult a professional before investing.
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
       </div>
-    </div></div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$975.26</div>
+          <div class="pw-change"><span class="pw-down">▼ 0.22%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$935–$945</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">3.2% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>91.6 <small>A</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+55.1%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>HBM and AI-memory demand</li><li>Memory pricing and mix leverage</li><li>High upside potential, but cyclical</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">NVDA</span>
+            <span class="pw-role">High priority</span>
+          </div>
+          <div class="pw-company">NVIDIA Corporation</div>
+        </div>
+        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$218.29</div>
+          <div class="pw-change"><span class="pw-down">▼ 0.03%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$205–$212</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">3.0% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>89.7 <small>A</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+50.1%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>AI accelerator leadership</li><li>CUDA + software ecosystem moat</li><li>Hyperscaler AI capex remains key demand driver</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">AVGO</span>
+            <span class="pw-role">High priority</span>
+          </div>
+          <div class="pw-company">Broadcom Inc.</div>
+        </div>
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$361.99</div>
+          <div class="pw-change"><span class="pw-up">▲ 0.32%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$340–$350</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">3.4% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>83.4 <small>A</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+46.9%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>AI networking + custom silicon exposure</li><li>VMware adds recurring software cash flow</li><li>Strong free-cash-flow profile</li></ul>
+    </article></div>
+        </section>
+        <section class="pw-category pw-tone-blue">
+          <div class="pw-category-head">
+            <div class="pw-category-title-wrap">
+              <div class="pw-category-icon">☁️</div>
+              <div>
+                <h3>Mega-cap Platforms</h3>
+                <p>Cloud, ads, AI distribution and ecosystem cash flows. The bucket is strongest when several platforms participate instead of one name carrying the group.</p>
+              </div>
+            </div>
+            <div class="pw-health-card">
+              <span class="pw-health-label pw-health-healthy">Healthy</span>
+              <div class="pw-health-grid">
+                <div><span>Group score</span><strong>75.0</strong></div>
+                <div><span>Today</span><strong class="pw-up">+1.34%</strong></div>
+                <div><span>Leader</span><strong>AMZN +1.94%</strong></div>
+                <div><span>In / near zone</span><strong>2/5</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="pw-card-grid">
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">GOOGL</span>
+            <span class="pw-role">High priority</span>
+          </div>
+          <div class="pw-company">Alphabet Inc.</div>
+        </div>
+        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$338.50</div>
+          <div class="pw-change"><span class="pw-up">▲ 1.77%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$325–$335</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">1.0% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>83.2 <small>A</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+26.5%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Search + YouTube cash engine</li><li>Cloud and AI growth optionality</li><li>Mega-cap quality with valuation support</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">AMZN</span>
+            <span class="pw-role">High priority</span>
+          </div>
+          <div class="pw-company">Amazon.com, Inc.</div>
+        </div>
+        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$256.78</div>
+          <div class="pw-change"><span class="pw-up">▲ 1.94%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$248–$254</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">1.1% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>77.2 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+27.8%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>AWS cloud + AI demand</li><li>Retail margin expansion</li><li>Advertising is a high-margin growth engine</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">MSFT</span>
+            <span class="pw-role">Core compounder</span>
+          </div>
+          <div class="pw-company">Microsoft Corporation</div>
+        </div>
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$495.63</div>
+          <div class="pw-change"><span class="pw-up">▲ 0.65%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$440–$450</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">10.1% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>75.6 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+15.6%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Azure + enterprise AI distribution</li><li>Durable recurring software revenue</li><li>Balance-sheet and cash-flow quality</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">META</span>
+            <span class="pw-role">Core compounder</span>
+          </div>
+          <div class="pw-company">Meta Platforms, Inc.</div>
+        </div>
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$648.03</div>
+          <div class="pw-change"><span class="pw-up">▲ 0.57%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$585–$595</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">8.9% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>69.7 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+16.9%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>AI improves ad targeting and efficiency</li><li>Large engagement + monetization base</li><li>Strong cash generation and capital returns</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">AAPL</span>
+            <span class="pw-role">Core compounder</span>
+          </div>
+          <div class="pw-company">Apple Inc.</div>
+        </div>
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$332.27</div>
+          <div class="pw-change"><span class="pw-up">▲ 1.75%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$305–$315</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">5.5% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>69.1 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Buy</strong></div>
+        <div><span>Target upside</span><strong>+-2.4%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Sticky device + services ecosystem</li><li>Huge installed base</li><li>Capital returns provide support</li></ul>
+    </article></div>
+        </section>
+        <section class="pw-category pw-tone-green">
+          <div class="pw-category-head">
+            <div class="pw-category-title-wrap">
+              <div class="pw-category-icon">💳</div>
+              <div>
+                <h3>Payments &amp; Data Moats</h3>
+                <p>High-quality transaction and data toll roads. Watch spending, cross-border activity and capital-markets volume for confirmation.</p>
+              </div>
+            </div>
+            <div class="pw-health-card">
+              <span class="pw-health-label pw-health-healthy">Healthy</span>
+              <div class="pw-health-grid">
+                <div><span>Group score</span><strong>75.5</strong></div>
+                <div><span>Today</span><strong class="pw-up">+0.54%</strong></div>
+                <div><span>Leader</span><strong>V +0.88%</strong></div>
+                <div><span>In / near zone</span><strong>2/3</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="pw-card-grid">
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">V</span>
+            <span class="pw-role">Core compounder</span>
+          </div>
+          <div class="pw-company">Visa Inc.</div>
+        </div>
+        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$370.45</div>
+          <div class="pw-change"><span class="pw-up">▲ 0.88%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$355–$363</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">2.1% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>78.4 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+13.2%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Secular shift to digital payments</li><li>High-margin global network</li><li>Cross-border volume is a strong tailwind</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">MA</span>
+            <span class="pw-role">Core compounder</span>
+          </div>
+          <div class="pw-company">Mastercard Incorporated</div>
+        </div>
+        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$569.19</div>
+          <div class="pw-change"><span class="pw-up">▲ 0.68%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$550–$558</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">2.0% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>77.8 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+17.5%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Global payments network moat</li><li>Strong cross-border economics</li><li>Asset-light compounding model</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">SPGI</span>
+            <span class="pw-role">Data moat</span>
+          </div>
+          <div class="pw-company">S&amp;P Global Inc.</div>
+        </div>
+        <span class="pw-status pw-status-below-zone">BELOW ZONE · CHECK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$410.71</div>
+          <div class="pw-change"><span class="pw-up">▲ 0.07%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$415–$425</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">1.0% below zone floor · recheck thesis/news</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>70.3 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+26.7%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Ratings + indices + market data moat</li><li>Recurring, high-value information products</li><li>Capital-markets recovery can add upside</li></ul>
+    </article></div>
+        </section>
+        <section class="pw-category pw-tone-amber">
+          <div class="pw-category-head">
+            <div class="pw-category-title-wrap">
+              <div class="pw-category-icon">🧠</div>
+              <div>
+                <h3>AI Software Turnarounds</h3>
+                <p>A higher-variance recovery bucket. Better setups require improving growth, durable free cash flow and evidence that AI products are monetizing—not just good narratives.</p>
+              </div>
+            </div>
+            <div class="pw-health-card">
+              <span class="pw-health-label pw-health-mixed">Mixed</span>
+              <div class="pw-health-grid">
+                <div><span>Group score</span><strong>68.9</strong></div>
+                <div><span>Today</span><strong class="pw-up">+0.68%</strong></div>
+                <div><span>Leader</span><strong>CRM +1.94%</strong></div>
+                <div><span>In / near zone</span><strong>0/3</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="pw-card-grid">
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">CRM</span>
+            <span class="pw-role">Turnaround</span>
+          </div>
+          <div class="pw-company">Salesforce, Inc.</div>
+        </div>
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$247.72</div>
+          <div class="pw-change"><span class="pw-up">▲ 1.94%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$220–$230</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">7.7% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>72.9 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Buy</strong></div>
+        <div><span>Target upside</span><strong>+10.4%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Large enterprise installed base</li><li>Margin and free-cash-flow improvement</li><li>AI monetization is the key upside test</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">SNOW</span>
+            <span class="pw-role">Turnaround</span>
+          </div>
+          <div class="pw-company">Snowflake Inc.</div>
+        </div>
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$328.99</div>
+          <div class="pw-change"><span class="pw-down">▼ 0.22%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$285–$300</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">9.7% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>61.8 <small>C</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+27.1%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Cloud data platform at center of AI workflows</li><li>Consumption growth can reaccelerate</li><li>Higher valuation sensitivity creates better entry discipline</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">WDAY</span>
+            <span class="pw-role">Turnaround</span>
+          </div>
+          <div class="pw-company">Workday, Inc.</div>
+        </div>
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$185.70</div>
+          <div class="pw-change"><span class="pw-up">▲ 0.33%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$165–$175</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">6.1% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>71.9 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Buy</strong></div>
+        <div><span>Target upside</span><strong>+12.4%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Sticky HR + finance subscriptions</li><li>Buybacks can support per-share value</li><li>Your thesis watches the ~$170 support area</li></ul>
+    </article></div>
+        </section>
+        <section class="pw-category pw-tone-rose">
+          <div class="pw-category-head">
+            <div class="pw-category-title-wrap">
+              <div class="pw-category-icon">✈️</div>
+              <div>
+                <h3>Travel &amp; Cyclicals</h3>
+                <p>Peer confirmation matters here. DAL and UAL moving together is a stronger industry signal than either airline moving alone; EXPE adds a broader travel-demand check.</p>
+              </div>
+            </div>
+            <div class="pw-health-card">
+              <span class="pw-health-label pw-health-healthy">Healthy</span>
+              <div class="pw-health-grid">
+                <div><span>Group score</span><strong>72.1</strong></div>
+                <div><span>Today</span><strong class="pw-up">+2.23%</strong></div>
+                <div><span>Leader</span><strong>UAL +3.13%</strong></div>
+                <div><span>In / near zone</span><strong>1/3</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="pw-card-grid">
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">DAL</span>
+            <span class="pw-role">Cyclical value</span>
+          </div>
+          <div class="pw-company">Delta Air Lines, Inc.</div>
+        </div>
+        <span class="pw-status pw-status-near-zone">NEAR ZONE</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$79.91</div>
+          <div class="pw-change"><span class="pw-up">▲ 2.13%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$72–$78</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">2.4% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>73.7 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+30.4%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Premium travel + loyalty economics</li><li>Operating leverage when demand is firm</li><li>UAL peer confirmation improves the signal</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">UAL</span>
+            <span class="pw-role">Cyclical value</span>
+          </div>
+          <div class="pw-company">United Airlines Holdings, Inc.</div>
+        </div>
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$109.82</div>
+          <div class="pw-change"><span class="pw-up">▲ 3.13%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$92–$98</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">12.1% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>64.3 <small>C</small></strong></div>
+        <div><span>Analyst</span><strong>Strong Buy</strong></div>
+        <div><span>Target upside</span><strong>+45.0%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Strong international network</li><li>Capacity discipline can support margins</li><li>DAL peer confirmation matters</li></ul>
+    </article>
+    <article class="pw-card">
+      <div class="pw-card-top">
+        <div>
+          <div class="pw-symbol-row">
+            <span class="pw-symbol">EXPE</span>
+            <span class="pw-role">Travel platform</span>
+          </div>
+          <div class="pw-company">Expedia Group, Inc.</div>
+        </div>
+        <span class="pw-status pw-status-wait">WAIT FOR PULLBACK</span>
+      </div>
+
+      <div class="pw-price-row">
+        <div>
+          <div class="pw-price">$280.83</div>
+          <div class="pw-change"><span class="pw-up">▲ 1.43%</span> today</div>
+        </div>
+        <div class="pw-zone-box">
+          <div class="pw-zone-label">YOUR ENTRY ZONE</div>
+          <div class="pw-zone-value">$240–$250</div>
+        </div>
+      </div>
+
+      <div class="pw-zone-detail">12.3% above target ceiling</div>
+
+      <div class="pw-mini-metrics">
+        <div><span>Watchlist score</span><strong>78.4 <small>B</small></strong></div>
+        <div><span>Analyst</span><strong>Buy</strong></div>
+        <div><span>Target upside</span><strong>+21.0%</strong></div>
+      </div>
+
+      <div class="pw-why-title">Why it stays on the watchlist</div>
+      <ul class="pw-reasons"><li>Scaled online travel platform</li><li>B2B + Vrbo provide multiple growth levers</li><li>Your thesis also watches the 200-day MA area</li></ul>
+    </article></div>
+        </section>
+
+      <div class="pw-foot">
+        <div><strong>How to read it:</strong> zone status is purely price-vs-your-range math; category health is the average model score plus same-day peer movement.</div>
+        <div>Informational dashboard only. Revalidate targets, taxes, diversification and risk before making an investment decision.</div>
+      </div>
+    </section></div>
 
   <div class="topics-columns">
     
@@ -1019,21 +1221,39 @@ body {
     <article class="lead-card">
         <div class="lead-meta">
             <span class="source-tag">The Hindu</span>
-            <span class="time-tag">8m ago</span>
+            <span class="time-tag">4m ago</span>
         </div>
         <h3 class="lead-title">
-            <a href="https://www.thehindu.com/news/national/tamil-nadu/savukku-shankar-presents-falsehoods-as-facts-for-financial-gain-ips-officer-arun-alleges-before-madras-high-court/article71459588.ece" target="_blank" rel="noopener">‘Savukku’ Shankar presents falsehoods as facts for financial gain, IPS officer Arun alleges before Madras High Court</a>
+            <a href="https://www.thehindu.com/news/cities/Delhi/jamia-hostel-protest-over-mess-food-escalates-varsity-denies-assault-charges/article71460985.ece" target="_blank" rel="noopener">Jamia hostel protest over mess food escalates; varsity denies assault charges</a>
         </h3>
-        <p class="lead-summary">In his defamation suit, the police officer says the YouTuber gives a false impression to people as if he possesses confidential, authentic, and inside information concerning senior police officers, politicians, public…</p>
+        <p class="lead-summary">This story discusses: Jamia hostel protest over mess food escalates; varsity denies assault charges</p>
     </article>
             <div class="side-list">
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">The Hindu</span>
-                <span class="time-tag">8m ago</span>
+                <span class="time-tag">4m ago</span>
             </div>
             <h4 class="side-title">
-                <a href="https://www.thehindu.com/news/national/air-india-pilot-found-dead-in-delhi-hotel-police-rule-out-foul-play/article71461296.ece" target="_blank" rel="noopener">Air India pilot found dead in Delhi hotel; police rule out foul play</a>
+                <a href="https://www.thehindu.com/news/cities/chennai/collection-of-short-stories-of-writer-r-chudamani-launched/article71461114.ece" target="_blank" rel="noopener">Collection of short stories of writer R Chudamani launched</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hindu</span>
+                <span class="time-tag">6m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thehindu.com/news/cities/Delhi/satya-niketan-tragedy-aap-accuses-senior-bjp-leaders-of-running-illegal-pg-nexus/article71461201.ece" target="_blank" rel="noopener">Satya Niketan tragedy: AAP accuses senior BJP leaders of running illegal PG nexus</a>
+            </h4>
+        </article>
+        <article class="side-item">
+            <div class="side-meta">
+                <span class="source-tag">The Hindu</span>
+                <span class="time-tag">7m ago</span>
+            </div>
+            <h4 class="side-title">
+                <a href="https://www.thehindu.com/news/cities/chennai/gcc-to-take-up-infra-maintenance-works-across-three-regions/article71460744.ece" target="_blank" rel="noopener">GCC to take up infra maintenance works across three regions</a>
             </h4>
         </article>
         <article class="side-item">
@@ -1042,34 +1262,16 @@ body {
                 <span class="time-tag">8m ago</span>
             </div>
             <h4 class="side-title">
-                <a href="https://sundayguardianlive.com/world/us-israel-iran-war-live-emergency-alerts-issued-in-saudi-arabia-to-warn-of-a-potential-danger-by-civil-defence-for-khamis-mushait-governorate-and-abha-city-in-aseer-province-283276/" target="_blank" rel="noopener">US-Israel-Iran War Live: Emergency Alerts Issued in Saudi Arabia ‘To Warn of a Potential Danger’ by Civil Defence for Khamis Mushait Governorate and Abha City in Aseer Province</a>
+                <a href="https://sundayguardianlive.com/sports/what-channel-is-misfits-boxing-on-tonight-where-to-watch-big-stacks-vs-jordan-mccann-start-time-full-fight-card-283287/" target="_blank" rel="noopener">What Channel Is Misfits Boxing On Tonight? Where To Watch Big Stacks Vs Jordan McCann, Start Time And Full Fight Card</a>
             </h4>
         </article>
         <article class="side-item">
             <div class="side-meta">
-                <span class="source-tag">Sun. Guardian</span>
+                <span class="source-tag">The Hindu</span>
                 <span class="time-tag">9m ago</span>
             </div>
             <h4 class="side-title">
-                <a href="https://sundayguardianlive.com/sports/what-channel-is-the-notre-dame-game-on-today-rice-vs-notre-dame-tv-schedule-live-stream-prediction-283275/" target="_blank" rel="noopener">What Channel Is The Notre Dame Game On Today? Rice Vs Notre Dame TV Schedule, Live Stream, And Prediction</a>
-            </h4>
-        </article>
-        <article class="side-item">
-            <div class="side-meta">
-                <span class="source-tag">Sun. Guardian</span>
-                <span class="time-tag">18m ago</span>
-            </div>
-            <h4 class="side-title">
-                <a href="https://sundayguardianlive.com/world/us-israel-iran-war-latest-live-news-us-military-says-100-commercial-ships-redirected-in-60-days-amid-iran-blockade-zero-vessels-passed-without-approval-check-latest-strait-of-hormuz-update-283270/" target="_blank" rel="noopener">US-Israel-Iran War Latest Live News: US Military Says 100 Commercial Ships Redirected In 60 Days Amid Iran Blockade; Zero Vessels Passed Without Approval; Check Latest Strait Of Hormuz Update</a>
-            </h4>
-        </article>
-        <article class="side-item">
-            <div class="side-meta">
-                <span class="source-tag">NDTV</span>
-                <span class="time-tag">19m ago</span>
-            </div>
-            <h4 class="side-title">
-                <a href="https://www.ndtv.com/india-news/ex-envoy-on-india-china-meet-xi-jinping-visiting-india-important-optics-12038910#publisher=newsstand" target="_blank" rel="noopener">&#x27;Optics Of Xi Visiting India Very Important&#x27;: Ex-Envoy On BRICS Bilateral</a>
+                <a href="https://www.thehindu.com/sci-tech/technology/ai-industry-needs-to-slow-down-for-safety-anthropic-ceo/article71461300.ece" target="_blank" rel="noopener">AI industry needs to slow down for safety: Anthropic CEO</a>
             </h4>
         </article></div>
         </div>
@@ -1084,7 +1286,7 @@ body {
     <article class="lead-card">
         <div class="lead-meta">
             <span class="source-tag">M9.news</span>
-            <span class="time-tag">48m ago</span>
+            <span class="time-tag">1h ago</span>
         </div>
         <h3 class="lead-title">
             <a href="https://www.m9.news/what-to-watch-on-ott/bigg-boss-telugu-season-10-rohith-cornered-by-host-also/" target="_blank" rel="noopener">Bigg Boss Telugu: Rohith Cornered By Host Also!</a>
@@ -1122,7 +1324,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">M9.news</span>
-                <span class="time-tag">1h ago</span>
+                <span class="time-tag">2h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://www.m9.news/movienews/vijay-ajith-reunion-dream-moment-kollywood-fans/" target="_blank" rel="noopener">Biggest Day for Tamil Fans: 30-Year Wait Ends In London?</a>
@@ -1214,57 +1416,57 @@ body {
     <article class="lead-card">
         <div class="lead-meta">
             <span class="source-tag">Deccan Chronicle - News Head</span>
-            <span class="time-tag">2m ago</span>
+            <span class="time-tag">0m ago</span>
         </div>
         <h3 class="lead-title">
-            <a href="https://www.deccanchronicle.com/southern-states/andhra-pradesh/jagan-asks-if-naidu-will-take-moral-responsibility-for-alleged-dsc-2025-anomalies-1987086" target="_blank" rel="noopener">Jagan Asks If Naidu Will Take Moral Responsibility for Alleged DSC-2025 Anomalies</a>
+            <a href="https://www.deccanchronicle.com/southern-states/andhra-pradesh/cashew-nuts-anjeer-paddy-sacred-powders-give-unique-look-to-ganesh-pandals-1987092" target="_blank" rel="noopener">Cashew Nuts, Anjeer, Paddy, Sacred Powders Give Unique Look to Ganesh Pandals</a>
         </h3>
-        <p class="lead-summary">Teacher aspirant’s careers have become a joke for you. He raised three cases with regard to the winners’ list to be checked and said that there were no names.</p>
+        <p class="lead-summary">At a street-side pandal on Temple Street in Kakinada, organisers are erecting an 18-foot Vinayaka idol using nearly 200 kg of sacred powders such as turmeric, vermillion, Vibhuthi and Kubera Kumkum.</p>
     </article>
             <div class="side-list">
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">Deccan Chronicle - News Head</span>
-                <span class="time-tag">3m ago</span>
+                <span class="time-tag">4m ago</span>
             </div>
             <h4 class="side-title">
-                <a href="https://www.deccanchronicle.com/nation/big-win-for-india-as-brics-unanimously-adopts-joint-delhi-declaration-1987085" target="_blank" rel="noopener">Big Win for India as BRICS Unanimously Adopts Joint Delhi Declaration</a>
+                <a href="https://www.deccanchronicle.com/southern-states/telangana/sir-hearings-leave-hyd-voters-fuming-1987091" target="_blank" rel="noopener">SIR Hearings Leave Hyd Voters Fuming</a>
             </h4>
         </article>
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">Deccan Chronicle - News Head</span>
-                <span class="time-tag">8m ago</span>
+                <span class="time-tag">7m ago</span>
             </div>
             <h4 class="side-title">
-                <a href="https://www.deccanchronicle.com/southern-states/andhra-pradesh/kakani-demands-mandal-wise-disclosure-of-land-re-verification-data-1987084" target="_blank" rel="noopener">Kakani Demands Mandal-Wise Disclosure of Land Re-Verification Data</a>
+                <a href="https://www.deccanchronicle.com/southern-states/telangana/hyderabad-gets-ready-to-host-ganesha-fest-with-15-l-idols-1987090" target="_blank" rel="noopener">Hyderabad Gets Ready to Host Ganesha Fest With 1.5 L Idols</a>
             </h4>
         </article>
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">Deccan Chronicle - News Head</span>
-                <span class="time-tag">9m ago</span>
+                <span class="time-tag">10m ago</span>
             </div>
             <h4 class="side-title">
-                <a href="https://www.deccanchronicle.com/southern-states/telangana/hyderabad-icmr-nin-review-finds-diet-exercise-help-sustain-weight-loss-1987083" target="_blank" rel="noopener">Hyderabad: ICMR-NIN Review Finds Diet, Exercise Help Sustain Weight Loss</a>
+                <a href="https://www.deccanchronicle.com/southern-states/andhra-pradesh/10-tribal-students-from-ap-emrs-to-meet-president-murmu-in-delhi-1987089" target="_blank" rel="noopener">10 Tribal Students From AP EMRS to Meet President Murmu in Delhi</a>
             </h4>
         </article>
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">Deccan Chronicle - News Head</span>
-                <span class="time-tag">11m ago</span>
+                <span class="time-tag">13m ago</span>
             </div>
             <h4 class="side-title">
-                <a href="https://www.deccanchronicle.com/southern-states/telangana/dalit-house-demolished-after-inter-caste-marriage-1987082" target="_blank" rel="noopener">Dalit House Demolished After Inter-Caste Marriage</a>
+                <a href="https://www.deccanchronicle.com/southern-states/andhra-pradesh/visakhapatnam-residents-protest-over-water-shortage-in-vizag-1987088" target="_blank" rel="noopener">Visakhapatnam: Residents Protest Over Water Shortage in Vizag</a>
             </h4>
         </article>
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">Deccan Chronicle - News Head</span>
-                <span class="time-tag">14m ago</span>
+                <span class="time-tag">13m ago</span>
             </div>
             <h4 class="side-title">
-                <a href="https://www.deccanchronicle.com/lifestyle/astrology/astroguide-for-saturday-september-13-sunday-1987081" target="_blank" rel="noopener">Astroguide for Saturday, September 13, Sunday</a>
+                <a href="https://www.deccanchronicle.com/southern-states/telangana/aimim-seeks-22a-cover-for-waqf-lands-1987087" target="_blank" rel="noopener">AIMIM Seeks 22A Cover for Waqf Lands</a>
             </h4>
         </article></div>
         </div>
@@ -1279,7 +1481,7 @@ body {
     <article class="lead-card">
         <div class="lead-meta">
             <span class="source-tag">NYT &gt; U.S. &gt; Politics</span>
-            <span class="time-tag">5m ago</span>
+            <span class="time-tag">19m ago</span>
         </div>
         <h3 class="lead-title">
             <a href="https://www.nytimes.com/2026/09/12/world/europe/trump-ireland-unification-remarks.html" target="_blank" rel="noopener">Trump Says Irish Unification Would Be ‘Fantastic,’ Breaking With Precedent</a>
@@ -1290,7 +1492,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">NYT &gt; U.S. &gt; Politics</span>
-                <span class="time-tag">34m ago</span>
+                <span class="time-tag">48m ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://www.nytimes.com/2026/09/12/us/politics/husted-political-director-nazi-photo.html" target="_blank" rel="noopener">Republican Campaign Aide Is Fired Over Nazi Photo</a>
@@ -1299,7 +1501,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">The Hill</span>
-                <span class="time-tag">39m ago</span>
+                <span class="time-tag">53m ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://thehill.com/homenews/administration/6086235-trump-adviser-gop-midterm-optimism/" target="_blank" rel="noopener">Trump political adviser is ‘cautiously optimistic’ about GOP in upcoming midterms</a>
@@ -1308,7 +1510,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">The Hill</span>
-                <span class="time-tag">55m ago</span>
+                <span class="time-tag">1h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://thehill.com/opinion/healthcare/6084852-training-american-doctors/" target="_blank" rel="noopener">America’s doctor shortage is a national security threat</a>
@@ -1317,7 +1519,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">The Hill</span>
-                <span class="time-tag">1h ago</span>
+                <span class="time-tag">2h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://thehill.com/policy/technology/6086167-anthropic-ceo-ai-development-guardrails/" target="_blank" rel="noopener">Anthropic CEO calls to ‘slow the pace’ of AI development amid safety concerns</a>
@@ -1326,7 +1528,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">The Hill</span>
-                <span class="time-tag">1h ago</span>
+                <span class="time-tag">2h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://thehill.com/opinion/healthcare/6081964-immigration-pathways-nursing-staffing/" target="_blank" rel="noopener">Loss of legal immigrant caregivers puts America’s seniors at risk</a>
@@ -1429,7 +1631,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">WIRED</span>
-                <span class="time-tag">7h ago</span>
+                <span class="time-tag">8h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://www.wired.com/gallery/best-standing-desks/" target="_blank" rel="noopener">10 Best Standing Desks Worth Buying in 2026</a>
@@ -1438,7 +1640,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">Ars Technica</span>
-                <span class="time-tag">7h ago</span>
+                <span class="time-tag">8h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://arstechnica.com/gadgets/2026/09/i-spent-4000-on-a-robot-dog-from-china/" target="_blank" rel="noopener">I spent $4,000 on a robot dog from China</a>
@@ -1447,7 +1649,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">WIRED</span>
-                <span class="time-tag">7h ago</span>
+                <span class="time-tag">8h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://www.wired.com/story/the-anti-woke-right-cant-figure-out-how-to-stop-grand-theft-auto-vi/" target="_blank" rel="noopener">The Anti-Woke Right Can’t Figure Out How to Stop ‘Grand Theft Auto VI’</a>
@@ -1485,7 +1687,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">The New Stack</span>
-                <span class="time-tag">3h ago</span>
+                <span class="time-tag">4h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://thenewstack.io/mcp-security-permissions-overhaul/" target="_blank" rel="noopener">Why MCP security is about permissions overhaul</a>
@@ -1512,7 +1714,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">The New Stack</span>
-                <span class="time-tag">4h ago</span>
+                <span class="time-tag">5h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://thenewstack.io/spec-driven-sdlc-gates/" target="_blank" rel="noopener">The AI-native SDLC won’t be one process</a>
@@ -1521,7 +1723,7 @@ body {
         <article class="side-item">
             <div class="side-meta">
                 <span class="source-tag">The New Stack</span>
-                <span class="time-tag">7h ago</span>
+                <span class="time-tag">8h ago</span>
             </div>
             <h4 class="side-title">
                 <a href="https://thenewstack.io/coxon-anthropic-ai-monitoring-failures/" target="_blank" rel="noopener">Jacob Coxon warns AI could kill us all. Anthropic’s own report exposes safety gaps.</a>
@@ -1539,7 +1741,7 @@ body {
     <article class="lead-card">
         <div class="lead-meta">
             <span class="source-tag">ABC7</span>
-            <span class="time-tag">22m ago</span>
+            <span class="time-tag">36m ago</span>
         </div>
         <h3 class="lead-title">
             <a href="https://abc7news.com/story/california-change-license-plate-sequence-1st-time-40-years-due-shortage-combinations/19822295/" target="_blank" rel="noopener">California to change license plate sequence for 1st time in 40 years due to shortage of combinations</a>
