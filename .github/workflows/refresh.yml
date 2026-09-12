@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - ".github/workflows/refresh.yml"
       - "config.yml"
       - "generate_newspaper.py"
       - "render_stocks.py"
@@ -15,6 +16,10 @@ on:
 
 permissions:
   contents: write
+
+concurrency:
+  group: refresh-personal-newspaper
+  cancel-in-progress: false
 
 jobs:
   refresh:
@@ -39,8 +44,33 @@ jobs:
 
       - name: Commit updated newspaper
         run: |
+          set -e
           git config user.name "personal-newspaper-bot"
           git config user.email "bot@example.com"
           git add index.html
-          git commit -m "Refresh newspaper + stocks $(date -u '+%Y-%m-%d %H:%M UTC')" || echo "No changes"
-          git push
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m "Refresh newspaper + stocks $(date -u '+%Y-%m-%d %H:%M UTC')"
+
+          # Retry transient GitHub push failures. The fetch/rebase also handles
+          # the unlikely case that another run updated main while this job ran.
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt $attempt"
+              exit 0
+            fi
+
+            if [ "$attempt" -eq 5 ]; then
+              echo "Push failed after $attempt attempts"
+              exit 1
+            fi
+
+            echo "Push attempt $attempt failed; syncing and retrying..."
+            sleep $((attempt * 5))
+            git fetch origin main
+            git rebase origin/main
+          done
