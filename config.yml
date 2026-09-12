@@ -3,26 +3,23 @@ site:
   subtitle: "Markets · World · India · Bay Area"
   max_articles_per_topic: 6
   stock_tickers:
-    - NVDA
     - MU
-    - MSFT
-    - META
-    - AMZN
-    - AAPL
-    - VUG
-    - SMH
-    - CRM
-    - NFLX
+    - NVDA
     - AVGO
     - GOOGL
-    - SPGI
-    - DAL
-    - MA
+    - AMZN
+    - MSFT
     - V
-    - BSX
-    - MPWR
-    - TTWO
-    - WYNN
+    - MA
+    - META
+    - AAPL
+    - CRM
+    - SNOW
+    - WDAY
+    - DAL
+    - UAL
+    - EXPE
+    - SPGI
 
 topics:
   - name: "India — National Politics & News"
