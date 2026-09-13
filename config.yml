@@ -1,7 +1,7 @@
 site:
   title: "The Chai Ledger"
   subtitle: "Markets · Politics · AI · Sports · Entertainment"
-  max_articles_per_topic: 10
+  max_articles_per_topic: 25
   stock_tickers:
     - MU
     - NVDA
@@ -26,68 +26,60 @@ site:
 news_tabs:
   - slug: "ap-telangana"
     title: "AP + Telangana"
-    kicker: "Politics first — Andhra Pradesh, Telangana, leaders, policy and power shifts"
+    kicker: "Politics first — Andhra Pradesh, Telangana, leaders, policy and power shifts · last 24 hours only"
     feeds:
-      - "https://news.google.com/rss/search?q=Andhra+Pradesh+politics&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=Telangana+politics&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=Chandrababu+Naidu+OR+Pawan+Kalyan+OR+Jagan+Mohan+Reddy&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=Revanth+Reddy+OR+KCR+OR+KTR+Telangana&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://www.gulte.com/feed"
-      - "https://www.greatandhra.com/rss.xml"
-      - "https://english.tupaki.com/rss.xml"
+      - "https://news.google.com/rss/search?q=Andhra+Pradesh+politics+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=Telangana+politics+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=(Chandrababu+Naidu+OR+Pawan+Kalyan+OR+Jagan+Mohan+Reddy)+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=(Revanth+Reddy+OR+KCR+OR+KTR)+Telangana+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
       - "https://www.telugu360.com/category/politics/feed/"
       - "https://www.m9.news/feed"
 
   - slug: "india-neighbors"
     title: "India + Neighbors"
-    kicker: "India's political and strategic relationships across South Asia and the Indo-Pacific"
+    kicker: "India's political and strategic relationships across South Asia and the Indo-Pacific · last 24 hours only"
     feeds:
-      - "https://news.google.com/rss/search?q=India+Pakistan+relations&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=India+China+relations&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=India+Bangladesh+relations&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=India+Nepal+Sri+Lanka+Maldives+relations&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=India+Pakistan+relations+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=India+China+relations+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=India+Bangladesh+relations+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=(India+Nepal+OR+India+Sri+Lanka+OR+India+Maldives)+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
       - "https://feeds.feedburner.com/ndtvnews-top-stories"
       - "https://www.thehindu.com/feeder/default.rss"
-      - "https://theprint.in/feed/"
-      - "https://tribune.com.pk/feed"
 
   - slug: "us"
     title: "U.S. News"
-    kicker: "Politics, economy, policy, courts and the stories that actually move the country"
+    kicker: "Politics, economy, policy, courts and the stories that actually move the country · last 24 hours only"
     feeds:
       - "https://rss.nytimes.com/services/xml/rss/nyt/US.xml"
       - "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml"
       - "https://thehill.com/feed/"
-      - "https://www.politico.com/rss/politicopicks.xml"
-      - "https://news.google.com/rss/search?q=US+politics+economy+policy&hl=en-US&gl=US&ceid=US:en"
+      - "https://news.google.com/rss/search?q=US+politics+economy+policy+when:1d&hl=en-US&gl=US&ceid=US:en"
 
   - slug: "ai-data"
     title: "AI + Data Lab"
-    kicker: "What to learn next — agents, data platforms, analytics engineering, AI infrastructure and applied AI"
+    kicker: "Agents, Agentic AI and the new trends worth learning — explained simply · last 24 hours only"
     feeds:
-      - "https://techcrunch.com/feed/"
-      - "https://feeds.arstechnica.com/arstechnica/index"
+      - "https://news.google.com/rss/search?q=(agentic+AI+OR+AI+agents+OR+multi-agent)+when:1d&hl=en-US&gl=US&ceid=US:en"
+      - "https://news.google.com/rss/search?q=(MCP+OR+Model+Context+Protocol)+AI+agents+when:1d&hl=en-US&gl=US&ceid=US:en"
+      - "https://news.google.com/rss/search?q=(LLM+agents+OR+AI+workflow+OR+tool+use+OR+reasoning+models)+when:1d&hl=en-US&gl=US&ceid=US:en"
+      - "https://news.google.com/rss/search?q=(RAG+OR+vector+database+OR+AI+data+engineering+OR+AI+analytics)+when:1d&hl=en-US&gl=US&ceid=US:en"
       - "https://www.technologyreview.com/feed/"
-      - "https://venturebeat.com/category/ai/feed/"
-      - "https://www.zdnet.com/news/rss.xml"
+      - "https://feeds.arstechnica.com/arstechnica/index"
       - "https://thenewstack.io/feed/"
-      - "https://news.google.com/rss/search?q=AI+agents+data+engineering+analytics+Snowflake+dbt&hl=en-US&gl=US&ceid=US:en"
 
   - slug: "sports"
     title: "Sports"
-    kicker: "Cricket and tennis first — the matches, players, rankings and stories worth your time"
+    kicker: "Cricket and tennis first — the matches, players, rankings and stories worth your time · last 24 hours only"
     feeds:
-      - "https://news.google.com/rss/search?q=cricket+India+ICC&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=IPL+cricket&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=tennis+ATP+WTA+Grand+Slam&hl=en-US&gl=US&ceid=US:en"
-      - "https://www.espn.com/espn/rss/news"
+      - "https://news.google.com/rss/search?q=cricket+India+ICC+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=IPL+cricket+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=tennis+ATP+WTA+Grand+Slam+when:1d&hl=en-US&gl=US&ceid=US:en"
 
   - slug: "entertainment"
     title: "Movies + Gossip"
-    kicker: "Telugu cinema, Bollywood, Hollywood, streaming and the fun stuff"
+    kicker: "Telugu cinema, Bollywood, Hollywood, streaming and the fun stuff · last 24 hours only"
     feeds:
-      - "https://news.google.com/rss/search?q=Telugu+cinema+Tollywood+gossip&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=Bollywood+movie+news+celebrity&hl=en-IN&gl=IN&ceid=IN:en"
-      - "https://news.google.com/rss/search?q=Hollywood+movie+streaming+celebrity+news&hl=en-US&gl=US&ceid=US:en"
-      - "https://www.gulte.com/category/movienews/feed"
+      - "https://news.google.com/rss/search?q=Telugu+cinema+Tollywood+gossip+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=Bollywood+movie+news+celebrity+when:1d&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=Hollywood+movie+streaming+celebrity+news+when:1d&hl=en-US&gl=US&ceid=US:en"
       - "https://www.m9.news/category/movienews/feed"
