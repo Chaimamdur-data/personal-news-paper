@@ -8,6 +8,8 @@ on:
       - "config.yml"
       - "generate_newspaper.py"
       - "render_stocks.py"
+      - "render_jobs.py"
+      - "inject_jobs.py"
       - "stock_health.py"
       - "requirements.txt"
   schedule:
@@ -40,7 +42,9 @@ jobs:
       - name: Generate newspaper + stock dashboard
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python generate_newspaper.py
+        run: |
+          python generate_newspaper.py
+          python inject_jobs.py
 
       - name: Commit updated newspaper
         run: |
