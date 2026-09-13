@@ -7,12 +7,65 @@
 <meta http-equiv="refresh" content="3600">
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#e9e4da}
+html,body{margin:0;padding:0;background:#e9e4da;color:#171713}
 body{min-height:100vh}
+a{color:inherit}
+.ledger-tabs-wrap{position:sticky;top:0;z-index:500;background:#171713;border-bottom:1px solid #3d3b35;box-shadow:0 4px 12px rgba(0,0,0,.16)}
+.ledger-tabs{max-width:1180px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 8px}
+.ledger-tabs::-webkit-scrollbar{display:none}
+.ledger-tab-btn{appearance:none;border:0;background:transparent;color:#d7d0c3;font:700 11px/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:.45px;padding:14px 15px 12px;white-space:nowrap;border-bottom:3px solid transparent;cursor:pointer}
+.ledger-tab-btn:hover{color:#fff}
+.ledger-tab-btn.active{color:#fff;border-bottom-color:#c79c4b;background:#24231f}
+.ledger-tab-panel{display:none}
+.ledger-tab-panel.active{display:block}
+.news-page{max-width:1180px;margin:0 auto;background:#f3ede2;min-height:100vh;padding:24px 28px 36px;font-family:Georgia,'Times New Roman',serif}
+.news-masthead{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;border-bottom:3px double #24221e;padding-bottom:13px;margin-bottom:16px}
+.news-eyebrow{font:700 9px/1.2 Arial,sans-serif;letter-spacing:.8px;color:#6e675b;margin-bottom:7px}
+.news-masthead h1{font-size:40px;line-height:.95;margin:0 0 7px;letter-spacing:-1.1px}
+.news-masthead p{font-size:11px;font-style:italic;color:#6e675b;margin:0;max-width:690px}
+.news-date{text-align:right;font:9px/1.5 Arial,sans-serif;white-space:nowrap}
+.learning-ribbon{display:flex;gap:9px;align-items:center;border-top:1px solid #24221e;border-bottom:1px solid #24221e;padding:7px 0;margin-bottom:18px;font:9px/1.4 Arial,sans-serif}
+.learning-ribbon strong{font-size:8px;letter-spacing:.7px;background:#171713;color:#f3ede2;padding:4px 6px}
+.news-front-grid{display:grid;grid-template-columns:1.35fr .85fr;border-top:1px solid #24221e;border-bottom:1px solid #24221e}
+.lead-story{padding:18px 20px 20px 0;border-right:1px solid #716b61}
+.story-meta{display:flex;gap:7px;align-items:center;font:8px/1.2 Arial,sans-serif;text-transform:uppercase;letter-spacing:.35px;margin-bottom:7px}
+.story-source{font-weight:800;color:#674e25}
+.story-age{color:#777065}
+.lead-story h2{font-size:30px;line-height:1.02;margin:0 0 11px;letter-spacing:-.6px}
+.lead-story h2 a,.side-story h3 a,.brief-story h3 a{text-decoration:none}
+.lead-story h2 a:hover,.side-story h3 a:hover,.brief-story h3 a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+.lead-story p{font-size:13px;line-height:1.5;margin:0 0 13px;color:#4e4941}
+.read-link{font:700 9px/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:.4px;text-decoration:none;border-bottom:1px solid #171713;padding-bottom:2px}
+.side-stack{padding-left:18px}
+.side-story{padding:14px 0;border-bottom:1px solid #a59e92}
+.side-story:last-child{border-bottom:0}
+.side-story h3{font-size:17px;line-height:1.1;margin:0 0 7px}
+.side-story p{font-size:10.5px;line-height:1.4;color:#5d574e;margin:0}
+.briefs-title{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #24221e;padding:18px 0 6px;font:700 8px/1 Arial,sans-serif;letter-spacing:.65px}
+.briefs-title span:last-child{font-weight:400;color:#777065}
+.briefs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:26px}
+.brief-story{display:grid;grid-template-columns:34px 1fr;gap:9px;border-bottom:1px solid #b5ada0;padding:13px 0}
+.brief-num{font-size:24px;line-height:1;color:#b9ae9c;font-weight:700}
+.brief-story h3{font-size:14px;line-height:1.18;margin:0}
+.empty-news{border:1px solid #25231f;padding:35px;text-align:center;font-style:italic;color:#6e675b}
+.news-footer{border-top:2px solid #24221e;margin-top:24px;padding-top:8px;font:8px/1.45 Arial,sans-serif;color:#746d61}
+@media(max-width:760px){
+  .ledger-tab-btn{padding:12px 11px 10px;font-size:9px}
+  .news-page{padding:18px 14px 28px}
+  .news-masthead h1{font-size:31px}
+  .news-masthead p{font-size:10px}
+  .news-front-grid{grid-template-columns:1fr}
+  .lead-story{padding:15px 0;border-right:0;border-bottom:1px solid #716b61}
+  .lead-story h2{font-size:25px}
+  .side-stack{padding-left:0}
+  .briefs-grid{grid-template-columns:1fr}
+  .learning-ribbon{align-items:flex-start;flex-direction:column}
+}
 </style>
 </head>
 <body>
-
+<div class="ledger-tabs-wrap"><nav class="ledger-tabs"><button class="ledger-tab-btn active" data-tab="markets">Markets</button><button class="ledger-tab-btn" data-tab="ap-telangana">AP + Telangana</button><button class="ledger-tab-btn" data-tab="india-neighbors">India + Neighbors</button><button class="ledger-tab-btn" data-tab="us">U.S.</button><button class="ledger-tab-btn" data-tab="ai-data">AI + Data</button><button class="ledger-tab-btn" data-tab="sports">Sports</button><button class="ledger-tab-btn" data-tab="entertainment">Movies + Gossip</button></nav></div>
+<div class="ledger-tab-panel active" id="tab-markets">
     <style>
       :root{--paper:#f3ede2;--ink:#171713;--muted:#69645b;--rule:#25241f;--green:#1f6b49;--amber:#a56a16;--red:#a54336;--bar:#15211c}
       body{background:#e9e4da!important} .ledger-page{max-width:1180px;margin:0 auto;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif;padding:22px 28px 34px}
@@ -29,7 +82,7 @@ body{min-height:100vh}
       @media(max-width:800px){.ledger-page{padding:14px 10px 24px}.ledger-title{font-size:29px}.ledger-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ledger-section-title{display:block}.ledger-section-title span{display:block;margin-top:3px}.read-grid{grid-template-columns:repeat(2,1fr)}.ledger-edition{font-size:7px}} @media(max-width:430px){.ledger-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ledger-card{padding:8px 7px}.ledger-ticker{font-size:15px}.health-inline{font-size:7px}.ledger-price{font-size:19px}.ledger-metrics{grid-template-columns:repeat(2,1fr)}.ledger-title{font-size:26px}}
     </style>
     <section class="ledger-page" id="stocks">
-      <header class="ledger-masthead"><div><h1 class="ledger-title">The Chai Ledger</h1><div class="ledger-deck">Entry levels, live prices, six-month targets — one glance tells you ENTER or WAIT.</div></div><div class="ledger-edition"><b>Edition:</b> Stocks Only · Action First<br><b>Updated:</b> Sep 13, 2026 · 03:05 AM</div></header>
+      <header class="ledger-masthead"><div><h1 class="ledger-title">The Chai Ledger</h1><div class="ledger-deck">Entry levels, live prices, six-month targets — one glance tells you ENTER or WAIT.</div></div><div class="ledger-edition"><b>Edition:</b> Stocks Only · Action First<br><b>Updated:</b> Sep 13, 2026 · 03:08 AM</div></header>
       <div class="tape"><span class="tape-label">ON THE TAPE</span><span><i class="tape-dot dot-green"></i><b>ENTER:</b> none right now</span><span><i class="tape-dot dot-amber"></i><b>WAIT:</b> MU · NVDA · AVGO · GOOGL · AMZN · MSFT · META · AAPL · ORCL · PSTG · SNOW · CRM · WDAY · V · MA · SPGI · DAL · UAL · EXPE</span></div>
       <section class="ledger-section"><div class="ledger-section-title"><h2>AI Compute &amp; Semis</h2><span>Infrastructure leaders — best entries come on disciplined pullbacks, not vertical moves.</span></div><div class="ledger-grid">
     <article class="ledger-card action-wait">
@@ -346,6 +399,517 @@ body{min-height:100vh}
         <div class="read-item"><b>GICS peer data</b>Official GICS peer-median fields remain N/A unless an authoritative peer feed is available; the bucket is renormalized exactly per the model.</div>
         <div class="read-item"><b>6-month target</b>Uses the current consensus mean analyst target as a planning proxy, not a guaranteed forecast.</div>
       </div><div class="footnote">The health model is a decision-support framework, not a guarantee of returns. Technical, ownership, filing, and peer-group fields can be unavailable or delayed in public market feeds.</div></section>
-    </section>
+    </section></div><div class="ledger-tab-panel" id="tab-ap-telangana">
+    <section class="news-page">
+      <header class="news-masthead">
+        <div>
+          <div class="news-eyebrow">◆ THE CHAI LEDGER / AP + TELANGANA</div>
+          <h1>AP + Telangana</h1>
+          <p>Politics first — Andhra Pradesh, Telangana, leaders, policy and power shifts</p>
+        </div>
+        <div class="news-date">Edition<br><strong>Sep 13, 2026</strong></div>
+      </header>
+      
+      
+        <div class="news-front-grid">
+          
+        <article class="lead-story">
+          <div class="story-meta"><span class="story-source">The New Indian Express</span><span class="story-age">3d ago</span></div>
+          <h2><a href="https://news.google.com/rss/articles/CBMiygFBVV95cUxNZXJhTmJ1MlBMbEZYQkhsTkJfNmFTTDZEa2pXdmYyZnpYc1Npdk9PT21SMVBiMndudzVpTFJvVmFPUVlwY19wRXJ0eHdYSTNtVXJYdnllSjhCaHhUd2xQend6aDNmS3dfX3lhdWNRWUlUOGNyakVmNllobThWRjZMRWRlRHBMUGJ1Qy11R1h4ekxPMG01UFNMbVB2ZktmT0FuMW9QcndTdzdwem9zeVhvVFRiY3djRzJVcE9uTzFNWlpaMnhRWkJhWFRn0gHXAUFVX3lxTE9ndkZ1Vklxd29QQXFJZmpnNHA4Z1RVUERqc0VIVFkxMXM4WGZYSGYwRWkzTFBpbFJBQkd1Nnd5UThmT1hyRkR4TzRYaWxjR0txUW5xNmp5YnhkSEktRUFpTzVfdENsQThBRGxZc213Qk1EVEFnem9mempfek1ObUh3U3hkOGtERWd3bzhUOUlSUmRaeGlKcGxzenZXVnpBWktwRHdEc3N2Snp3M242UzJSRGgyMUFxOE5wRm9ZelFOQWVfZC1QTjJRbUxJMDFLcldpam8xYzNB?oc=5" target="_blank" rel="noopener">Telangana CM Revanth Reddy orders probe into ‘BRS plot hatched by KCR’</a></h2>
+          <p>Telangana CM Revanth Reddy orders probe into ‘BRS plot hatched by KCR’ The New Indian Express</p>
+          <a class="read-link" href="https://news.google.com/rss/articles/CBMiygFBVV95cUxNZXJhTmJ1MlBMbEZYQkhsTkJfNmFTTDZEa2pXdmYyZnpYc1Npdk9PT21SMVBiMndudzVpTFJvVmFPUVlwY19wRXJ0eHdYSTNtVXJYdnllSjhCaHhUd2xQend6aDNmS3dfX3lhdWNRWUlUOGNyakVmNllobThWRjZMRWRlRHBMUGJ1Qy11R1h4ekxPMG01UFNMbVB2ZktmT0FuMW9QcndTdzdwem9zeVhvVFRiY3djRzJVcE9uTzFNWlpaMnhRWkJhWFRn0gHXAUFVX3lxTE9ndkZ1Vklxd29QQXFJZmpnNHA4Z1RVUERqc0VIVFkxMXM4WGZYSGYwRWkzTFBpbFJBQkd1Nnd5UThmT1hyRkR4TzRYaWxjR0txUW5xNmp5YnhkSEktRUFpTzVfdENsQThBRGxZc213Qk1EVEFnem9mempfek1ObUh3U3hkOGtERWd3bzhUOUlSUmRaeGlKcGxzenZXVnpBWktwRHdEc3N2Snp3M242UzJSRGgyMUFxOE5wRm9ZelFOQWVfZC1QTjJRbUxJMDFLcldpam8xYzNB?oc=5" target="_blank" rel="noopener">Read full story →</a>
+        </article>
+          <div class="side-stack">
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">Politics Archives - Telugu360</span><span class="story-age">1d ago</span></div>
+              <h3><a href="https://www.telugu360.com/ktr-threatens-investors-telangana-projects-today-may-face-action-tomorrow/" target="_blank" rel="noopener">KTR threatens investors: Telangana projects today may face action tomorrow</a></h3>
+              <p>KTR’s political attack on the Congress government has now moved beyond allegations of corruption. Over two days, he has delivered a direct warning to companies considering investment in Telangana: projects cleared by the present government could face legal and political consequences if BRS returns to power. On Wednesday, KTR…</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">The News Minute</span><span class="story-age">1d ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxQV0QyQ2NYb2lvU2Zhcnh6YmR5cGc4d2VaVGEyUlN5Q3djNFFRdnpLeWJnaUdkWUg0N1N3OXd6X1pBU3F5YlhZSUR1VEFpZGZhLUxlUHdYaWNxWlJCWFlwXzZOSG9vZ2U1dDI0eE5mNWhtbEJzcjFDdXN5UW9qWTg1SEItd0h0a3JQNzRaN1E4MDVJb2o0bUNjdUdoWllmSVJybURGcmQybk9pc09IbzlN?oc=5" target="_blank" rel="noopener">‘Can arrest Jagan in a minute, but won’t’: Andhra CM Chandrababu Naidu</a></h3>
+              <p>‘Can arrest Jagan in a minute, but won’t’: Andhra CM Chandrababu Naidu The News Minute</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">ANI News</span><span class="story-age">2d ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMi8wFBVV95cUxNRjBCckVmMEtrNEdiejZybDN4VkhQM1JjYUFaaGYwZFZHZi1lZElNRkMxczZZMXpuZWNlaktoQXNqMUFLdnhtcDYtSkNQNzRmaWFzaF9iRlJVbVdCTTFVczRxLWpPNnR1bWRNU3ZUZ0t0aHQ2UDJlNE5GaXluQXpWYmN4Sk1zRjhMNG1oclBBcHFPaGRvOFNUVTF0ZzZmM2g5Nkh2cXdoUkV4UTF3Tzl3MjAzeWU5c3JnZVlhLTI2bDN2RFRlRnUxU0MyUkgtVFNJSFNSbEloVFV6Y0NiQmMtaUhTT0ZQNTMySm1UYmtMWkFQMkk?oc=5" target="_blank" rel="noopener">Andhra CM Naidu, Nara Lokesh misled legislature: Jagan Reddy alleges massive irregularities in DSC 2025</a></h3>
+              <p>Andhra CM Naidu, Nara Lokesh misled legislature: Jagan Reddy alleges massive irregularities in DSC 2025 ANI News</p>
+            </article></div>
+        </div>
+        <div class="briefs-title"><span>THE REST OF THE BRIEF</span><span>10 curated stories</span></div>
+        <div class="briefs-grid">
+            <article class="brief-story">
+              <span class="brief-num">05</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Telangana Today</span><span class="story-age">2d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMirAFBVV95cUxQRkw5WWJXbVhfbmJ1dXd1RDRCRDAxeGYxUGpiNUVKeGpseWJRUzBpLVBwU1VSRTRHWUlKVFNtV05DRkJvYU5kMGlob3NaM3ZxR2Nmdnp0eXVrSlQzaHpSM1VUallvSlRKZm0tQ29hZkY1S1NQalRkbGpHUVJZblExWVhWRzVuZUFJN0Z0akVNSVd0TTVOYXNyRkFuTFotcHUwUnBlLW5WZHluNTBj?oc=5" target="_blank" rel="noopener">KTR accuses Revanth Reddy of family enrichment, takes Tesseract land row to ground</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">06</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Telangana Today</span><span class="story-age">2d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQR3BBT0pNR01rQWFsV0ZOVWROcnBMNmMzQU9GV0ZrUC1xR241VGRhZ0ptbVYwcU5aUDJqakpGWllZTVI5RGZuSGg1ZWRlRllkY2J2eS1sQTQwNE9INU10STZKNzBoSmNrOEFGQlpkRU9RNXlENXVmRzI5STdDaDVDYl84TDBzLVk?oc=5" target="_blank" rel="noopener">BRS to move privilege motion against CM Revanth Reddy</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">07</span>
+              <div>
+                <div class="story-meta"><span class="story-source">ANI News</span><span class="story-age">3d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMi8gFBVV95cUxQN3lQT0tjNnQ5OTRGNXlBV3ppd3FYYThyelJCdHZ6WTliSUNvcGQwRTYwT2lYZ21IakJnVWs5SjlPREJPbTJ6eXE1V25xTGc0QmZreHo5dHNQbkp3dzFJWmQwdm1xT2NHdWNRcVBuZEZCY01HYmI2VHRlQXM0UUl1YW1Sd2FJM1ZMOEhNOFJLaXdRa1Q4NWxLR3NHdEhzYVROaVZqR2h3RjQzSFlab2I0WldEQV9TcFRFc195N2x3eGl4cEtJSVpHQkFQa05aU3Z3dkE3WGpmb1BoWUZlR3NHNkwyV2Mxek9zVjM3YzJjVjBDdw?oc=5" target="_blank" rel="noopener">Telangana CM Revanth Reddy slams KCR for his ‘feudal’ approach towards Dalit Speaker, community</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">08</span>
+              <div>
+                <div class="story-meta"><span class="story-source">thenewsmill.com</span><span class="story-age">3d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMingFBVV95cUxQZW1iMDktQzdxVngzeFB4dFpKR3ZNT2FuUVd0QzNTdlVXdlFWVUp4RlZYNjYxY0tjVlZxbHFWU256VlY2akgwUnZRNTIwMEhnY3hHMlAzc2NtNzN0WGpZeUswZkdiek5NSjRIVXA1NFB6OFZBYU8xa3NyYUpKOE00NGh5d2tibUJDb2x0ZlpKVWxuVXBWLWJtVGJzUE1jdw?oc=5" target="_blank" rel="noopener">YSRCP criticises Chandrababu Naidu for personal attacks on Jagan</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">09</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Politics Archives - Telugu360</span><span class="story-age">3d ago</span></div>
+                <h3><a href="https://www.telugu360.com/revanth-orders-comprehensive-probe-into-events-since-sept-6-targets-brs-over-speaker-row/" target="_blank" rel="noopener">Revanth Orders Comprehensive Probe Into Events Since Sept 6, Targets BRS Over Speaker Row</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">10</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Politics Archives - Telugu360</span><span class="story-age">3d ago</span></div>
+                <h3><a href="https://www.telugu360.com/first-signature-to-350-court-battles-naidu-makes-mega-dsc-his-case-against-ysrcp-politics/" target="_blank" rel="noopener">First signature to 350 court battles: Naidu makes Mega DSC his case against YSRCP politics</a></h3>
+              </div>
+            </article></div>
+      <footer class="news-footer">Stories link to the original publisher or news aggregation source. Headlines and summaries refresh automatically.</footer>
+    </section></div><div class="ledger-tab-panel" id="tab-india-neighbors">
+    <section class="news-page">
+      <header class="news-masthead">
+        <div>
+          <div class="news-eyebrow">◎ THE CHAI LEDGER / INDIA + NEIGHBORS</div>
+          <h1>India + Neighbors</h1>
+          <p>India&#x27;s political and strategic relationships across South Asia and the Indo-Pacific</p>
+        </div>
+        <div class="news-date">Edition<br><strong>Sep 13, 2026</strong></div>
+      </header>
+      
+      
+        <div class="news-front-grid">
+          
+        <article class="lead-story">
+          <div class="story-meta"><span class="story-source">theweek.in</span><span class="story-age">38m ago</span></div>
+          <h2><a href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxPQmpSRE9yQVhmcXhQb2FhUVZzUF9wT1ZtWW85Q040V2dreEdkZVVJS0RmMkZ1aHowcG9IQmEzRGlHWWRKRFoxQS1PR0dRbTVUWXBUYlBSMXdiQ3FmR082ckFEOVVrQUJTUVd6UnNteVkxaEIyM0gyTS0wUEtvbVE4UnhXaWRKdzItZmt6UEpONEtsaUFjZVowZG52cUF6LU56TVJhTDRjUnbSAa4BQVVfeXFMTWRXZkJFTWhqSm5kVkIxS2FFS19qeDNvbENpcl9OMDhYeUl4Z0lURFdVVUtkRGdraHZiUDZFc3hXeTlCX0U0RE5xZVdhYWpjQ1Q5N1NfMlQtZDRiRFJiS20tSzcwZ2wwOFg3RkE2UXdzY1F3S1l1TnlWUGFrbllDY2VCSlFxb2I5VEV3M1R4NU5reUR2OHJxS0F5dUxnekRDZkdNODdaR3BvLWFKX3hB?oc=5" target="_blank" rel="noopener">Peace on border essential for development of India-China ties: Modi tells Xi</a></h2>
+          <p>Peace on border essential for development of India-China ties: Modi tells Xi theweek.in</p>
+          <a class="read-link" href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxPQmpSRE9yQVhmcXhQb2FhUVZzUF9wT1ZtWW85Q040V2dreEdkZVVJS0RmMkZ1aHowcG9IQmEzRGlHWWRKRFoxQS1PR0dRbTVUWXBUYlBSMXdiQ3FmR082ckFEOVVrQUJTUVd6UnNteVkxaEIyM0gyTS0wUEtvbVE4UnhXaWRKdzItZmt6UEpONEtsaUFjZVowZG52cUF6LU56TVJhTDRjUnbSAa4BQVVfeXFMTWRXZkJFTWhqSm5kVkIxS2FFS19qeDNvbENpcl9OMDhYeUl4Z0lURFdVVUtkRGdraHZiUDZFc3hXeTlCX0U0RE5xZVdhYWpjQ1Q5N1NfMlQtZDRiRFJiS20tSzcwZ2wwOFg3RkE2UXdzY1F3S1l1TnlWUGFrbllDY2VCSlFxb2I5VEV3M1R4NU5reUR2OHJxS0F5dUxnekRDZkdNODdaR3BvLWFKX3hB?oc=5" target="_blank" rel="noopener">Read full story →</a>
+        </article>
+          <div class="side-stack">
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">Daily Excelsior</span><span class="story-age">4h ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxQdC1ZNGlSWXBHdUlCY2RCYi1neEZFOWVid2xZZTRHWXBMVF9iem9OSEJyMFQ0OXFZdmJHUENXc2oxN0dmZFozaV9pbzNCSlExSlpUMXU1LXlPWk5kSVFDbkowUVE3SmJ6OXk2eGtwN3c1T2liQUdNTk9ON1NyOEVGTDRfUWstR0VKZUdiS1BHb2UwQlHSAZMBQVVfeXFMUHQtWTRpUllwR3VJQmNkQmItZ3hGRTllYndsWWU0R1lwTFRfYnpvTkhCcjBUNDlxWXZiR1BDV3NqMTdHZmRaM2lfaW8zQkpRMUpaVDF1NS15T1pOZElRQ25KMFFRN0piejl5NnhrcDd3NU9pYkFHTU5PTjdTcjhFRkw0X1FrLUdFSmVHYktQR29lMEJR?oc=5" target="_blank" rel="noopener">Border peace essential for India, China ties: Modi to Xi</a></h3>
+              <p>Border peace essential for India, China ties: Modi to Xi Daily Excelsior</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">NDTV News Search Records Found 1000</span><span class="story-age">8h ago</span></div>
+              <h3><a href="https://www.ndtv.com/india-news/brics-summit-2026-live-updates-pm-narendra-modi-putin-xi-jinping-meeting-bharat-mandapam-new-delhi-traffic-advisory-updates-12031073#publisher=newsstand" target="_blank" rel="noopener">BRICS Summit 2026 Highlights: PM Modi, Xi Hold Bilateral Meet For 50 Minutes, Discuss Trade, Border</a></h3>
+              <p>BRICS Summit 2026 Highlights: BRICS comprises Brazil, China, Egypt, Ethiopia, India, Indonesia, Iran, Russia, Saudi Arabia, South Africa, and the United Arab Emirates. BRICS partner countries are: Belarus, Cuba, Bolivia, Kazakhstan, Malaysia, Nigeria, Thailand, Uganda, Uzbekistan and Vietnam.</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">The Hindu</span><span class="story-age">9h ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxPNkZrY3JHYnBQanZuWms3VnJHOUJPa0pWdi1LSFhaWGxGMXowQ1dEV2owbTdZUGVZamJPbUlBUzBvS09oWDhrUXNsakpMNk04VDZqdDZ6TjN4THhqSXAyS0VpY0Q4aklxRFhVc3NMTEZkUXpSVlhmcXVPYnFzQmkyZ3JtLUk0dzBWOW1ORVZQT1JpTkFHenpmMXhpZGRKRjVibm1fYVVKYTItLVd0d2ZZ0gG2AUFVX3lxTFBsaUlsUjVpeUFJN3FFMjFZVmp4SU5HT0hIb09aU1JjbzN4aWpNRWFZcFVKYXdWUnMtS0FSUjFESGY1T01tUktJaWFON0llNG16VWhER05OQW9OZF95RVFEc0p1WWdrU05fUGhXNGp6V2l2Ql9NQUdMcHFiZFRsQUIyeFBYZmo0N3IwcVJkTXJwUEdNNVNUVDVnaElqMUVzUnJrOHE1T0xQNG9GcnhWODE1RnlZSy1B?oc=5" target="_blank" rel="noopener">Xi, Modi welcome ‘steady progress’ in India-China ties</a></h3>
+              <p>Xi, Modi welcome ‘steady progress’ in India-China ties The Hindu Xi outlines four-point formula to reset India-China ties Rediff Video | India-China Ties: PM Modi, President Xi Jinping Discuss Border, Bilateral Progress NDTV &#x27;Differences should not become disputes&#x27;: PM Modi says India-China ties should be guided by 3 mutuals…</p>
+            </article></div>
+        </div>
+        <div class="briefs-title"><span>THE REST OF THE BRIEF</span><span>10 curated stories</span></div>
+        <div class="briefs-grid">
+            <article class="brief-story">
+              <span class="brief-num">05</span>
+              <div>
+                <div class="story-meta"><span class="story-source">CNBC</span><span class="story-age">11h ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMieEFVX3lxTFBieFJFeEpGSnBFelRlMzJGZkpsYXZ5bXRhTzRjakstZHJMYlNfdkdSbDZ4ZWw0SV9EUlNTb2NXUmxRZzVfQTN4Z1FzRGY3dDZTSWY0QzM5Z0F3dW5BVmp6SmZiNmJmYUJxb0xLVzVzLVJzamREVFhqVNIBfkFVX3lxTE1LNHdzVE5QNEk4Y1lkWmpSbDYya2UxcXNDcmxhbnJOak1aZVpLY0djR2E3dzJVSm1nWF83VGdOMF9ocUowZlNtZTVzRWZKOGRINUVWMk9PQTM1M0o5eUhuWXJDTUFVcGRqWVU0T0RPT2MyclRjMXFaMHZEekYxQQ?oc=5" target="_blank" rel="noopener">Indian Prime Minister Modi says border peace is key to India-China ties</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">06</span>
+              <div>
+                <div class="story-meta"><span class="story-source">NDTV Profit</span><span class="story-age">13h ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMixAFBVV95cUxNWkFfcE1odVF6aXo2dy1fV0NKVUs5azRxRU1FT0trNXVWNmdvZEt1UlduYWhIZkJVMkJmTTJxdFctT0dYbmVvRmstSVY4Nk5jMk1VVjJoWDNIV2o2U3ViNnlnTXNCR0FJalhJa0R1U0RnX3psWVBqcnVna29wbFNIRGYwVm5sMEIyM2ZTeDF0TW9xR25TeURYQVhISzhTS0QwYzZndU9MSWlTRkRnejUyb3NsTWRTLUZBU1lMdUlJSDN3TFpK0gHMAUFVX3lxTE83UXl4TU9VSFZfM2RzS3llbEVkTmlYYkVEWnE2enJMX21ZamdFYk9XM1FqTzZYZkktbWRjaGZ6TjhGSDhtdGk5Yk9FR3FOdEZfb2k5elAwcWQ4OHlYX0Z2XzBjVFdVVjh5bU9FMHN4akd2MzBHYTRVZ09HaWJRNEhRenFuankyMWNIeDB3YXhmX0l2clJpdG1GeHRPX3J6NW9ZS1FYbXZtN0UwZjhRR3c4Y3JJcnoxSTh3QmhlYjIyTVlOOUM3My1qeW1SWQ?oc=5" target="_blank" rel="noopener">PM Modi, Xi Jinping Hold India-China Bilateral Talks On Border, Trade And Investment</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">07</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Vivekananda International Foundation…</span><span class="story-age">50d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMijgFBVV95cUxQU2hjemFQandyWEtOckFhRG14UHY3a0Nfay15enVuaUFGcHhCN0kzbXdNeWNERVczdDZHeTA2THZSZWZpOEhldnYxcmJpc0NWWnp0RE94MlR3LTFCTElBc2QwcUFQTy1fTHdleThucENWWl9JWms3a2RVRHk2dC1DSjRhT05mNG1QdFVwUHFR?oc=5" target="_blank" rel="noopener">‘Strategic Scan of India’s Neighbourhood: Focus on Nepal, Sri Lanka, Bhutan and Maldives’ - Vivekananda International Foundation (VIF)</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">08</span>
+              <div>
+                <div class="story-meta"><span class="story-source">India Today</span><span class="story-age">55m ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMi5AFBVV95cUxPV2V3RTB6N1lrQkhHaGJDZGdZNUN5TmppZ3FISlpvcm5MQ19vY2EtTm9LTjJSS1ZNSmhGcTZmV0F1ZzFyOVl0dHZ1LWd1dkZGcUgtNGRyNEJBVjJSTEo4Q2twYXJVR1dZTDRPM0RLeFYwWktaeUF1YnVUc3J1YmZKbkRMT3M2elZEYXNEcW5uVTNyTmkwWjBOYWh3SFJ5VkRMbUZUalhTenNZcjJsTFFsTWNPOVJzY21yV2plN1NvSFdrWFQwREhBdldyanhRZDVzemsyMm5oa2RmcVl0Z1REbVpOY2rSAeQBQVVfeXFMT1dld0UwejdZa0JIR2hiQ2RnWTVDeU5qaWdxSEpab3JuTENfb2NhLU5vS04yUktWTUpoRnE2ZldBdWcxcjlZdHR2dS1ndXZGRnFILTRkcjRCQVYyUkxKOENrcGFyVUdXWUw0TzNES3hWMFpLWnlBdWJ1VHNydWJmSm5ETE9zNnpWRGFzRHFublUzck5pMFowTmFod0hSeVZETG1GVGpYU3pzWXIybExRbE1jTzlSc2NtcldqZTdTb0hXa1hUMERIQXZXcmp4UWQ1c3prMjJuaGtkZnFZdGdURG1aTmNq?oc=5" target="_blank" rel="noopener">Border Peace, Boundary Settlement And Trade Ties Focus In India-China Bilateral Talks - India Today</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">09</span>
+              <div>
+                <div class="story-meta"><span class="story-source">The Indian Awaaz</span><span class="story-age">7h ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxQWHBEcnVEVV8tcHhvWWljNDhBR2FJTTZkNHBKckpkMU1uelBkcmJ4ZlFCaV9CUkVUN3p1OTJ2WGlHUDQzWFpPd3VGc0MwT3NiSm5EakM2VVNKMnBjU1c0LWdfeFA1cUhwakFCS255WVBLUDhvZzYtMTg5YlN6bmc3OG9Sd296eU9Bd3NLWVNlVlN3QWFYeS1fVFNKVzRBQjM5Z2Nn?oc=5" target="_blank" rel="noopener">Modi, Xi Jinping for strategic, long term perspective of India China ties</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">10</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Al Jazeera</span><span class="story-age">8h ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxOaW1hdmpKRHlLcUJ6dVFoRE9xMEJOWlNpdEQ4VlEwN1RkTUlSa05JOG5Sal9CV3d2WFkyaHZWTl80S2lBNzJQSkJMRzhiV2wweHFXbk9QUU40SGt4bDlrZl9OOXVab2ZfVVFncHBXV0cydnVqUmc1LVNDR1dHcjIzelNkNk9NLS1SRmJyZVd5bENIenQtbDNveUVpdjdkeWtvMF9aWEhB0gGrAUFVX3lxTE9JendtdDYzMlpwZ09rS0lycS1fMnlmT0pZbkRfQllUclhyWW1wRlBnejgtMFVtM3I1ZmhuTS13Z3lGTGdMbExacTVIeVRFS3R4bkw3QlVjdzhCSGUySGFvdC04Q19DRmVwZ0xxblRnOXNQbWg3MzZpYjVxMU5QZDY4cEtrVDNpd1Y5VHVHUmJWVGtkRzR1YTQ0UUxUdEV0dndJR2dZSzc0WjZUVQ?oc=5" target="_blank" rel="noopener">Modi and Xi seek to reset India-China ties on BRICS sidelines</a></h3>
+              </div>
+            </article></div>
+      <footer class="news-footer">Stories link to the original publisher or news aggregation source. Headlines and summaries refresh automatically.</footer>
+    </section></div><div class="ledger-tab-panel" id="tab-us">
+    <section class="news-page">
+      <header class="news-masthead">
+        <div>
+          <div class="news-eyebrow">★ THE CHAI LEDGER / U.S. NEWS</div>
+          <h1>U.S. News</h1>
+          <p>Politics, economy, policy, courts and the stories that actually move the country</p>
+        </div>
+        <div class="news-date">Edition<br><strong>Sep 13, 2026</strong></div>
+      </header>
+      
+      
+        <div class="news-front-grid">
+          
+        <article class="lead-story">
+          <div class="story-meta"><span class="story-source">The Hill News</span><span class="story-age">6h ago</span></div>
+          <h2><a href="https://thehill.com/homenews/6085372-missouri-redistricting-election-chaos/" target="_blank" rel="noopener">Redistricting rulings injects chaos, uncertainty into Missouri House races</a></h2>
+          <p>Missouri election officials and candidates are bracing for chaos in November amid concerns the state’s redistricting saga could spark widespread confusion for voters at the ballot box. The Supreme Court paved the way for the state to use its old map that favored the GOP six seats to two, instead of the newer 7-1 House…</p>
+          <a class="read-link" href="https://thehill.com/homenews/6085372-missouri-redistricting-election-chaos/" target="_blank" rel="noopener">Read full story →</a>
+        </article>
+          <div class="side-stack">
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">The Hill News</span><span class="story-age">6h ago</span></div>
+              <h3><a href="https://thehill.com/homenews/sunday-talk-shows/6086297-sunday-shows-republicans-strategy-economy-struggles/" target="_blank" rel="noopener">Sunday shows preview: Republicans talk strategy as midterms approach; Iran conflict, Canada trade war leave economy in flux</a></h3>
+              <p>Republican leaders traveled to Dallas this week for the GOP’s midterm convention, fueling the party’s President Trump-forward midterm strategy, as the party fights to maintain control in both chambers of Congress this November. The two-day event featured keynote speeches from Trump and Vice President Vance, tributes to the late…</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">NYT &gt; U.S. News</span><span class="story-age">1d ago</span></div>
+              <h3><a href="https://www.nytimes.com/2026/09/11/us/missouri-congressional-redistricting-chaos.html" target="_blank" rel="noopener">Trump Wanted a New House Map in Missouri. Voters Got Chaos Instead.</a></h3>
+              <p>The legal wrangling over a congressional map redrawn by Republicans has election officials, candidates and voters scrambling before November.</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">pbs.org</span><span class="story-age">15d ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxNeTZYd1JtU2tpSmRvbTJqT2J5VHpCQzJMVFR5WWJlZ3ppLTNjU3prR01jeUtWSXVEbWZScmw5S2RfdmVES3dEOThSeGwwMGVvOWs5NWpjNjU3M3JFdmpsVlRyaFJ6cEU4SWptdUM2MWotckR3dDYzSkxzUUJyOEtWbDFkMzJWZG1sSWd3d3Q3d3BndjlIb2ZfaGthSDlWdFZESEpkdERKbEJ4VnVGRmJGZFRR?oc=5" target="_blank" rel="noopener">WATCH: Fed Chair Warsh signals stubborn inflation may require rate hikes in Jackson Hole speech</a></h3>
+              <p>WATCH: Fed Chair Warsh signals stubborn inflation may require rate hikes in Jackson Hole speech pbs.org</p>
+            </article></div>
+        </div>
+        <div class="briefs-title"><span>THE REST OF THE BRIEF</span><span>10 curated stories</span></div>
+        <div class="briefs-grid">
+            <article class="brief-story">
+              <span class="brief-num">05</span>
+              <div>
+                <div class="story-meta"><span class="story-source">U.S. Government Accountability Office…</span><span class="story-age">93d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxQU3NVN3FkVU1Lc0RvazU3Smo2bnZNMmdUV2hqMDJKLVQ0OU9JYlR2aXNjbHotZjh4Z21JTEgyTXhjOGdpQ3Z2TWFRYzVIR3VKNFR2MU94alhZTk5IZGhUN2wwdlNIVTFsWnowbWdheGRoci0xZXQtX2FnTllfVmJPX0xMT0Z1NE95bDdqdERmUjc3cm5MVzRESUQ1Ylk?oc=5" target="_blank" rel="noopener">The Federal Government’s Debt Is Growing Faster Than the Economy. What Does that Mean for You? - U.S. Government Accountability Office (.gov)</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">06</span>
+              <div>
+                <div class="story-meta"><span class="story-source">The Hill News</span><span class="story-age">5h ago</span></div>
+                <h3><a href="https://thehill.com/regulation/court-battles/6086363-trump-fema-cuts-illegal-federal-judge/" target="_blank" rel="noopener">Trump’s plan to halve FEMA workforce illegal, judge rules</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">07</span>
+              <div>
+                <div class="story-meta"><span class="story-source">The Hill News</span><span class="story-age">8h ago</span></div>
+                <h3><a href="https://thehill.com/homenews/administration/6086235-trump-adviser-gop-midterm-optimism/" target="_blank" rel="noopener">Trump political adviser is ‘cautiously optimistic’ about GOP in upcoming midterms</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">08</span>
+              <div>
+                <div class="story-meta"><span class="story-source">The Hill News</span><span class="story-age">9h ago</span></div>
+                <h3><a href="https://thehill.com/opinion/healthcare/6084852-training-american-doctors/" target="_blank" rel="noopener">America’s doctor shortage is a national security threat</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">09</span>
+              <div>
+                <div class="story-meta"><span class="story-source">The Hill News</span><span class="story-age">10h ago</span></div>
+                <h3><a href="https://thehill.com/regulation/court-battles/6086160-texas-surrogacy-case-supreme-court-appeal/" target="_blank" rel="noopener">Surrogate who fled to Texas to avoid abortion appeals custody case to Supreme Court</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">10</span>
+              <div>
+                <div class="story-meta"><span class="story-source">The Hill News</span><span class="story-age">11h ago</span></div>
+                <h3><a href="https://thehill.com/homenews/administration/6085604-gop-candidates-split-strategy/" target="_blank" rel="noopener">Trump plots a campaign blitz; GOP candidates face a decision</a></h3>
+              </div>
+            </article></div>
+      <footer class="news-footer">Stories link to the original publisher or news aggregation source. Headlines and summaries refresh automatically.</footer>
+    </section></div><div class="ledger-tab-panel" id="tab-ai-data">
+    <section class="news-page">
+      <header class="news-masthead">
+        <div>
+          <div class="news-eyebrow">⌘ THE CHAI LEDGER / AI + DATA LAB</div>
+          <h1>AI + Data Lab</h1>
+          <p>What to learn next — agents, data platforms, analytics engineering, AI infrastructure and applied AI</p>
+        </div>
+        <div class="news-date">Edition<br><strong>Sep 13, 2026</strong></div>
+      </header>
+      
+        <div class="learning-ribbon">
+          <strong>LEARNING LENS</strong>
+          <span>Prioritized: AI agents · analytics engineering · Snowflake/dbt · data platforms · enterprise AI · AI infrastructure</span>
+        </div>
+      
+        <div class="news-front-grid">
+          
+        <article class="lead-story">
+          <div class="story-meta"><span class="story-source">snowflake.com</span><span class="story-age">220d ago</span></div>
+          <h2><a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE1aTzBmZTdhQzgtTmE4ZURjemFuVktwMFA4NzQyQk1GT015SzAzdnhTTWtBRkktVHVXdHcxejlyZ3lvMHlhMXFERnRpaHVCNVAwSnI3aXRfd21ObTlTOGw2SDhxZ0dtOVN5bWp4WXllNG5XRThMNXkw?oc=5" target="_blank" rel="noopener">Snowflake Acquires TensorStax to Accelerate Agentic AI for Data Engineering</a></h2>
+          <p>Snowflake Acquires TensorStax to Accelerate Agentic AI for Data Engineering snowflake.com</p>
+          <a class="read-link" href="https://news.google.com/rss/articles/CBMid0FVX3lxTE1aTzBmZTdhQzgtTmE4ZURjemFuVktwMFA4NzQyQk1GT015SzAzdnhTTWtBRkktVHVXdHcxejlyZ3lvMHlhMXFERnRpaHVCNVAwSnI3aXRfd21ObTlTOGw2SDhxZ0dtOVN5bWp4WXllNG5XRThMNXkw?oc=5" target="_blank" rel="noopener">Read full story →</a>
+        </article>
+          <div class="side-stack">
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">The New Stack</span><span class="story-age">2d ago</span></div>
+              <h3><a href="https://thenewstack.io/gpt-live-1-voice-api/" target="_blank" rel="noopener">OpenAI split a voice model’s brain. Then one team deleted 23,000 lines of code.</a></h3>
+              <p>Building an AI voice agent has always been clunkier than it seems. Most voice agents are really a chain of The post OpenAI split a voice model’s brain. Then one team deleted 23,000 lines of code. appeared first on The New Stack .</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">snowflake.com</span><span class="story-age">37d ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMimgFBVV95cUxNRGxTWmRoSjVGUENpX3lrX0ZzTmtHU0s4cmpWc1hvQmRIQ2dTbTVhaVdTcHpQT2NaNF85NXRzc3V1ZF9jNGdjYjB6dXRVSHRxc3l3VGNIeDdhLWRwc24tR0t3bnk3WkNsQkRGeU4zWFZFNXU5SjZvT1BjLXprM3Zlb2tlVVR1cXhMZVpOYkRLNnRNVThoM0RwU1FB?oc=5" target="_blank" rel="noopener">A Data Engineering Benchmark for AI Agents</a></h3>
+              <p>A Data Engineering Benchmark for AI Agents snowflake.com</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">snowflake.com</span><span class="story-age">102d ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNZ1VDaFg0QkNtLTF5bFY2NlZoNlhQX1R5TnMxVFpNa2xYWjZ6OGpQSHRFNk9jelY4OXd6YmtrZ21iY2VrODJHaG1YeDllXzFMaTh2Z095eVdMNlFtcUVPamJzZ2M0NzhCOWNHSC1hVVA2VGZwSjZUMlhHaGFydzlNR2NmTGNvd3haZHc4?oc=5" target="_blank" rel="noopener">Snowflake CoCo: AI Coding Agent for the Modern Data Stack</a></h3>
+              <p>Snowflake CoCo: AI Coding Agent for the Modern Data Stack snowflake.com</p>
+            </article></div>
+        </div>
+        <div class="briefs-title"><span>THE REST OF THE BRIEF</span><span>10 curated stories</span></div>
+        <div class="briefs-grid">
+            <article class="brief-story">
+              <span class="brief-num">05</span>
+              <div>
+                <div class="story-meta"><span class="story-source">HPCwire</span><span class="story-age">103d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxQNmlvT3p1Tlg5Wm9RT21zeXctaUE4dGtvaTFrUUZmVWg0cmFVcWZxOVh0SkhyNngxUjVCZElHWGNrdUR4UlBmV3FXMWNPckJnWWd5Ti1ibWkzbmJTTk5iellVZHFIZkx6R3VUQ2k4RmFDVS0xSVNINmZseE9CUkdYU3BsU0MzTGpkQnJNdm02bkNrVkQ2V0Q4RlhfdXEtWW91eWZFT0dMMGwyeVRid0hzZzJEREdzMVFvWFFNYUQteUZFY0pIaGszNjQtREFaMXJUOXNPdEhn?oc=5" target="_blank" rel="noopener">Fivetran + dbt Labs Complete Merger to Create the Data Infrastructure for Trusted AI Agents</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">06</span>
+              <div>
+                <div class="story-meta"><span class="story-source">InfoWorld</span><span class="story-age">200d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMi1wFBVV95cUxORHB5QlgyaWxZeG1aR2F3WDNqMHEyQ1NvTFlUTnBBMlNGNHFlWDdTeU51aWFRdE5FZnBIN1pOMlkxeWZiRlozVFlVZjdwMkpfTlVQWnBoQ3o2UWNsUS1fam5STndxdmlVdk50S1BJRFM4MEFJYTVOd1RIa3ViQkQ0X3VHSlBNQVV1VUx5MUc4MzZYX2l1M29EbVQ1dElGVVRTUWN5QzdyQkkwNEhTOG9lYjUya0p0WUJJWHI1OW1oaF9JZTE1OVV5SjVPRXRNWFpvUWduMjFBTQ?oc=5" target="_blank" rel="noopener">Snowflake extends Cortex Code CLI to dbt and Airflow to streamline data engineering workflows</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">07</span>
+              <div>
+                <div class="story-meta"><span class="story-source">snowflake.com</span><span class="story-age">248d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMi0wFBVV95cUxQVDMyVy14aV8zYzdYNk53VU8wWGNfdERTNHJ2eXlWbXJaZ0kxd2N1c0dCUm9RNTNuY1JSbnJGVldUWGhMYndqMk9nanpzcHRfekpQUkdqSnNTdW82NmEwbG9IYk1QVEYxMDJUNjEwRGQ2T3gzaHRrTmdVaS1zU3l5SDl5dnkxb1JoMVVsMFFXQWJ2SFFQSVh1ajdCS2pRU3dZMHdPY3h5X3FaREU4RkhpOFJ1Rm95aFVpZnNQYzNpdEFJSXFqclJremVfXzN5b2V5N3NV?oc=5" target="_blank" rel="noopener">What’s New in Snowflake 2025: From AI Agents to Open Lakehouse and Real‑Time Analytics</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">08</span>
+              <div>
+                <div class="story-meta"><span class="story-source">snowflake.com</span><span class="story-age">312d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMi2gFBVV95cUxPeEpyUE9pTUNEYkVROVIzdW1FRWZGcVVQa1JOQkEwY05SZDVwbDU4ZUx0VnJmMDQ4dTJkcmx6Z0tsTGFKSUVZOTE4MDZ0aUludVY0dkZoZ2NMUUZUVnY5dW1IM3dEenYtdFZXVExjc0wybVRVd3RVOEYta2xNcVdXMzJKdFhlZ0N2ZExxS2dZVWdKMEQyc1dpLVhPeGt1bm5QdGpIYjgwaHBodVo5WGcyUTd3a3ZZaVlSWXotb1p1bXFDUGMwdmVIbnNFNTBtR0NIQngyZEdLRGxvdw?oc=5" target="_blank" rel="noopener">Snowflake Unveils New Developer Tools to Supercharge Enterprise-Grade Agentic AI Development</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">09</span>
+              <div>
+                <div class="story-meta"><span class="story-source">TechCrunch</span><span class="story-age">7h ago</span></div>
+                <h3><a href="https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier/" target="_blank" rel="noopener">Anthropic CEO outlines plan to slow AI development</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">10</span>
+              <div>
+                <div class="story-meta"><span class="story-source">The New Stack</span><span class="story-age">12h ago</span></div>
+                <h3><a href="https://thenewstack.io/mcp-security-permissions-overhaul/" target="_blank" rel="noopener">Why MCP security is about permissions overhaul</a></h3>
+              </div>
+            </article></div>
+      <footer class="news-footer">Stories link to the original publisher or news aggregation source. Headlines and summaries refresh automatically.</footer>
+    </section></div><div class="ledger-tab-panel" id="tab-sports">
+    <section class="news-page">
+      <header class="news-masthead">
+        <div>
+          <div class="news-eyebrow">● THE CHAI LEDGER / SPORTS</div>
+          <h1>Sports</h1>
+          <p>Cricket and tennis first — the matches, players, rankings and stories worth your time</p>
+        </div>
+        <div class="news-date">Edition<br><strong>Sep 13, 2026</strong></div>
+      </header>
+      <div class="learning-ribbon"><strong>SPORTS LENS</strong><span>Cricket first · tennis second · other major stories only when they matter</span></div>
+      
+        <div class="news-front-grid">
+          
+        <article class="lead-story">
+          <div class="story-meta"><span class="story-source">News On AIR</span><span class="story-age">8h ago</span></div>
+          <h2><a href="https://news.google.com/rss/articles/CBMingFBVV95cUxNXzdSSUFRUHZZT0JQOFY1V2d3dGI3SnZJMm9tbHJLdTV2QjNaYU41c3FZZE1OUHVzSThVclptVFUxSkQwN2ZQTUZzbDFXaWE4emNWTWZ0bU1JVVVpWTdHcWtUYXNOYnV0YzA2am0tRXl4bjNWNEVsckdjNnV4SmhaaE5RU0NUMDVEQkZsMnBUdzgzTnFvZkRNZHZhZDUyZw?oc=5" target="_blank" rel="noopener">India Beat England by 7 Runs, Enter ICC Men’s T20 Cricket World Cup Final</a></h2>
+          <p>India Beat England by 7 Runs, Enter ICC Men’s T20 Cricket World Cup Final News On AIR</p>
+          <a class="read-link" href="https://news.google.com/rss/articles/CBMingFBVV95cUxNXzdSSUFRUHZZT0JQOFY1V2d3dGI3SnZJMm9tbHJLdTV2QjNaYU41c3FZZE1OUHVzSThVclptVFUxSkQwN2ZQTUZzbDFXaWE4emNWTWZ0bU1JVVVpWTdHcWtUYXNOYnV0YzA2am0tRXl4bjNWNEVsckdjNnV4SmhaaE5RU0NUMDVEQkZsMnBUdzgzTnFvZkRNZHZhZDUyZw?oc=5" target="_blank" rel="noopener">Read full story →</a>
+        </article>
+          <div class="side-stack">
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">News On AIR</span><span class="story-age">19h ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMi3wFBVV95cUxNYjB6SnlDTUgzYWhwUzZWbjZia2Mtc1ZWTThKRTJtaEZoUktra2lxRzlJcjNzTGFlY3d1VVBuVWN2UTZJZTNUamV2elIyd1VtWURzamFZVzh4UUN4OU9NOTlsZTZTVnphSkhpMlhNYnBVQ2R4dG9sSHoyaS1yUXdobVhRRTdMVG41Mm4ySjdaak9ZTHotdllsV0I3SnZScWE0LTdzRjhkUHp2MmQ1Tm5tUm95aTNIYUJQYWtvV2NSbzgtVEtlYkZ6dlBxNEFwWHZ4QXdhOTNBbzBobTNLLVFV?oc=5" target="_blank" rel="noopener">Bangladesh forms committee to probe reason behind national cricket team’s withdrawal from ICC Men’s T20 World Cup in India | Akashvani News</a></h3>
+              <p>Bangladesh forms committee to probe reason behind national cricket team’s withdrawal from ICC Men’s T20 World Cup in India | Akashvani News News On AIR</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">Sky Sports</span><span class="story-age">13d ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMi0gFBVV95cUxOUERSTnI4OU04Ql9JaFpfaFQtYjNLZTduMlQtbWFYWldDRndMd1pld3gwYXBGY1h3SmJmcFNCbWV2eV9HbWZrZTBFSXBtMFMwN1NyRC0wYkQzZHZUaVhtclRPRFQ4WG1oR1puU0dCcDlBeVhXLTQ0RnVPbWEzV3FnTy1UTC1waGpNTWFhYlJBZER3SUlBTWYydFdYb2M1S21pMGlEZmZsTDF1S25ZNVNHOUNnNmdseWNIVXdPdERtUVFUTm9rNVBDd1pSODA0eVdZT1E?oc=5" target="_blank" rel="noopener">Tennis 2026 schedule, Grand Slam dates and tournament calendar for ATP and WTA Tours</a></h3>
+              <p>Tennis 2026 schedule, Grand Slam dates and tournament calendar for ATP and WTA Tours Sky Sports</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">Cricket World</span><span class="story-age">97d ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMi0gFBVV95cUxOM3BnOVJTVDBNbDZuNzdBLTZVU2dlbW9pWFFiR2c5MEprZ3EyVGhoUWVKMTZfQ3ZyQUNQRFN4NG40WUFVRG1sVDBFNTYwdjY2X0oxQmd6Unp5QmFFYkdKSUFPR2R0WjNmazJJaUxvOVI0TFU2a0k0SDNqdVJwWGd4SFFpVDk3TnEzMDBxckUxUGxUeF9CcDhiSExkM3FGSWpFcG9WbnB6NWo0RUxqc0xyWElocnE3MUIxZGlFOUZUeFlnTlFGZGc0V0JOYmtUUUJOTWc?oc=5" target="_blank" rel="noopener">West Indies Women vs India Women Live Streaming, Scores &amp; Updates | ICC Women&#x27;s T20 World Cup Warm-up</a></h3>
+              <p>West Indies Women vs India Women Live Streaming, Scores &amp; Updates | ICC Women&#x27;s T20 World Cup Warm-up Cricket World</p>
+            </article></div>
+        </div>
+        <div class="briefs-title"><span>THE REST OF THE BRIEF</span><span>10 curated stories</span></div>
+        <div class="briefs-grid">
+            <article class="brief-story">
+              <span class="brief-num">05</span>
+              <div>
+                <div class="story-meta"><span class="story-source">ICC</span><span class="story-age">11h ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMimAFBVV95cUxQZ011c2VFclB4akxGYVNCSDlrS1VycTBNcEVrWGtoWlhXbHNueVVVVmt1bnJSWF90Ymg4Vzk5VTlnYThQZkZBcEtfdjZWcEw3ODB1QlhRTnEwTnRJZ1NJSE1VSGpPdDZmN19kNWNUZnpDdWRidktBRWlrTTVBcmxsQi1sM3JmQUN0cGd1emotckpKaUtOVFNHUw?oc=5" target="_blank" rel="noopener">India look for perfect opening combination and T20I momentum</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">06</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Sportstar</span><span class="story-age">1d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMi8AFBVV95cUxNWkd6THg2SVRMWTNkVHZJZ1VBaC01RjdIVk83V0ZMM1VVdENuVFVXV2t0bWgtaEQ3d1ZTNWZfa0VvSHp1Qm9VaU1qdjVPRXhLdDh1emMzSS1ZWWRCOEE2MG45bTRpRUMxOXB6T1Q3dkFMYmVxR3hNd3d1aFN0WVE3YzJCS1VPVkVUM25IMDN2Ty1QV0xTZkROai1tcUpSODg5VGRBSm1nLUNvMjRSR0RndVRLX1RTU0lqS3FnYm9XSkJ4TTNUVk5yTEYzMFlPOWNld2FVMHZBUjJFQk42ZWlzdGNQNVl6THZqUGJZM1hSTFHSAfcBQVVfeXFMUEdpMzZ5dTFRbkQyc0g3VXRNRkY0NWQyRHh6dGlRRzJuZVQzbWpjTmppblJheUpJbTFUWWhIb3FPSGtubElKRFhyR2JDdkw1aDVNb0Z4LTY1ZVNhVERPMUhpZlRsOXEtUEtWdGZoLWNFR0xkampzMXQyb1Z5UEtDQkE5bE5xUnd5WU5MTEpWQ3VIYlZuTlAxNU1pWDViZWxvUTZhS05ISlNnVDR2Nm9OV01KN21hZDJFM1JGRnFUUnFFM203a3YxN0dVY0ZwbEhVaWZna2QzVkFucXJZY0RRWlRBNzZqMUY3d2JoenMxdEhtckh4bkpGbw?oc=5" target="_blank" rel="noopener">&quot;Why spend money to lose money?&quot; — Afghan coach Pybus on the ICC&#x27;s Test cricket dilemma for smaller nations</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">07</span>
+              <div>
+                <div class="story-meta"><span class="story-source">NDTV Sports</span><span class="story-age">1d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMixgFBVV95cUxNcExOTTNRRlZzZjZuNXgtMnJRWlYwaUktc0p1SXY1am9GcEhQNXY2TGNfRnp1T01pbmN2SENiMzJfcmptdEpDOV9WVHVRZURmN3h3dXAtTXNZQkVFOHVueFdrWVgyYUZnWlVZMWJoT1dxclBYUHJqcms2MUNXczFUaFpLb0ZRbzUtMTQ0SHl0OFlnb0ZtZ1NaLWdpdjM1NlhPMWtDSWh2cUVLYms1ZndVRm5PblNkS1l3Smh2Vk9ORDNkdGIwWUE?oc=5" target="_blank" rel="noopener">&quot;Indian Cricketers Are Not Sugarcane&quot;: Sunil Gavaskar Calls Out BCCI, ICC, Makes Big Demand</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">08</span>
+              <div>
+                <div class="story-meta"><span class="story-source">The Indian Express</span><span class="story-age">1d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMizAFBVV95cUxOMkd2Vm9VUEtaSWxjS0pQS2dqWW5rSU5ma0hkd0F6dEY1WXpJZ09pUl9aTjRjSnRjUEJSenNQeTV5S0RjTWp4RFFBY1ZWLXkyOXQ3S3BsV3JtWkpwOWRsck9VeWRsbHZBVldaZkx3bUJ1Xzg2cHBXVm9tS18xY192UFNwMTRKeHRKOG1DT0dCUk1uX096TmtpWFBKZ1pqZGNGZkFFZ1JaTVlBVGNVQ1BPMG02Rnd1M3Y5c3FvOWk4c2U1SThfeElVbkxzU1DSAdMBQVVfeXFMUEg0YnpLQUYzVTZ6WmcxMHZwVmNIeW5SeGtIbzdxS0tuOXVsNjdiNFg4OFFOMl9ITFhyTXdsb3hWLXFxeC1TbzYzWnBSQnJpNERiaVo0LTlITmRwR0c5X2xOeWpQdUhjb0xnRXRlM2tzUlRINUY3dGhUYmlNeFhMV1VnVEo3RmNjaXBFYlp6aTlwclRxbXg1NDdQNERWTmY3NGNxUjFqUHBhOWVSNTl0S0JJc0JGcXVoTDlYVGVJdWdpV1U2SG5qblRhLTR5Z0N2MTZVaw?oc=5" target="_blank" rel="noopener">‘Ranji Trophy split for IPL auction’: Gavaskar slams BCCI’s domestic cricket schedule</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">09</span>
+              <div>
+                <div class="story-meta"><span class="story-source">India Today</span><span class="story-age">1d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMiyAFBVV95cUxOVXpDSjRUYTRBcExsNnBsSnJyQzJfTFAwdTFWVU04WGlBUjJwUkhZZEEzV0M0S0Uwd1JUekhFUTVnM0tjUzMtUFJ4dTYxZmI4Q2hMaktmRTRDRmF6bUhXUXI1b1FqeURQbTFKazJTc0RtYU1jeUlRNDZyZ0F5Q2lmTXBwRUxZaldLSzlneDBIYVVLcEVzV2czdWJmMW1kdjc4dUhvYkxGYXNRdnhEZEJmS2JDcXI1QkU3WXQ5MlZvZG5WSW5oQ0o2ONIBzgFBVV95cUxQZC1HY09DVXhCYjk1M0VZRDlNekQzVXE3LUp6bms1NGhoWEVxdGhyOGZNQ05qOWMtb1VCeDBGeHprcFNWbGVYV01MV3hsMUhJeTRzaDFja2VxYU5aRTZFNG45YmlqaXBDZHg5Y2g5cHYtNUpyZlJMeWxTSnZHRkx2VGYySWh5eTlidXJaRkxFMXVXNXUxMU9GTUh4d2Q4d18tS013SUt3cjhjak5wTVVzUlpuczhqOGNnNzRIaXpQLTVrVlA5SGl4bDd2cGxQdw?oc=5" target="_blank" rel="noopener">Ex-Pakistan cricketer questions coach Mike Hesson&#x27;s loyalty over IPL ties</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">10</span>
+              <div>
+                <div class="story-meta"><span class="story-source">The Times of India</span><span class="story-age">2d ago</span></div>
+                <h3><a href="https://news.google.com/rss/articles/CBMi_wFBVV95cUxNUUFrbHA1aDdOMExHMVNxX1ZpQTJWeWhUZVkzdWMybnk5ci1sM2VKVGFTTWQzZ3VmS2wwR29WWVZxSThUWTY5ZFptNFBPckZDUG8zcHA3WTZMN24yeWx0SzBxRDNlM0Z5ZUhYUm1IZTFuak1XYWhMbGI5RTJyeEljRm14V0xIUjNuaVl2bTdqelZnTlpjY3RLQjA2Qmt4ZXBkeEtub2h3cUlFYVl4ZWMtVFVhbG5PdU95SjY1OUVPZEhocGpMY2tzaEc4cHVKam9KZ1VlWG1wcGpsSzdMbWYxZlNsaFZJcDduR19Leng2Vk13bUljREh6OWhVLWNPQWPSAYQCQVVfeXFMTkwtd0RoLVdrYTZhRXlwUFBRX0hNNDQ0Z3gwcHJUSWJJYm1zNFhFV1J6dkhrRTlia0dyLUIycmJsS0REUHllb3FLLWxaVExOR0x2QUZzQzhsa0VfaHF5eHBUT2tYeHRZSFVSaEJXTHYwNWYwanVEdEVMTVo4R2NLSHBpTUF1TmZMUzdrUDJzUmhPYk5ZMXdid3ZrMVMzU2ZrY3phMExaS2FILUVvbW5lTGxNNENtcWlPNmw3dXQzYnZuV01pVFYwTnBfUHhBaGdhTmxlZDVneTlhVW5vdmVrUVRyeU1TRk9JMU9Od1JiUW1zdkRBVDFiUjdmdURwS3NTYTJ2RGE?oc=5" target="_blank" rel="noopener">‘India national team is not Indian cricket’: Sunil Gavaskar’s strong message to BCCI and ICC</a></h3>
+              </div>
+            </article></div>
+      <footer class="news-footer">Stories link to the original publisher or news aggregation source. Headlines and summaries refresh automatically.</footer>
+    </section></div><div class="ledger-tab-panel" id="tab-entertainment">
+    <section class="news-page">
+      <header class="news-masthead">
+        <div>
+          <div class="news-eyebrow">✦ THE CHAI LEDGER / MOVIES + GOSSIP</div>
+          <h1>Movies + Gossip</h1>
+          <p>Telugu cinema, Bollywood, Hollywood, streaming and the fun stuff</p>
+        </div>
+        <div class="news-date">Edition<br><strong>Sep 13, 2026</strong></div>
+      </header>
+      <div class="learning-ribbon"><strong>FUN LENS</strong><span>Telugu cinema first · Bollywood · Hollywood · streaming · celebrity buzz</span></div>
+      
+        <div class="news-front-grid">
+          
+        <article class="lead-story">
+          <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">11h ago</span></div>
+          <h2><a href="https://www.m9.news/movienews/sreeleela-responds-rumours-career/" target="_blank" rel="noopener">Sreeleela Responds to Shocking Rumors: What Went Wrong?</a></h2>
+          <p>Sreeleela has finally responded to the rumors that her success has made her arrogant and that she does not respect people in the film industry. Sreeleela became one of the most popular young actresses in Telugu cinema at a very early age. She quickly built a strong fan following and worked with stars like Mahesh […] The post…</p>
+          <a class="read-link" href="https://www.m9.news/movienews/sreeleela-responds-rumours-career/" target="_blank" rel="noopener">Read full story →</a>
+        </article>
+          <div class="side-stack">
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">13h ago</span></div>
+              <h3><a href="https://www.m9.news/movienews/dhruv-vikrams-dv4-shoot-to-begin-in-october/" target="_blank" rel="noopener">Dhruv Vikram’s DV4 Shoot to Begin in October</a></h3>
+              <p>A collaboration has been announced as Pen Movies, Sri Neeladri Productions, and RV Studios come together for DV4, a Telugu-Tamil bilingual starring Dhruv Vikram. Presented by Jayantilal Gada and directed by Ramesh Varma, the film is being planned on a large scale. ADVERTISEMENT The banners have joined hands for a commercial…</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">TeluguOne</span><span class="story-age">5d ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMi-wFBVV95cUxNMXN0MC1zRmJfSDZZUFFwSUhYRWE1dVlQWFhfN0hocTA3RDBxRUoyV05TOTRqeXBsYTJSV3hpVl9MeGlDS2hjY0hIWWJnMjgtcV91Ui1BcmhzZFY5Z0NaOWNYY3dHUjFQVHQxQTZNSkZWSzlOTGFsc3J4ZWI5bWQxbUNZVVhqVmpUbGtNcEROMjZvdk5STkVra0hlWEVhZm96NTYwcENpTFQ2S1lkYmhNdW5JUVRSX1k5MlI4VlNZYVlRRDRYbGNweUJTUW40bjdJTklpUjFBc2szbklwUzd3dl9qZU1RYllFUG9WSUlVYkU0Nzhob2dMekFuRQ?oc=5" target="_blank" rel="noopener">History of Weapons in Tollywood Movies Tollywood Mass Elevations NBK Jr NTR Prabhas</a></h3>
+              <p>History of Weapons in Tollywood Movies Tollywood Mass Elevations NBK Jr NTR Prabhas TeluguOne</p>
+            </article>
+            <article class="side-story">
+              <div class="story-meta"><span class="story-source">Hindustan Times</span><span class="story-age">96d ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMimAJBVV95cUxOMThIMFVrSko3TW5FN0IyQWF4Q0NVdHBYZnVTazNPVHpCTkpJYjl4Rm0wcXBMN1NkRkZmczhCWExPNDVhOGpFVEJ6UVRDTi1lQW9RSXFCdjQwRG1MdmczOUxFOGpWTVR6S1hXOW9ncE0zNWJYa3FlODU5aEVNbFZCeWdwV0Uza0p5bElwamFzNFQwTmxwS29rVjEwRXFYc2I1Yk9nMjlVRm9uU2tvYWZsZkdCQUthMTY0bXVZMzBsR3RUU0VNbHl5NFN4RjRfMHpxbWd1ay1CaDVJaTVZWmlYenJjMUxBOFM4Yzc5cEtZYjhHcVBreWVJR0JCMVA5T1JJUk0xQ2czbEhnYkhfS1VLLUdrTm1NNmg20gGeAkFVX3lxTE4xRC1QZlIyZFNrZVBSUzBrUjQ5MGRKOW1xa2YzSjlHUkJ2VHkzQWwtd1lMLTh4b3cxNnZFN1hwSjY5bnBxdmNQeDNJTU9HdjB0eExEOE1GNGdTMzgwN1NWY1hKT3Y4RGxLMkE4bXJjUmdqVTJ0OVFLZ3lqeUxTdkdvS2hJZWhSSThoaEEtYVo3M3pUaU01c1BuZXdJNVhGemFYVE04dEtaTGJXcWJUU2FmOWxZMWc0UDdMVlZ2TlZvNERUYnQyb2h2eG42Z1Z3YjdJSEVSY2hBVTEyZTRGdVgyX3VBcnRJTk5yb1RLRHYwTjUwTVdGbXdydmpOZFFjTUZNSXc1dlhWZTNrOWZObDVyZjdSWFljQUJYV2d0NUE?oc=5" target="_blank" rel="noopener">Actor who hasn’t starred in an Indian movie in 7 years is among India’s most valuable celebrities. Check out full list | Bollywood</a></h3>
+              <p>Actor who hasn’t starred in an Indian movie in 7 years is among India’s most valuable celebrities. Check out full list | Bollywood Hindustan Times</p>
+            </article></div>
+        </div>
+        <div class="briefs-title"><span>THE REST OF THE BRIEF</span><span>10 curated stories</span></div>
+        <div class="briefs-grid">
+            <article class="brief-story">
+              <span class="brief-num">05</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">12h ago</span></div>
+                <h3><a href="https://www.m9.news/movienews/sumanth-on-mahendragiri-varahi-murari-similarities/" target="_blank" rel="noopener">Sumanth On Varahi &amp; Murari Similarities</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">06</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">12h ago</span></div>
+                <h3><a href="https://www.m9.news/movienews/happy-journey-trailer-a-trip-with-memorable-moments/" target="_blank" rel="noopener">Happy Journey Trailer: A Trip With Memorable Moments</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">07</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">14h ago</span></div>
+                <h3><a href="https://www.m9.news/movienews/dhee-fame-raju-arrested-sexual-harassment-case/" target="_blank" rel="noopener">Popular Choreographer Arrested: Sexual Allegations Shock</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">08</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">16h ago</span></div>
+                <h3><a href="https://www.m9.news/movienews/nikhil-siddhartha-swayambhu-175-day-shoot-2500-vfx-shots/" target="_blank" rel="noopener">Nikhil’s Swayambhu: 175-day shoot, 2,500 VFX shots!</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">09</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">17h ago</span></div>
+                <h3><a href="https://www.m9.news/movienews/nani-next-film-after-the-paradise-bloody-romeo/" target="_blank" rel="noopener">Enough Mass Films? Nani Wants a Change</a></h3>
+              </div>
+            </article>
+            <article class="brief-story">
+              <span class="brief-num">10</span>
+              <div>
+                <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">18h ago</span></div>
+                <h3><a href="https://www.m9.news/movienews/kvn-productions-toxic-jana-nayagan-haiwaan-crisis/" target="_blank" rel="noopener">Unbeatable Record: 4 Disasters in 4 Languages in 1 Year</a></h3>
+              </div>
+            </article></div>
+      <footer class="news-footer">Stories link to the original publisher or news aggregation source. Headlines and summaries refresh automatically.</footer>
+    </section></div>
+<script>
+(function(){
+  const buttons=[...document.querySelectorAll('.ledger-tab-btn')];
+  const panels=[...document.querySelectorAll('.ledger-tab-panel')];
+  function show(slug, updateHash=true){
+    buttons.forEach(b=>b.classList.toggle('active',b.dataset.tab===slug));
+    panels.forEach(p=>p.classList.toggle('active',p.id==='tab-'+slug));
+    if(updateHash) history.replaceState(null,'','#'+slug);
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+  buttons.forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
+  const requested=(location.hash||'').replace('#','');
+  if(buttons.some(b=>b.dataset.tab===requested)) show(requested,false);
+})();
+</script>
 </body>
 </html>
