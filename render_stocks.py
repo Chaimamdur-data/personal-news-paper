@@ -1,12 +1,13 @@
-"""Stocks-only personalized dashboard renderer."""
+"""Stocks-only Chai Ledger renderer."""
 from html import escape
+from datetime import datetime
 
 CATEGORY_DEFS = [
-    {"name":"AI Compute & Semis","icon":"⚡","tone":"purple","tickers":["MU","NVDA","AVGO"],"thesis":"AI infrastructure leaders. Best entries usually come on pullbacks toward support, not after vertical moves."},
-    {"name":"Mega-cap Platforms","icon":"☁️","tone":"blue","tickers":["GOOGL","AMZN","MSFT","META","AAPL","ORCL"],"thesis":"Cloud, AI distribution and durable cash-flow platforms. Oracle is included here for cloud and database AI exposure."},
-    {"name":"Data Infrastructure","icon":"💾","tone":"teal","tickers":["PSTG","SNOW","CRM","WDAY"],"thesis":"Enterprise data, storage and software. Pure Storage adds the physical data layer behind AI workloads."},
-    {"name":"Payments & Data Moats","icon":"💳","tone":"green","tickers":["V","MA","SPGI"],"thesis":"High-quality transaction and information toll roads with durable margins and recurring demand."},
-    {"name":"Travel & Cyclicals","icon":"✈️","tone":"rose","tickers":["DAL","UAL","EXPE"],"thesis":"More cyclical names where peer confirmation and disciplined entry prices matter most."},
+    {"name":"AI Compute & Semis","tickers":["MU","NVDA","AVGO"],"thesis":"Infrastructure leaders — best entries come on pullbacks toward support, not vertical moves."},
+    {"name":"Mega-cap Platforms","tickers":["GOOGL","AMZN","MSFT","META","AAPL","ORCL"],"thesis":"Cloud, AI distribution, and durable cash-flow compounders — Oracle included for cloud/database AI exposure."},
+    {"name":"Data Infrastructure","tickers":["PSTG","SNOW","CRM","WDAY"],"thesis":"Enterprise data, storage, and software — Pure Storage adds the physical data layer behind AI workloads."},
+    {"name":"Payments & Data Moats","tickers":["V","MA","SPGI"],"thesis":"High-quality transaction and information toll roads with durable margins and recurring demand."},
+    {"name":"Travel & Cyclicals","tickers":["DAL","UAL","EXPE"],"thesis":"More cyclical names where peer confirmation and disciplined entry prices matter most."},
 ]
 
 STOCK_META = {
@@ -47,8 +48,7 @@ def _target_6m(s):
 def _entry_zone(s, meta):
     if meta.get("zone"):
         low, high = meta["zone"]
-        return low, high, "Curated target zone"
-
+        return low, high, "Curated zone"
     price = s.get("price") or 0
     ma50 = s.get("ma50")
     ma200 = s.get("ma200")
@@ -56,10 +56,10 @@ def _entry_zone(s, meta):
     if anchors:
         below_or_near = [x for x in anchors if x <= price * 1.05]
         anchor = max(below_or_near) if below_or_near else min(anchors)
-        return anchor * 0.985, anchor * 1.015, "MA support-derived zone"
+        return anchor * 0.985, anchor * 1.015, "MA-derived zone"
     if price:
         anchor = price * 0.95
-        return anchor * 0.985, anchor * 1.015, "5% pullback fallback"
+        return anchor * 0.985, anchor * 1.015, "5% pullback zone"
     return 0, 0, "No price data"
 
 
@@ -67,22 +67,30 @@ def _zone_status(price, low, high):
     if not price or not low or not high:
         return {"key":"no-data","label":"NO DATA","detail":"Price unavailable"}
     if low <= price <= high:
-        return {"key":"in-zone","label":"🔥🔥 ENTRY ZONE HIT","detail":"Price is inside the defined entry zone."}
+        return {"key":"in-zone","label":"ENTRY","detail":"Inside buy zone"}
     if price < low:
         pct = (low-price)/low*100
-        return {"key":"below-zone","label":"⚠️ BELOW RANGE","detail":f"{pct:.1f}% below the zone floor — recheck thesis/news before acting."}
+        return {"key":"below-zone","label":"BELOW","detail":f"{pct:.1f}% below floor"}
     pct = (price-high)/high*100
     if pct <= 3:
-        return {"key":"near-zone","label":"🔥 NEAR ENTRY","detail":f"Only {pct:.1f}% above the zone ceiling."}
-    return {"key":"wait","label":"⏳ WAIT","detail":f"{pct:.1f}% above the zone ceiling."}
+        return {"key":"near-zone","label":"NEAR ENTRY","detail":f"Only {pct:.1f}% above ceiling"}
+    return {"key":"wait","label":"WAIT","detail":f"{pct:.1f}% above ceiling"}
 
 
 def _day_change(v):
     if v is None:
-        return '<span class="pw-muted">—</span>'
-    cls = "pw-up" if v >= 0 else "pw-down"
+        return '<span class="ledger-muted">—</span>'
+    cls = "ledger-up" if v >= 0 else "ledger-down"
     sym = "▲" if v >= 0 else "▼"
     return f'<span class="{cls}">{sym} {abs(v):.2f}%</span>'
+
+
+def _score_desc(score):
+    if score >= 80: return "A", "Strong Buy"
+    if score >= 70: return "B", "Buy"
+    if score >= 55: return "C", "Hold"
+    if score >= 40: return "D", "Caution"
+    return "F", "Weak"
 
 
 def _render_card(s):
@@ -92,99 +100,177 @@ def _render_card(s):
     low, high, zone_basis = _entry_zone(s, meta)
     z = _zone_status(price, low, high)
     target = _target_6m(s)
-    score = s.get("health_score",0)
-    grade = s.get("grade","?")
-    analyst = (s.get("analyst_rec") or "none").replace("_"," ").title()
-    reasons = "".join(f"<li>{escape(r)}</li>" for r in meta["reasons"])
     target_up = s.get("upside_pct")
+    score = s.get("health_score", 0)
+    grade, stance = _score_desc(score)
+    analyst = (s.get("analyst_rec") or "none").replace("_", " ").title()
+    reasons = "".join(f"<li>{escape(r)}</li>" for r in meta["reasons"])
+    zone_text = f"${low:,.0f}–${high:,.0f}" if low and high else "—"
     return f"""
-    <article class="pw-card pw-card-{z['key']}">
-      <div class="pw-card-top">
-        <div><div class="pw-symbol-row"><span class="pw-symbol">{escape(ticker)}</span><span class="pw-role">{escape(meta['label'])}</span></div><div class="pw-company">{escape(s.get('name',ticker))}</div></div>
-        <span class="pw-status pw-status-{z['key']}">{z['label']}</span>
+    <article class="ledger-card status-{z['key']}">
+      <div class="ledger-card-head">
+        <div>
+          <div class="ledger-ticker">{escape(ticker)}</div>
+          <div class="ledger-company">{escape(s.get('name', ticker))}</div>
+          <div class="ledger-tag">{escape(meta['label'].upper())}</div>
+        </div>
+        <div class="ledger-status">{escape(z['label'])}</div>
       </div>
-      <div class="pw-price-row">
-        <div><div class="pw-price">{_money(price)}</div><div class="pw-change">{_day_change(s.get('day_change'))} today</div></div>
-        <div class="pw-zone-box"><div class="pw-zone-label">ENTRY ZONE</div><div class="pw-zone-value">${low:,.0f}–${high:,.0f}</div></div>
+
+      <div class="ledger-price-row">
+        <div class="ledger-price">{_money(price)}</div>
+        <div class="ledger-day">{_day_change(s.get('day_change'))}</div>
       </div>
-      <div class="pw-action-line">{escape(z['detail'])}</div>
-      <div class="pw-target-box"><div><span>6-MONTH TARGET*</span><strong>{_money(target)}</strong></div><div><span>UPSIDE TO TARGET</span><strong>{('+'+str(target_up)+'%') if target_up is not None else '—'}</strong></div></div>
-      <div class="pw-mini-metrics">
-        <div><span>Watchlist score</span><strong>{score:.1f} <small>{escape(grade)}</small></strong></div>
-        <div><span>Analyst</span><strong>{escape(analyst)}</strong></div>
-        <div><span>Entry basis</span><strong>{escape(zone_basis)}</strong></div>
+
+      <div class="zone-line">
+        <span>Zone {zone_text}</span>
+        <span>{escape(z['detail'])}</span>
       </div>
-      <div class="pw-why-title">Why it stays on the list</div><ul class="pw-reasons">{reasons}</ul>
+      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
+
+      <div class="target-strip">
+        <div><span>6-MO TARGET*</span><strong>{_money(target)}</strong></div>
+        <div class="target-right"><span>UPSIDE</span><strong>{('+' + str(target_up) + '%') if target_up is not None else '—'}</strong></div>
+      </div>
+
+      <div class="ledger-metrics">
+        <div><strong>{score:.1f} {grade}</strong><span>Watchlist</span></div>
+        <div><strong>{escape(stance)}</strong><span>Strategy</span></div>
+        <div><strong>{escape(analyst)}</strong><span>Street</span></div>
+        <div><strong>{escape(zone_basis)}</strong><span>Zone basis</span></div>
+      </div>
+
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
+      <ul class="ledger-reasons">{reasons}</ul>
     </article>"""
 
 
 def render_stock_section(stocks:list)->str:
     if not stocks:
         return ""
-    by_ticker={s.get("ticker"):s for s in stocks}
-    ordered=[]
+
+    by_ticker = {s.get("ticker"): s for s in stocks}
+    ordered = []
     for c in CATEGORY_DEFS:
         for t in c["tickers"]:
             if t in by_ticker:
                 ordered.append(by_ticker[t])
 
-    hot=[]; near=[]
+    hot, near = [], []
     for s in ordered:
-        low,high,_=_entry_zone(s,STOCK_META[s["ticker"]])
-        k=_zone_status(s.get("price") or 0,low,high)["key"]
-        if k=="in-zone": hot.append(s["ticker"])
-        elif k=="near-zone": near.append(s["ticker"])
+        low, high, _ = _entry_zone(s, STOCK_META[s["ticker"]])
+        status = _zone_status(s.get("price") or 0, low, high)["key"]
+        if status == "in-zone": hot.append(s["ticker"])
+        elif status == "near-zone": near.append(s["ticker"])
 
-    sections=[]
+    sections = []
     for c in CATEGORY_DEFS:
-        items=[by_ticker[t] for t in c["tickers"] if t in by_ticker]
-        if not items: continue
-        cards="".join(_render_card(s) for s in items)
+        items = [by_ticker[t] for t in c["tickers"] if t in by_ticker]
+        if not items:
+            continue
+        cards = "".join(_render_card(s) for s in items)
         sections.append(f"""
-        <section class="pw-category pw-tone-{c['tone']}">
-          <div class="pw-category-head"><div class="pw-category-title-wrap"><div class="pw-category-icon">{c['icon']}</div><div><h3>{escape(c['name'])}</h3><p>{escape(c['thesis'])}</p></div></div></div>
-          <div class="pw-card-grid">{cards}</div>
+        <section class="ledger-section">
+          <div class="ledger-section-title">
+            <h2>{escape(c['name'])}</h2>
+            <span>{escape(c['thesis'])}</span>
+          </div>
+          <div class="ledger-grid">{cards}</div>
         </section>""")
 
-    hot_text=", ".join(hot) if hot else "None right now"
-    near_text=", ".join(near) if near else "None right now"
+    hot_text = " · ".join(hot) if hot else "none right now"
+    near_text = " · ".join(near) if near else "none right now"
+    now = datetime.now().strftime("%b %d, %Y · %I:%M %p")
 
     return f"""
     <style>
-      .portfolio-watch{{--pw-ink:#172033;--pw-muted:#667085;--pw-line:#e7eaf0;--pw-green:#0f8a5f;--pw-green-bg:#e8f8f1;--pw-blue:#2563eb;--pw-blue-bg:#edf4ff;--pw-red:#c24157;--pw-red-bg:#fff0f2;--pw-amber:#9a5a00;--pw-amber-bg:#fff4df;--pw-slate:#475467;--pw-slate-bg:#f2f4f7;color:var(--pw-ink);font-family:'Source Sans 3',system-ui,sans-serif}}
-      .portfolio-watch *{{box-sizing:border-box}} .pw-hero{{border-radius:22px;padding:26px;color:white;background:linear-gradient(135deg,#07111f,#172a46 55%,#273f69);box-shadow:0 18px 45px rgba(15,23,42,.16);margin-bottom:14px}}
-      .pw-kicker{{font-size:11px;font-weight:850;letter-spacing:1.2px;text-transform:uppercase;color:#b8c6ff}} .pw-hero h2{{font-family:'Playfair Display',Georgia,serif;font-size:30px;margin:3px 0 6px}} .pw-hero p{{color:#d5deeb;font-size:13px;max-width:850px}}
-      .pw-alerts{{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}} .pw-alert{{border-radius:13px;padding:12px 14px;font-size:12px;font-weight:700}} .pw-alert.hot{{background:#fff0ec;border:1px solid #ffd2c8;color:#a6341f}} .pw-alert.near{{background:#edf4ff;border:1px solid #cfe0ff;color:#2459a9}}
-      .pw-rules{{background:#fff;border:1px solid var(--pw-line);border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 4px 18px rgba(15,23,42,.04)}} .pw-rules h3{{margin:0 0 10px;font-size:16px}} .pw-rule-grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}} .pw-rule{{padding:10px;border-radius:10px;background:#f8fafc;border:1px solid #eef1f5;font-size:11.5px;line-height:1.4}} .pw-rule strong{{display:block;color:#243247;margin-bottom:2px}}
-      .pw-cheat{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:18px}} .pw-cheat div{{background:#fff;border:1px solid var(--pw-line);border-radius:10px;padding:9px 10px;font-size:11px}} .pw-cheat b{{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#344054}}
-      .pw-category{{background:#fff;border:1px solid var(--pw-line);border-radius:18px;margin-bottom:18px;overflow:hidden;box-shadow:0 5px 20px rgba(15,23,42,.04)}} .pw-category-head{{padding:16px 18px;border-bottom:1px solid var(--pw-line)}} .pw-category-title-wrap{{display:flex;gap:10px}} .pw-category-icon{{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:#f4f6fa;font-size:18px}} .pw-category h3{{margin:0 0 3px;font-family:'Playfair Display',Georgia,serif;font-size:18px}} .pw-category p{{margin:0;color:var(--pw-muted);font-size:11.5px}}
-      .pw-card-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}} .pw-card{{padding:15px;border-right:1px solid var(--pw-line);border-bottom:1px solid var(--pw-line);min-width:0}} .pw-card:nth-child(3n){{border-right:none}} .pw-card-in-zone{{background:linear-gradient(180deg,#fff7f3,#fff)}} .pw-card-near-zone{{background:linear-gradient(180deg,#f4f8ff,#fff)}}
-      .pw-card-top{{display:flex;justify-content:space-between;gap:8px}} .pw-symbol-row{{display:flex;align-items:center;gap:6px}} .pw-symbol{{font-size:17px;font-weight:850}} .pw-role{{font-size:9px;background:#f2f4f7;color:#667085;border-radius:6px;padding:3px 5px}} .pw-company{{font-size:10.5px;color:var(--pw-muted);max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
-      .pw-status{{font-size:9px;font-weight:900;padding:5px 7px;border-radius:999px;white-space:nowrap}} .pw-status-in-zone{{color:#9f2d18;background:#ffe5dd;box-shadow:0 0 0 2px rgba(255,94,53,.08)}} .pw-status-near-zone{{color:#2459a9;background:#e6efff}} .pw-status-wait{{color:var(--pw-slate);background:var(--pw-slate-bg)}} .pw-status-below-zone{{color:var(--pw-red);background:var(--pw-red-bg)}} .pw-status-no-data{{color:var(--pw-amber);background:var(--pw-amber-bg)}}
-      .pw-price-row{{display:flex;justify-content:space-between;align-items:end;gap:9px;margin:12px 0 8px}} .pw-price{{font-size:23px;font-weight:850}} .pw-change{{font-size:10.5px;color:var(--pw-muted)}} .pw-up{{color:var(--pw-green)!important;font-weight:750}} .pw-down{{color:var(--pw-red)!important;font-weight:750}} .pw-zone-box{{text-align:right;background:#f8fafc;border:1px solid #edf0f4;border-radius:9px;padding:7px 9px}} .pw-zone-label{{font-size:8px;color:var(--pw-muted);font-weight:850;letter-spacing:.5px}} .pw-zone-value{{font-size:13px;font-weight:850}}
-      .pw-action-line{{font-size:10.5px;color:#475467;background:#fbfcfe;border:1px solid #f0f2f5;border-radius:8px;padding:7px 8px}} .pw-target-box{{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:9px 0;background:#0f172a;color:#fff;border-radius:10px;padding:9px}} .pw-target-box span{{display:block;font-size:8px;color:#aab4c5;font-weight:800;letter-spacing:.45px}} .pw-target-box strong{{display:block;font-size:14px;margin-top:1px}}
-      .pw-mini-metrics{{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}} .pw-mini-metrics span{{display:block;font-size:8px;color:var(--pw-muted);text-transform:uppercase;font-weight:800}} .pw-mini-metrics strong{{display:block;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}} .pw-mini-metrics small{{color:var(--pw-muted);font-size:8px}} .pw-why-title{{border-top:1px solid #f0f2f5;padding-top:9px;font-size:9px;font-weight:850;text-transform:uppercase}} .pw-reasons{{margin:6px 0 0 15px;padding:0;font-size:10.5px;line-height:1.4;color:#475467}}
-      .pw-foot{{font-size:10px;color:var(--pw-muted);padding:4px 2px 0;line-height:1.45}}
-      @media(max-width:1050px){{.pw-card-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.pw-card:nth-child(3n){{border-right:1px solid var(--pw-line)}}.pw-card:nth-child(2n){{border-right:none}}}}
-      @media(max-width:720px){{.pw-hero{{padding:20px 16px;border-radius:16px}}.pw-hero h2{{font-size:24px}}.pw-card-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.pw-card{{padding:11px}}.pw-symbol{{font-size:15px}}.pw-role{{display:none}}.pw-status{{font-size:7.5px;padding:4px 5px}}.pw-price{{font-size:19px}}.pw-zone-value{{font-size:11px}}.pw-target-box strong{{font-size:12px}}.pw-rule-grid,.pw-cheat,.pw-alerts{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
-      @media(max-width:430px){{.pw-card-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.pw-company{{max-width:105px}}.pw-mini-metrics{{grid-template-columns:1fr 1fr}}.pw-mini-metrics div:last-child{{grid-column:1/-1}}}}
+      :root{{--paper:#f3ede2;--ink:#171713;--muted:#69645b;--rule:#25241f;--green:#1f6b49;--amber:#a56a16;--red:#a54336;--bar:#15211c}}
+      body{{background:#e9e4da!important}}
+      .ledger-page{{max-width:1180px;margin:0 auto;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif;padding:22px 28px 34px;box-shadow:0 0 0 1px rgba(0,0,0,.02)}}
+      .ledger-masthead{{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:2px solid var(--rule);padding-bottom:12px}}
+      .ledger-title{{font-size:40px;line-height:.95;font-weight:700;letter-spacing:-1px;margin:0}}
+      .ledger-deck{{font-size:11px;font-style:italic;color:var(--muted);margin-top:6px}}
+      .ledger-edition{{font-family:Arial,sans-serif;text-align:right;font-size:9px;line-height:1.55;white-space:nowrap}}
+      .ledger-edition b{{font-weight:700}}
+      .tape{{display:flex;align-items:center;gap:9px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding:8px 0 7px;font-family:Arial,sans-serif;font-size:9px;text-transform:uppercase;letter-spacing:.2px}}
+      .tape-label{{font-family:Georgia,serif;font-style:italic;font-weight:700}}
+      .tape-dot{{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}}
+      .dot-green{{background:var(--green)}} .dot-amber{{background:var(--amber)}}
+
+      .ledger-section{{margin-top:25px}}
+      .ledger-section-title{{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--rule);padding-bottom:5px;margin-bottom:0}}
+      .ledger-section-title h2{{font-size:21px;line-height:1;margin:0;font-weight:700}}
+      .ledger-section-title span{{font-size:9px;font-style:italic;color:var(--muted)}}
+      .ledger-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-left:1px solid var(--rule)}}
+      .ledger-card{{padding:10px 12px 12px;border-right:1px solid var(--rule);border-bottom:1px solid #a49d90;min-width:0;position:relative}}
+      .ledger-card.status-near-zone{{border-left:3px solid var(--amber)}}
+      .ledger-card.status-in-zone{{border-left:3px solid var(--green);background:rgba(255,255,255,.13)}}
+      .ledger-card.status-below-zone{{border-left:3px solid var(--red)}}
+      .ledger-card-head{{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}}
+      .ledger-ticker{{font-size:17px;font-weight:700;line-height:1}}
+      .ledger-company{{font-family:Arial,sans-serif;font-size:8px;color:var(--muted);margin:2px 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:175px}}
+      .ledger-tag{{display:inline-block;border:1px solid var(--rule);padding:1px 4px;font-family:Arial,sans-serif;font-size:6.7px;line-height:1.1;letter-spacing:.2px}}
+      .ledger-status{{font-family:Arial,sans-serif;font-size:7px;text-transform:uppercase;letter-spacing:.5px;color:#6b665c;white-space:nowrap}}
+      .status-near-zone .ledger-status{{color:var(--amber)}} .status-in-zone .ledger-status{{color:var(--green);font-weight:700}} .status-below-zone .ledger-status{{color:var(--red)}}
+      .ledger-price-row{{display:flex;align-items:baseline;gap:8px;margin-top:8px}}
+      .ledger-price{{font-family:Arial,sans-serif;font-size:24px;font-weight:700;letter-spacing:-.5px}}
+      .ledger-day{{font-family:Arial,sans-serif;font-size:8px}}
+      .ledger-up{{color:var(--green);font-weight:700}} .ledger-down{{color:var(--red);font-weight:700}} .ledger-muted{{color:var(--muted)}}
+      .zone-line{{display:flex;justify-content:space-between;gap:8px;font-family:Arial,sans-serif;font-size:6.8px;color:#4f4b43;margin-top:5px}}
+      .zone-line span:last-child{{text-align:right}}
+      .zone-gauge{{position:relative;height:8px;border-bottom:1px solid #777166;margin:0 0 8px}}
+      .zone-fill{{position:absolute;left:38%;right:38%;bottom:-2px;height:3px;background:var(--green)}}
+      .zone-mark{{position:absolute;bottom:-3px;width:2px;height:5px;background:var(--rule)}} .zone-low{{left:38%}} .zone-high{{right:38%}}
+      .target-strip{{display:grid;grid-template-columns:1fr 1fr;background:var(--bar);color:#f3ede2;padding:7px 9px;margin:3px 0 8px;font-family:Arial,sans-serif}}
+      .target-strip span{{display:block;font-size:6.5px;color:#bfc5bd;letter-spacing:.5px}}
+      .target-strip strong{{display:block;font-size:12px;margin-top:1px}}
+      .target-right{{text-align:right}} .target-right strong{{color:#8bd2a9}}
+      .ledger-metrics{{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;font-family:Arial,sans-serif;margin-bottom:7px}}
+      .ledger-metrics div{{min-width:0}}
+      .ledger-metrics strong{{display:block;font-size:8.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+      .ledger-metrics span{{display:block;font-size:6.5px;color:#746e64}}
+      .ledger-why{{font-family:Arial,sans-serif;font-size:6.5px;font-weight:700;letter-spacing:.3px;margin-top:4px}}
+      .ledger-reasons{{margin:3px 0 0 12px;padding:0;font-family:Arial,sans-serif;font-size:7.3px;line-height:1.45;color:#454139}}
+
+      .how-box{{border:1.5px solid var(--rule);padding:12px 14px;margin-top:28px}}
+      .how-box h3{{font-size:13px;margin:0 0 8px}}
+      .how-grid{{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;font-family:Arial,sans-serif}}
+      .how-grid b{{display:block;font-size:7.5px;margin-bottom:2px}} .how-grid p{{font-size:7px;line-height:1.4;color:#4f4a42;margin:0}}
+      .how-dot{{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px}}
+      .how-green{{background:var(--green)}} .how-amber{{background:var(--amber)}} .how-gray{{background:#6f6a60}} .how-red{{background:var(--red)}}
+
+      @media(max-width:820px){{.ledger-page{{padding:16px 14px}}.ledger-title{{font-size:31px}}.ledger-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.ledger-section-title{{display:block}}.ledger-section-title span{{display:block;margin-top:4px}}.how-grid{{grid-template-columns:repeat(2,1fr)}}}}
+      @media(max-width:520px){{.ledger-page{{padding:12px 9px}}.ledger-title{{font-size:27px}}.ledger-deck{{font-size:9px}}.ledger-edition{{font-size:7px}}.ledger-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.ledger-card{{padding:8px}}.ledger-price{{font-size:19px}}.ledger-company{{max-width:120px}}.ledger-metrics{{grid-template-columns:repeat(2,1fr)}}.how-grid{{grid-template-columns:repeat(2,1fr);gap:9px}}}}
     </style>
-    <section class="portfolio-watch" id="stocks">
-      <div class="pw-hero"><div class="pw-kicker">Stocks only · action first</div><h2>Chai's Stock Command Center</h2><p>Entry zones, live prices, six-month planning targets and simple action signals in one compact view.</p></div>
-      <div class="pw-alerts"><div class="pw-alert hot">🔥🔥 ENTRY ZONE HIT: {escape(hot_text)}</div><div class="pw-alert near">🔥 NEAR ENTRY: {escape(near_text)}</div></div>
-      <div class="pw-rules"><h3>How an entry signal is defined</h3><div class="pw-rule-grid">
-        <div class="pw-rule"><strong>🔥🔥 Entry Zone Hit</strong>Current price is inside the defined buy zone. This is the strongest price-based action signal.</div>
-        <div class="pw-rule"><strong>🔥 Near Entry</strong>Current price is no more than 3% above the zone ceiling. Watch closely rather than chase.</div>
-        <div class="pw-rule"><strong>⏳ Wait</strong>Price is more than 3% above the zone. Wait for a pullback instead of buying extended.</div>
-        <div class="pw-rule"><strong>⚠️ Below Range</strong>Price has fallen below the zone floor. Treat this as a thesis/news recheck, not an automatic bargain.</div>
-        <div class="pw-rule"><strong>33% Tranche Rule</strong>When you choose to act, deploy in thirds rather than all at once: roughly 33% / 33% / 33%.</div>
-        <div class="pw-rule"><strong>ORCL / PSTG Rule</strong>Their zones are derived from the nearest useful 50-day or 200-day moving-average support, ±1.5% around that support.</div>
-      </div></div>
-      <div class="pw-cheat">
-        <div><b>MA50</b>Average price over the last 50 trading days — short/medium-term trend support.</div><div><b>MA200</b>Average price over the last 200 trading days — long-term trend support.</div>
-        <div><b>Entry Zone</b>The price band where the risk/reward becomes attractive enough to consider a tranche.</div><div><b>6M Target</b>Current analyst mean price target used here as a practical six-month planning proxy.</div>
-        <div><b>Upside</b>Percent gain from today's price to the six-month target.</div><div><b>Watchlist Score</b>Composite quality/valuation/growth/technical score from the stock-health model.</div>
+
+    <main class="ledger-page" id="stocks">
+      <header class="ledger-masthead">
+        <div>
+          <h1 class="ledger-title">The Chai Ledger</h1>
+          <div class="ledger-deck">Entry zones, live prices, and six-month targets — one glance tells you act or wait.</div>
+        </div>
+        <div class="ledger-edition"><b>Edition:</b> Stocks Only · Action First<br><b>Updated:</b> {escape(now)}</div>
+      </header>
+
+      <div class="tape">
+        <span class="tape-label">ON THE TAPE</span>
+        <span><i class="tape-dot dot-green"></i>ENTRY ZONE HIT: {escape(hot_text)}</span>
+        <span><i class="tape-dot dot-amber"></i>NEAR ENTRY: {escape(near_text)}</span>
       </div>
+
       {''.join(sections)}
-      <div class="pw-foot">* The 6-month target is not a guaranteed forecast. It uses the latest analyst mean target available from Yahoo Finance as a planning proxy and refreshes with the page.</div>
-    </section>"""
+
+      <section class="how-box">
+        <h3>How to read this page</h3>
+        <div class="how-grid">
+          <div><b><i class="how-dot how-green"></i>Entry zone hit</b><p>Price sits inside the buy zone. Strongest action signal — deploy a tranche, not the whole position.</p></div>
+          <div><b><i class="how-dot how-amber"></i>Near entry</b><p>Within 3% of the zone ceiling. Watch closely; do not chase.</p></div>
+          <div><b><i class="how-dot how-gray"></i>Wait</b><p>More than 3% above the zone. Wait for a pullback instead of buying extended.</p></div>
+          <div><b><i class="how-dot how-red"></i>Below range</b><p>Price fell below the zone floor. Recheck the thesis — not an automatic bargain.</p></div>
+          <div><b>The gauge</b><p>A dot on a track: green band is the entry zone, dot is today's price. Dot inside band = act.</p></div>
+          <div><b>Tranche rule</b><p>When you choose to act, deploy in thirds rather than all at once — roughly 33% / 33% / 33%.</p></div>
+          <div><b>Zone basis</b><p>Most zones are curated. ORCL and PSTG use the nearest useful MA50/MA200 support with a ±1.5% band.</p></div>
+          <div><b>6-mo target</b><p>Current analyst mean price target used as a practical six-month planning proxy — not a guarantee.</p></div>
+        </div>
+      </section>
+    </main>"""
