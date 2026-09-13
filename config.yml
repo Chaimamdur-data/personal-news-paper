@@ -1,7 +1,7 @@
 site:
-  title: "Chai's Stock Command Center"
-  subtitle: "Entry zones · 6-month targets · action signals"
-  max_articles_per_topic: 0
+  title: "The Chai Ledger"
+  subtitle: "Markets · Politics · AI · Sports · Entertainment"
+  max_articles_per_topic: 10
   stock_tickers:
     - MU
     - NVDA
@@ -23,4 +23,71 @@ site:
     - EXPE
     - SPGI
 
-topics: []
+news_tabs:
+  - slug: "ap-telangana"
+    title: "AP + Telangana"
+    kicker: "Politics first — Andhra Pradesh, Telangana, leaders, policy and power shifts"
+    feeds:
+      - "https://news.google.com/rss/search?q=Andhra+Pradesh+politics&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=Telangana+politics&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=Chandrababu+Naidu+OR+Pawan+Kalyan+OR+Jagan+Mohan+Reddy&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=Revanth+Reddy+OR+KCR+OR+KTR+Telangana&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://www.gulte.com/feed"
+      - "https://www.greatandhra.com/rss.xml"
+      - "https://english.tupaki.com/rss.xml"
+      - "https://www.telugu360.com/category/politics/feed/"
+      - "https://www.m9.news/feed"
+
+  - slug: "india-neighbors"
+    title: "India + Neighbors"
+    kicker: "India's political and strategic relationships across South Asia and the Indo-Pacific"
+    feeds:
+      - "https://news.google.com/rss/search?q=India+Pakistan+relations&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=India+China+relations&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=India+Bangladesh+relations&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=India+Nepal+Sri+Lanka+Maldives+relations&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://feeds.feedburner.com/ndtvnews-top-stories"
+      - "https://www.thehindu.com/feeder/default.rss"
+      - "https://theprint.in/feed/"
+      - "https://tribune.com.pk/feed"
+
+  - slug: "us"
+    title: "U.S. News"
+    kicker: "Politics, economy, policy, courts and the stories that actually move the country"
+    feeds:
+      - "https://rss.nytimes.com/services/xml/rss/nyt/US.xml"
+      - "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml"
+      - "https://thehill.com/feed/"
+      - "https://www.politico.com/rss/politicopicks.xml"
+      - "https://news.google.com/rss/search?q=US+politics+economy+policy&hl=en-US&gl=US&ceid=US:en"
+
+  - slug: "ai-data"
+    title: "AI + Data Lab"
+    kicker: "What to learn next — agents, data platforms, analytics engineering, AI infrastructure and applied AI"
+    feeds:
+      - "https://techcrunch.com/feed/"
+      - "https://feeds.arstechnica.com/arstechnica/index"
+      - "https://www.technologyreview.com/feed/"
+      - "https://venturebeat.com/category/ai/feed/"
+      - "https://www.zdnet.com/news/rss.xml"
+      - "https://thenewstack.io/feed/"
+      - "https://news.google.com/rss/search?q=AI+agents+data+engineering+analytics+Snowflake+dbt&hl=en-US&gl=US&ceid=US:en"
+
+  - slug: "sports"
+    title: "Sports"
+    kicker: "Cricket and tennis first — the matches, players, rankings and stories worth your time"
+    feeds:
+      - "https://news.google.com/rss/search?q=cricket+India+ICC&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=IPL+cricket&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=tennis+ATP+WTA+Grand+Slam&hl=en-US&gl=US&ceid=US:en"
+      - "https://www.espn.com/espn/rss/news"
+
+  - slug: "entertainment"
+    title: "Movies + Gossip"
+    kicker: "Telugu cinema, Bollywood, Hollywood, streaming and the fun stuff"
+    feeds:
+      - "https://news.google.com/rss/search?q=Telugu+cinema+Tollywood+gossip&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=Bollywood+movie+news+celebrity&hl=en-IN&gl=IN&ceid=IN:en"
+      - "https://news.google.com/rss/search?q=Hollywood+movie+streaming+celebrity+news&hl=en-US&gl=US&ceid=US:en"
+      - "https://www.gulte.com/category/movienews/feed"
+      - "https://www.m9.news/category/movienews/feed"
