@@ -47,18 +47,25 @@ jobs:
           set -e
           git config user.name "personal-newspaper-bot"
           git config user.email "bot@example.com"
-          git add index.html
 
-          if git diff --cached --quiet; then
-            echo "No changes"
-            exit 0
-          fi
+          # Preserve the freshly generated artifact, then always publish it on
+          # top of the latest main. This avoids index.html rebase conflicts when
+          # another refresh or code commit lands while generation is running.
+          cp index.html /tmp/generated-index.html
 
-          git commit -m "Refresh newspaper + stocks $(date -u '+%Y-%m-%d %H:%M UTC')"
-
-          # Retry transient GitHub push failures. The fetch/rebase also handles
-          # the unlikely case that another run updated main while this job ran.
           for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp /tmp/generated-index.html index.html
+            git add index.html
+
+            if git diff --cached --quiet; then
+              echo "No generated changes to publish"
+              exit 0
+            fi
+
+            git commit -m "Refresh newspaper + stocks $(date -u '+%Y-%m-%d %H:%M UTC')"
+
             if git push origin HEAD:main; then
               echo "Push succeeded on attempt $attempt"
               exit 0
@@ -69,8 +76,6 @@ jobs:
               exit 1
             fi
 
-            echo "Push attempt $attempt failed; syncing and retrying..."
+            echo "Push attempt $attempt failed; retrying on latest main..."
             sleep $((attempt * 5))
-            git fetch origin main
-            git rebase origin/main
           done
