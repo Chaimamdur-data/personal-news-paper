@@ -15,813 +15,337 @@ body{min-height:100vh}
 
     <style>
       :root{--paper:#f3ede2;--ink:#171713;--muted:#69645b;--rule:#25241f;--green:#1f6b49;--amber:#a56a16;--red:#a54336;--bar:#15211c}
-      body{background:#e9e4da!important}
-      .ledger-page{max-width:1180px;margin:0 auto;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif;padding:22px 28px 34px;box-shadow:0 0 0 1px rgba(0,0,0,.02)}
-      .ledger-masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:2px solid var(--rule);padding-bottom:12px}
-      .ledger-title{font-size:40px;line-height:.95;font-weight:700;letter-spacing:-1px;margin:0}
-      .ledger-deck{font-size:11px;font-style:italic;color:var(--muted);margin-top:6px}
-      .ledger-edition{font-family:Arial,sans-serif;text-align:right;font-size:9px;line-height:1.55;white-space:nowrap}
-      .ledger-edition b{font-weight:700}
-      .tape{display:flex;align-items:center;gap:9px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding:8px 0 7px;font-family:Arial,sans-serif;font-size:9px;text-transform:uppercase;letter-spacing:.2px}
-      .tape-label{font-family:Georgia,serif;font-style:italic;font-weight:700}
-      .tape-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
-      .dot-green{background:var(--green)} .dot-amber{background:var(--amber)}
-
-      .ledger-section{margin-top:25px}
-      .ledger-section-title{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--rule);padding-bottom:5px;margin-bottom:0}
-      .ledger-section-title h2{font-size:21px;line-height:1;margin:0;font-weight:700}
-      .ledger-section-title span{font-size:9px;font-style:italic;color:var(--muted)}
-      .ledger-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-left:1px solid var(--rule)}
-      .ledger-card{padding:10px 12px 12px;border-right:1px solid var(--rule);border-bottom:1px solid #a49d90;min-width:0;position:relative}
-      .ledger-card.status-near-zone{border-left:3px solid var(--amber)}
-      .ledger-card.status-in-zone{border-left:3px solid var(--green);background:rgba(255,255,255,.13)}
-      .ledger-card.status-below-zone{border-left:3px solid var(--red)}
-      .ledger-card-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
-      .ledger-ticker{font-size:17px;font-weight:700;line-height:1}
-      .ledger-company{font-family:Arial,sans-serif;font-size:8px;color:var(--muted);margin:2px 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:175px}
-      .ledger-tag{display:inline-block;border:1px solid var(--rule);padding:1px 4px;font-family:Arial,sans-serif;font-size:6.7px;line-height:1.1;letter-spacing:.2px}
-      .ledger-status{font-family:Arial,sans-serif;font-size:7px;text-transform:uppercase;letter-spacing:.5px;color:#6b665c;white-space:nowrap}
-      .status-near-zone .ledger-status{color:var(--amber)} .status-in-zone .ledger-status{color:var(--green);font-weight:700} .status-below-zone .ledger-status{color:var(--red)}
-      .ledger-price-row{display:flex;align-items:baseline;gap:8px;margin-top:8px}
-      .ledger-price{font-family:Arial,sans-serif;font-size:24px;font-weight:700;letter-spacing:-.5px}
-      .ledger-day{font-family:Arial,sans-serif;font-size:8px}
-      .ledger-up{color:var(--green);font-weight:700} .ledger-down{color:var(--red);font-weight:700} .ledger-muted{color:var(--muted)}
-      .zone-line{display:flex;justify-content:space-between;gap:8px;font-family:Arial,sans-serif;font-size:6.8px;color:#4f4b43;margin-top:5px}
-      .zone-line span:last-child{text-align:right}
-      .zone-gauge{position:relative;height:8px;border-bottom:1px solid #777166;margin:0 0 8px}
-      .zone-fill{position:absolute;left:38%;right:38%;bottom:-2px;height:3px;background:var(--green)}
-      .zone-mark{position:absolute;bottom:-3px;width:2px;height:5px;background:var(--rule)} .zone-low{left:38%} .zone-high{right:38%}
-      .target-strip{display:grid;grid-template-columns:1fr 1fr;background:var(--bar);color:#f3ede2;padding:7px 9px;margin:3px 0 8px;font-family:Arial,sans-serif}
-      .target-strip span{display:block;font-size:6.5px;color:#bfc5bd;letter-spacing:.5px}
-      .target-strip strong{display:block;font-size:12px;margin-top:1px}
-      .target-right{text-align:right} .target-right strong{color:#8bd2a9}
-      .ledger-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;font-family:Arial,sans-serif;margin-bottom:7px}
-      .ledger-metrics div{min-width:0}
-      .ledger-metrics strong{display:block;font-size:8.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-      .ledger-metrics span{display:block;font-size:6.5px;color:#746e64}
-      .ledger-why{font-family:Arial,sans-serif;font-size:6.5px;font-weight:700;letter-spacing:.3px;margin-top:4px}
-      .ledger-reasons{margin:3px 0 0 12px;padding:0;font-family:Arial,sans-serif;font-size:7.3px;line-height:1.45;color:#454139}
-
-      .how-box{border:1.5px solid var(--rule);padding:12px 14px;margin-top:28px}
-      .how-box h3{font-size:13px;margin:0 0 8px}
-      .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;font-family:Arial,sans-serif}
-      .how-grid b{display:block;font-size:7.5px;margin-bottom:2px} .how-grid p{font-size:7px;line-height:1.4;color:#4f4a42;margin:0}
-      .how-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px}
-      .how-green{background:var(--green)} .how-amber{background:var(--amber)} .how-gray{background:#6f6a60} .how-red{background:var(--red)}
-
-      @media(max-width:820px){.ledger-page{padding:16px 14px}.ledger-title{font-size:31px}.ledger-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ledger-section-title{display:block}.ledger-section-title span{display:block;margin-top:4px}.how-grid{grid-template-columns:repeat(2,1fr)}}
-      @media(max-width:520px){.ledger-page{padding:12px 9px}.ledger-title{font-size:27px}.ledger-deck{font-size:9px}.ledger-edition{font-size:7px}.ledger-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ledger-card{padding:8px}.ledger-price{font-size:19px}.ledger-company{max-width:120px}.ledger-metrics{grid-template-columns:repeat(2,1fr)}.how-grid{grid-template-columns:repeat(2,1fr);gap:9px}}
+      body{background:#e9e4da!important} .ledger-page{max-width:1180px;margin:0 auto;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif;padding:22px 28px 34px}
+      .ledger-masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:2px solid var(--rule);padding-bottom:12px} .ledger-title{font-size:40px;line-height:.95;font-weight:700;letter-spacing:-1px;margin:0} .ledger-deck{font-size:11px;font-style:italic;color:var(--muted);margin-top:6px} .ledger-edition{font-family:Arial,sans-serif;text-align:right;font-size:9px;line-height:1.55;white-space:nowrap}
+      .tape{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding:8px 0 7px;font-family:Arial,sans-serif;font-size:9px;text-transform:uppercase} .tape-label{font-family:Georgia,serif;font-style:italic;font-weight:700} .tape-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle} .dot-green{background:var(--green)} .dot-amber{background:var(--amber)}
+      .ledger-section{margin-top:25px} .ledger-section-title{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--rule);padding-bottom:5px} .ledger-section-title h2{font-size:21px;margin:0} .ledger-section-title span{font-size:9px;font-style:italic;color:var(--muted)} .ledger-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-left:1px solid var(--rule)}
+      .ledger-card{padding:10px 12px 12px;border-right:1px solid var(--rule);border-bottom:1px solid #a49d90;min-width:0} .ledger-card.action-enter{border-left:3px solid var(--green);background:rgba(255,255,255,.13)} .ledger-card-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start} .ticker-line{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap} .ledger-ticker{font-size:17px;font-weight:700;line-height:1} .health-inline{font-family:Arial,sans-serif;font-size:8.5px;letter-spacing:.1px} .sig-strong,.sig-buy{color:var(--green)} .sig-hold{color:var(--amber)} .sig-sell{color:var(--red)}
+      .ledger-company{font-family:Arial,sans-serif;font-size:8px;color:var(--muted);margin:2px 0 4px;max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .ledger-lifecycle{display:inline-block;border:1px solid var(--rule);padding:1px 4px;font-family:Arial,sans-serif;font-size:6.7px} .ledger-action{font-family:Arial,sans-serif;font-size:8px;font-weight:800;letter-spacing:.6px} .action-label-enter{color:var(--green)} .action-label-wait{color:#6b665c}
+      .ledger-price-row{display:flex;align-items:baseline;gap:8px;margin-top:8px} .ledger-price{font-family:Arial,sans-serif;font-size:24px;font-weight:700;letter-spacing:-.5px} .ledger-day{font-family:Arial,sans-serif;font-size:8px} .ledger-up{color:var(--green);font-weight:700} .ledger-down{color:var(--red);font-weight:700}
+      .entry-row{display:grid;grid-template-columns:auto auto;align-items:baseline;gap:3px 7px;border-top:1px solid #756f65;border-bottom:1px solid #756f65;padding:5px 0;margin:7px 0;font-family:Arial,sans-serif} .entry-row span{font-size:6.5px;letter-spacing:.5px} .entry-row strong{font-size:12px;text-align:right} .entry-row small{grid-column:1/-1;font-size:7px;color:var(--muted)}
+      .target-strip{display:grid;grid-template-columns:1fr 1fr;background:var(--bar);color:#fff;padding:7px 8px;font-family:Arial,sans-serif} .target-strip span{display:block;font-size:6.4px;color:#c9d1cd;letter-spacing:.4px} .target-strip strong{display:block;font-size:12px;margin-top:2px} .target-right{text-align:right} .target-right strong{color:#71d39a}
+      .ledger-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:8px 0 6px;font-family:Arial,sans-serif} .ledger-metrics strong{display:block;font-size:7.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .ledger-metrics span{font-size:6.2px;color:var(--muted)} .model-line{font-family:Arial,sans-serif;font-size:7px;color:#49453e;border-top:1px solid #c1baae;padding-top:5px} .ledger-why{font-family:Arial,sans-serif;font-size:6.8px;font-weight:700;margin-top:6px} .ledger-reasons{font-family:Arial,sans-serif;font-size:7.2px;line-height:1.35;padding-left:12px;margin:3px 0 0}
+      .how-read{border:1.5px solid var(--rule);margin-top:28px;padding:12px 14px} .how-read h3{font-size:13px;margin:0 0 8px} .read-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px} .read-item{font-family:Arial,sans-serif;font-size:7px;line-height:1.4} .read-item b{display:block;font-family:Georgia,serif;font-size:8px;margin-bottom:2px} .footnote{font-family:Arial,sans-serif;font-size:6.8px;color:var(--muted);margin-top:8px;line-height:1.4}
+      @media(max-width:800px){.ledger-page{padding:14px 10px 24px}.ledger-title{font-size:29px}.ledger-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ledger-section-title{display:block}.ledger-section-title span{display:block;margin-top:3px}.read-grid{grid-template-columns:repeat(2,1fr)}.ledger-edition{font-size:7px}} @media(max-width:430px){.ledger-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ledger-card{padding:8px 7px}.ledger-ticker{font-size:15px}.health-inline{font-size:7px}.ledger-price{font-size:19px}.ledger-metrics{grid-template-columns:repeat(2,1fr)}.ledger-title{font-size:26px}}
     </style>
-
-    <main class="ledger-page" id="stocks">
-      <header class="ledger-masthead">
-        <div>
-          <h1 class="ledger-title">The Chai Ledger</h1>
-          <div class="ledger-deck">Entry zones, live prices, and six-month targets — one glance tells you act or wait.</div>
-        </div>
-        <div class="ledger-edition"><b>Edition:</b> Stocks Only · Action First<br><b>Updated:</b> Sep 13, 2026 · 02:56 AM</div>
-      </header>
-
-      <div class="tape">
-        <span class="tape-label">ON THE TAPE</span>
-        <span><i class="tape-dot dot-green"></i>ENTRY ZONE HIT: none right now</span>
-        <span><i class="tape-dot dot-amber"></i>NEAR ENTRY: NVDA · GOOGL · AMZN · V · MA · DAL</span>
-      </div>
-
-      
-        <section class="ledger-section">
-          <div class="ledger-section-title">
-            <h2>AI Compute &amp; Semis</h2>
-            <span>Infrastructure leaders — best entries come on pullbacks toward support, not vertical moves.</span>
-          </div>
-          <div class="ledger-grid">
-    <article class="ledger-card status-wait">
+    <section class="ledger-page" id="stocks">
+      <header class="ledger-masthead"><div><h1 class="ledger-title">The Chai Ledger</h1><div class="ledger-deck">Entry levels, live prices, six-month targets — one glance tells you ENTER or WAIT.</div></div><div class="ledger-edition"><b>Edition:</b> Stocks Only · Action First<br><b>Updated:</b> Sep 13, 2026 · 03:05 AM</div></header>
+      <div class="tape"><span class="tape-label">ON THE TAPE</span><span><i class="tape-dot dot-green"></i><b>ENTER:</b> none right now</span><span><i class="tape-dot dot-amber"></i><b>WAIT:</b> MU · NVDA · AVGO · GOOGL · AMZN · MSFT · META · AAPL · ORCL · PSTG · SNOW · CRM · WDAY · V · MA · SPGI · DAL · UAL · EXPE</span></div>
+      <section class="ledger-section"><div class="ledger-section-title"><h2>AI Compute &amp; Semis</h2><span>Infrastructure leaders — best entries come on disciplined pullbacks, not vertical moves.</span></div><div class="ledger-grid">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">MU</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">MU</span><span class="health-inline"><b>84.6 A</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Micron Technology, Inc.</div>
-          <div class="ledger-tag">HIGH PRIORITY</div>
+          <div class="ledger-lifecycle">CYCLICAL-TROUGH</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$975.26</div>
-        <div class="ledger-day"><span class="ledger-down">▼ 0.22%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $935–$945</span>
-        <span>3.2% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$1,512.63</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+55.1%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>84.6 A</strong><span>Watchlist</span></div>
-        <div><strong>Strong Buy</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>HBM and AI-memory demand</li><li>Memory pricing leverage</li><li>Higher cyclicality = stricter entry discipline</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$975.26</div><div class="ledger-day"><span class="ledger-down">▼ 0.22%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$925.00</strong><small>5.4% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$1,513.11</strong></div><div class="target-right"><span>UPSIDE</span><strong>+55.1%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>HBM and AI-memory demand</li><li>Memory pricing leverage</li><li>Higher cyclicality = stricter entry discipline</li></ul>
     </article>
-    <article class="ledger-card status-near-zone">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">NVDA</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">NVDA</span><span class="health-inline"><b>81.0 A</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">NVIDIA Corporation</div>
-          <div class="ledger-tag">HIGH PRIORITY</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">NEAR ENTRY</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$218.29</div>
-        <div class="ledger-day"><span class="ledger-down">▼ 0.03%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $205–$212</span>
-        <span>Only 3.0% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$327.65</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+50.1%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>81.0 A</strong><span>Watchlist</span></div>
-        <div><strong>Strong Buy</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>AI accelerator leadership</li><li>CUDA ecosystem moat</li><li>Hyperscaler AI capex remains the demand engine</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$218.29</div><div class="ledger-day"><span class="ledger-down">▼ 0.03%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$200.00</strong><small>9.1% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$327.65</strong></div><div class="target-right"><span>UPSIDE</span><strong>+50.1%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>AI accelerator leadership</li><li>CUDA ecosystem moat</li><li>Hyperscaler AI capex remains the demand engine</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">AVGO</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">AVGO</span><span class="health-inline"><b>77.9 B</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Broadcom Inc.</div>
-          <div class="ledger-tag">HIGH PRIORITY</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$361.99</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 0.32%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $340–$350</span>
-        <span>3.4% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$531.76</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+46.9%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>77.9 B</strong><span>Watchlist</span></div>
-        <div><strong>Buy</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>AI networking + custom silicon</li><li>VMware recurring software cash flow</li><li>Strong free-cash-flow profile</li></ul>
-    </article></div>
-        </section>
-        <section class="ledger-section">
-          <div class="ledger-section-title">
-            <h2>Mega-cap Platforms</h2>
-            <span>Cloud, AI distribution, and durable cash-flow compounders — Oracle included for cloud/database AI exposure.</span>
-          </div>
-          <div class="ledger-grid">
-    <article class="ledger-card status-near-zone">
+      <div class="ledger-price-row"><div class="ledger-price">$361.99</div><div class="ledger-day"><span class="ledger-up">▲ 0.32%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$335.00</strong><small>8.1% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$531.85</strong></div><div class="target-right"><span>UPSIDE</span><strong>+46.9%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>AI networking + custom silicon</li><li>VMware recurring software cash flow</li><li>Strong free-cash-flow profile</li></ul>
+    </article></div></section><section class="ledger-section"><div class="ledger-section-title"><h2>Mega-cap Platforms</h2><span>Cloud, AI distribution, and durable cash-flow compounders — Oracle included for cloud/database AI exposure.</span></div><div class="ledger-grid">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">GOOGL</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">GOOGL</span><span class="health-inline"><b>66.6 C</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Alphabet Inc.</div>
-          <div class="ledger-tag">HIGH PRIORITY</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">NEAR ENTRY</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$338.50</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 1.77%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $325–$335</span>
-        <span>Only 1.0% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$428.20</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+26.5%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>66.6 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Search + YouTube cash engine</li><li>Cloud and AI growth optionality</li><li>Mega-cap quality</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$338.50</div><div class="ledger-day"><span class="ledger-up">▲ 1.77%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$320.00</strong><small>5.8% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$428.07</strong></div><div class="target-right"><span>UPSIDE</span><strong>+26.5%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Search + YouTube cash engine</li><li>Cloud and AI growth optionality</li><li>Mega-cap quality</li></ul>
     </article>
-    <article class="ledger-card status-near-zone">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">AMZN</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">AMZN</span><span class="health-inline"><b>62.0 C</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Amazon.com, Inc.</div>
-          <div class="ledger-tag">HIGH PRIORITY</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">NEAR ENTRY</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$256.78</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 1.94%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $248–$254</span>
-        <span>Only 1.1% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$328.16</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+27.8%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>62.0 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>AWS cloud + AI demand</li><li>Retail margin expansion</li><li>Advertising is a high-margin engine</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$256.78</div><div class="ledger-day"><span class="ledger-up">▲ 1.94%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$245.00</strong><small>4.8% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$328.17</strong></div><div class="target-right"><span>UPSIDE</span><strong>+27.8%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>AWS cloud + AI demand</li><li>Retail margin expansion</li><li>Advertising is a high-margin engine</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">MSFT</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">MSFT</span><span class="health-inline"><b>65.8 C</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Microsoft Corporation</div>
-          <div class="ledger-tag">CORE COMPOUNDER</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$495.63</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 0.65%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $440–$450</span>
-        <span>10.1% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$572.95</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+15.6%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>65.8 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Azure + enterprise AI distribution</li><li>Recurring software revenue</li><li>Balance-sheet quality</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$495.63</div><div class="ledger-day"><span class="ledger-up">▲ 0.65%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$435.00</strong><small>13.9% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$572.92</strong></div><div class="target-right"><span>UPSIDE</span><strong>+15.6%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Azure + enterprise AI distribution</li><li>Recurring software revenue</li><li>Balance-sheet quality</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">META</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">META</span><span class="health-inline"><b>57.2 D</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Meta Platforms, Inc.</div>
-          <div class="ledger-tag">CORE COMPOUNDER</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$648.03</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 0.57%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $585–$595</span>
-        <span>8.9% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$757.55</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+16.9%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>57.2 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>AI improves ad efficiency</li><li>Large engagement base</li><li>Strong cash generation</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$648.03</div><div class="ledger-day"><span class="ledger-up">▲ 0.57%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$575.00</strong><small>12.7% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$757.31</strong></div><div class="target-right"><span>UPSIDE</span><strong>+16.9%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>AI improves ad efficiency</li><li>Large engagement base</li><li>Strong cash generation</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">AAPL</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">AAPL</span><span class="health-inline"><b>55.6 D</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Apple Inc.</div>
-          <div class="ledger-tag">CORE COMPOUNDER</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$332.27</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 1.75%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $305–$315</span>
-        <span>5.5% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$324.30</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+-2.4%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>55.6 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Sticky device + services ecosystem</li><li>Huge installed base</li><li>Capital returns provide support</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$332.27</div><div class="ledger-day"><span class="ledger-up">▲ 1.75%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$300.00</strong><small>10.8% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$324.40</strong></div><div class="target-right"><span>UPSIDE</span><strong>+-2.4%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Sticky device + services ecosystem</li><li>Huge installed base</li><li>Capital returns provide support</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">ORCL</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">ORCL</span><span class="health-inline"><b>68.7 C</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Oracle Corporation</div>
-          <div class="ledger-tag">CLOUD COMPOUNDER</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$150.28</div>
-        <div class="ledger-day"><span class="ledger-down">▼ 1.74%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $139–$143</span>
-        <span>5.2% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$241.35</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+60.6%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>68.7 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Buy</strong><span>Street</span></div>
-        <div><strong>MA-derived zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>OCI + database cloud exposure</li><li>AI infrastructure demand</li><li>Large recurring enterprise base</li></ul>
-    </article></div>
-        </section>
-        <section class="ledger-section">
-          <div class="ledger-section-title">
-            <h2>Data Infrastructure</h2>
-            <span>Enterprise data, storage, and software — Pure Storage adds the physical data layer behind AI workloads.</span>
-          </div>
-          <div class="ledger-grid">
-    <article class="ledger-card status-no-data">
+      <div class="ledger-price-row"><div class="ledger-price">$150.28</div><div class="ledger-day"><span class="ledger-down">▼ 1.74%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$137.87</strong><small>9.0% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$241.41</strong></div><div class="target-right"><span>UPSIDE</span><strong>+60.6%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>2% below MA support</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>OCI + database cloud exposure</li><li>AI infrastructure demand</li><li>Large recurring enterprise base</li></ul>
+    </article></div></section><section class="ledger-section"><div class="ledger-section-title"><h2>Data Infrastructure</h2><span>Enterprise data, storage, and software — Pure Storage adds the physical data layer behind AI workloads.</span></div><div class="ledger-grid">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">PSTG</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">PSTG</span><span class="health-inline"><b>27.5 F</b> · <b class="sig-sell">SELL</b></span></div>
           <div class="ledger-company">PSTG</div>
-          <div class="ledger-tag">AI DATA INFRASTRUCTURE</div>
+          <div class="ledger-lifecycle">HYPERGROWTH</div>
         </div>
-        <div class="ledger-status">NO DATA</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">—</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 0.00%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone —</span>
-        <span>Price unavailable</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>—</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>—</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>27.5 F</strong><span>Watchlist</span></div>
-        <div><strong>Weak</strong><span>Strategy</span></div>
-        <div><strong>None</strong><span>Street</span></div>
-        <div><strong>No price data</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Flash storage for AI/data workloads</li><li>Subscription mix improves durability</li><li>High-growth infrastructure name needs disciplined entries</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">—</div><div class="ledger-day"><span class="ledger-up">▲ 0.00%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>—</strong><small>Price/entry unavailable</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>—</strong></div><div class="target-right"><span>UPSIDE</span><strong>—</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>No price data</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Flash storage for AI/data workloads</li><li>Subscription mix improves durability</li><li>AI infrastructure demand</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">SNOW</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">SNOW</span><span class="health-inline"><b>63.7 C</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Snowflake Inc.</div>
-          <div class="ledger-tag">GROWTH DATA</div>
+          <div class="ledger-lifecycle">HYPERGROWTH</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$328.99</div>
-        <div class="ledger-day"><span class="ledger-down">▼ 0.22%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $285–$300</span>
-        <span>9.7% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$418.15</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+27.1%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>63.7 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Cloud data platform for AI workflows</li><li>Consumption can reaccelerate</li><li>Valuation discipline matters</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$328.99</div><div class="ledger-day"><span class="ledger-down">▼ 0.22%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$280.00</strong><small>17.5% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$418.29</strong></div><div class="target-right"><span>UPSIDE</span><strong>+27.1%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Cloud data platform for AI workflows</li><li>Consumption can reaccelerate</li><li>Valuation discipline matters</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">CRM</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">CRM</span><span class="health-inline"><b>59.1 D</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Salesforce, Inc.</div>
-          <div class="ledger-tag">TURNAROUND</div>
+          <div class="ledger-lifecycle">TURNAROUND</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$247.72</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 1.94%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $220–$230</span>
-        <span>7.7% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$273.48</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+10.4%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>59.1 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Large enterprise installed base</li><li>FCF improvement</li><li>AI monetization is the key upside test</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$247.72</div><div class="ledger-day"><span class="ledger-up">▲ 1.94%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$215.00</strong><small>15.2% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$273.37</strong></div><div class="target-right"><span>UPSIDE</span><strong>+10.4%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Large enterprise installed base</li><li>FCF improvement</li><li>AI monetization is the key upside test</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">WDAY</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">WDAY</span><span class="health-inline"><b>65.0 C</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Workday, Inc.</div>
-          <div class="ledger-tag">TURNAROUND</div>
+          <div class="ledger-lifecycle">TURNAROUND</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$185.70</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 0.33%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $165–$175</span>
-        <span>6.1% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$208.73</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+12.4%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>65.0 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Sticky HR + finance subscriptions</li><li>Buybacks support per-share value</li><li>Support area matters</li></ul>
-    </article></div>
-        </section>
-        <section class="ledger-section">
-          <div class="ledger-section-title">
-            <h2>Payments &amp; Data Moats</h2>
-            <span>High-quality transaction and information toll roads with durable margins and recurring demand.</span>
-          </div>
-          <div class="ledger-grid">
-    <article class="ledger-card status-near-zone">
+      <div class="ledger-price-row"><div class="ledger-price">$185.70</div><div class="ledger-day"><span class="ledger-up">▲ 0.33%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$160.00</strong><small>16.1% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$208.68</strong></div><div class="target-right"><span>UPSIDE</span><strong>+12.4%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Sticky HR + finance subscriptions</li><li>Buybacks support per-share value</li><li>Support area matters</li></ul>
+    </article></div></section><section class="ledger-section"><div class="ledger-section-title"><h2>Payments &amp; Data Moats</h2><span>High-quality transaction and information toll roads with durable margins and recurring demand.</span></div><div class="ledger-grid">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">V</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">V</span><span class="health-inline"><b>64.2 C</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Visa Inc.</div>
-          <div class="ledger-tag">CORE COMPOUNDER</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">NEAR ENTRY</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$370.45</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 0.88%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $355–$363</span>
-        <span>Only 2.1% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$419.35</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+13.2%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>64.2 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Digital payments tailwind</li><li>High-margin global network</li><li>Cross-border volume</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$370.45</div><div class="ledger-day"><span class="ledger-up">▲ 0.88%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$350.00</strong><small>5.8% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$419.36</strong></div><div class="target-right"><span>UPSIDE</span><strong>+13.2%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Expanding</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Digital payments tailwind</li><li>High-margin global network</li><li>Cross-border volume</li></ul>
     </article>
-    <article class="ledger-card status-near-zone">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">MA</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">MA</span><span class="health-inline"><b>64.4 C</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Mastercard Incorporated</div>
-          <div class="ledger-tag">CORE COMPOUNDER</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">NEAR ENTRY</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$569.19</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 0.68%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $550–$558</span>
-        <span>Only 2.0% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$668.80</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+17.5%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>64.4 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Global payments moat</li><li>Strong cross-border economics</li><li>Asset-light compounding model</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$569.19</div><div class="ledger-day"><span class="ledger-up">▲ 0.68%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$545.00</strong><small>4.4% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$668.53</strong></div><div class="target-right"><span>UPSIDE</span><strong>+17.5%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Expanding</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Global payments moat</li><li>Strong cross-border economics</li><li>Asset-light compounding model</li></ul>
     </article>
-    <article class="ledger-card status-below-zone">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">SPGI</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">SPGI</span><span class="health-inline"><b>58.4 D</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">S&amp;P Global Inc.</div>
-          <div class="ledger-tag">DATA MOAT</div>
+          <div class="ledger-lifecycle">COMPOUNDER</div>
         </div>
-        <div class="ledger-status">BELOW</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$410.71</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 0.07%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $415–$425</span>
-        <span>1.0% below floor</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$520.37</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+26.7%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>58.4 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Ratings + indices + market data moat</li><li>Recurring information products</li><li>Capital-markets recovery upside</li></ul>
-    </article></div>
-        </section>
-        <section class="ledger-section">
-          <div class="ledger-section-title">
-            <h2>Travel &amp; Cyclicals</h2>
-            <span>More cyclical names where peer confirmation and disciplined entry prices matter most.</span>
-          </div>
-          <div class="ledger-grid">
-    <article class="ledger-card status-near-zone">
+      <div class="ledger-price-row"><div class="ledger-price">$410.71</div><div class="ledger-day"><span class="ledger-up">▲ 0.07%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$410.00</strong><small>0.2% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$520.30</strong></div><div class="target-right"><span>UPSIDE</span><strong>+26.7%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Expanding</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Ratings + indices + market data moat</li><li>Recurring information products</li><li>Capital-markets recovery upside</li></ul>
+    </article></div></section><section class="ledger-section"><div class="ledger-section-title"><h2>Travel &amp; Cyclicals</h2><span>More cyclical names where peer confirmation and disciplined entry prices matter most.</span></div><div class="ledger-grid">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">DAL</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">DAL</span><span class="health-inline"><b>60.4 C</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Delta Air Lines, Inc.</div>
-          <div class="ledger-tag">CYCLICAL VALUE</div>
+          <div class="ledger-lifecycle">CYCLICAL-TROUGH</div>
         </div>
-        <div class="ledger-status">NEAR ENTRY</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$79.91</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 2.13%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $72–$78</span>
-        <span>Only 2.4% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$104.20</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+30.4%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>60.4 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Premium travel + loyalty economics</li><li>Operating leverage</li><li>UAL confirmation improves signal</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$79.91</div><div class="ledger-day"><span class="ledger-up">▲ 2.13%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$70.00</strong><small>14.2% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$104.23</strong></div><div class="target-right"><span>UPSIDE</span><strong>+30.4%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Premium travel + loyalty economics</li><li>Operating leverage</li><li>UAL confirmation improves signal</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">UAL</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">UAL</span><span class="health-inline"><b>59.2 D</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">United Airlines Holdings, Inc.</div>
-          <div class="ledger-tag">CYCLICAL VALUE</div>
+          <div class="ledger-lifecycle">CYCLICAL-TROUGH</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$109.82</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 3.13%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $92–$98</span>
-        <span>12.1% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$159.24</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+45.0%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>59.2 C</strong><span>Watchlist</span></div>
-        <div><strong>Hold</strong><span>Strategy</span></div>
-        <div><strong>Strong Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Strong international network</li><li>Capacity discipline</li><li>DAL confirmation matters</li></ul>
+      <div class="ledger-price-row"><div class="ledger-price">$109.82</div><div class="ledger-day"><span class="ledger-up">▲ 3.13%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$90.00</strong><small>22.0% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$159.20</strong></div><div class="target-right"><span>UPSIDE</span><strong>+45.0%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Strong international network</li><li>Capacity discipline</li><li>DAL confirmation matters</li></ul>
     </article>
-    <article class="ledger-card status-wait">
+    <article class="ledger-card action-wait">
       <div class="ledger-card-head">
-        <div>
-          <div class="ledger-ticker">EXPE</div>
+        <div class="ticker-stack">
+          <div class="ticker-line"><span class="ledger-ticker">EXPE</span><span class="health-inline"><b>75.9 B</b> · <b class="sig-hold">HOLD</b></span></div>
           <div class="ledger-company">Expedia Group, Inc.</div>
-          <div class="ledger-tag">TRAVEL PLATFORM</div>
+          <div class="ledger-lifecycle">CYCLICAL-TROUGH</div>
         </div>
-        <div class="ledger-status">WAIT</div>
+        <div class="ledger-action action-label-wait">WAIT</div>
       </div>
-
-      <div class="ledger-price-row">
-        <div class="ledger-price">$280.83</div>
-        <div class="ledger-day"><span class="ledger-up">▲ 1.43%</span></div>
-      </div>
-
-      <div class="zone-line">
-        <span>Zone $240–$250</span>
-        <span>12.3% above ceiling</span>
-      </div>
-      <div class="zone-gauge"><span class="zone-mark zone-low"></span><span class="zone-fill"></span><span class="zone-mark zone-high"></span></div>
-
-      <div class="target-strip">
-        <div><span>6-MO TARGET*</span><strong>$339.80</strong></div>
-        <div class="target-right"><span>UPSIDE</span><strong>+21.0%</strong></div>
-      </div>
-
-      <div class="ledger-metrics">
-        <div><strong>75.9 B</strong><span>Watchlist</span></div>
-        <div><strong>Buy</strong><span>Strategy</span></div>
-        <div><strong>Buy</strong><span>Street</span></div>
-        <div><strong>Curated zone</strong><span>Zone basis</span></div>
-      </div>
-
-      <div class="ledger-why">WHY IT STAYS ON THE LIST</div>
-      <ul class="ledger-reasons"><li>Scaled travel platform</li><li>B2B + Vrbo growth levers</li><li>200-day MA is useful support context</li></ul>
-    </article></div>
-        </section>
-
-      <section class="how-box">
-        <h3>How to read this page</h3>
-        <div class="how-grid">
-          <div><b><i class="how-dot how-green"></i>Entry zone hit</b><p>Price sits inside the buy zone. Strongest action signal — deploy a tranche, not the whole position.</p></div>
-          <div><b><i class="how-dot how-amber"></i>Near entry</b><p>Within 3% of the zone ceiling. Watch closely; do not chase.</p></div>
-          <div><b><i class="how-dot how-gray"></i>Wait</b><p>More than 3% above the zone. Wait for a pullback instead of buying extended.</p></div>
-          <div><b><i class="how-dot how-red"></i>Below range</b><p>Price fell below the zone floor. Recheck the thesis — not an automatic bargain.</p></div>
-          <div><b>The gauge</b><p>A dot on a track: green band is the entry zone, dot is today's price. Dot inside band = act.</p></div>
-          <div><b>Tranche rule</b><p>When you choose to act, deploy in thirds rather than all at once — roughly 33% / 33% / 33%.</p></div>
-          <div><b>Zone basis</b><p>Most zones are curated. ORCL and PSTG use the nearest useful MA50/MA200 support with a ±1.5% band.</p></div>
-          <div><b>6-mo target</b><p>Current analyst mean price target used as a practical six-month planning proxy — not a guarantee.</p></div>
-        </div>
-      </section>
-    </main>
+      <div class="ledger-price-row"><div class="ledger-price">$280.83</div><div class="ledger-day"><span class="ledger-up">▲ 1.43%</span></div></div>
+      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>$235.00</strong><small>19.5% above entry threshold</small></div>
+      <div class="target-strip"><div><span>6-MO TARGET*</span><strong>$339.81</strong></div><div class="target-right"><span>UPSIDE</span><strong>+21.0%</strong></div></div>
+      <div class="ledger-metrics"><div><strong>Neutral</strong><span>Market</span></div><div><strong>Stable</strong><span>Sector</span></div><div><strong>Low</strong><span>Conviction</span></div><div><strong>Curated conservative level</strong><span>Entry basis</span></div></div>
+      <div class="model-line"><b>40-factor profile:</b> Neutral / Stable</div>
+      <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons"><li>Scaled travel platform</li><li>B2B + Vrbo growth levers</li><li>200-day MA is useful support context</li></ul>
+    </article></div></section>
+      <section class="how-read"><h3>How to read this page</h3><div class="read-grid">
+        <div class="read-item"><b>● ENTER</b>Price is at or below the conservative entry threshold. This is the only positive action state.</div>
+        <div class="read-item"><b>● WAIT</b>Price is above the entry threshold. Do not chase; wait for the level.</div>
+        <div class="read-item"><b>Health score</b>The bold score next to each ticker uses the regime-aware 40-parameter model. Grade: A+ 90–100, A 80–89, B 70–79, C 60–69, D 50–59, F below 50.</div>
+        <div class="read-item"><b>Signal</b>STRONG BUY / BUY / HOLD / SELL follows the weighted score, hard-disqualifier rules, and data conviction. Missing data is N/A and renormalized—not guessed.</div>
+        <div class="read-item"><b>Entry level</b>Curated levels are intentionally conservative. NVDA is now ENTER at or below $200. ORCL/PSTG use 2% below useful MA support.</div>
+        <div class="read-item"><b>40-factor weights</b>Weights change with Risk-on/Neutral/Risk-off conditions and lifecycle: Hypergrowth, Compounder, Turnaround, or Cyclical-trough.</div>
+        <div class="read-item"><b>GICS peer data</b>Official GICS peer-median fields remain N/A unless an authoritative peer feed is available; the bucket is renormalized exactly per the model.</div>
+        <div class="read-item"><b>6-month target</b>Uses the current consensus mean analyst target as a planning proxy, not a guaranteed forecast.</div>
+      </div><div class="footnote">The health model is a decision-support framework, not a guarantee of returns. Technical, ownership, filing, and peer-group fields can be unavailable or delayed in public market feeds.</div></section>
+    </section>
 </body>
 </html>
