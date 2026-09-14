@@ -41,6 +41,17 @@ STOCK_META = {
     "PSTG":{"reasons":["Flash storage for AI/data workloads","Subscription mix improves durability","AI infrastructure demand"]},
 }
 
+TERM_HELP = {
+    "hypergrowth": "Fast-growing company; bigger upside, usually bigger price swings.",
+    "compounder": "Proven business that can steadily grow earnings and cash over many years.",
+    "turnaround": "Business trying to improve after a slowdown; results need to prove the recovery.",
+    "cyclical-trough": "Business tied to the economic cycle and near a weaker part of that cycle.",
+    "cyclical": "Results rise and fall more with the economy or industry cycle.",
+    "risk-on": "Investors are comfortable taking risk; growth stocks usually get more support.",
+    "neutral": "Market signals are mixed; neither clearly bullish nor defensive.",
+    "risk-off": "Investors are defensive; high-growth and cyclical stocks can face pressure.",
+}
+
 def _money(v):
     return f"${v:,.2f}" if v not in (None, 0) else "—"
 
@@ -61,10 +72,17 @@ def _entry_level(s):
     return 0,"No price data"
 
 def _action(price,level):
-    if not price or not level:return "WAIT","Price/entry unavailable","wait"
-    if price<=level:
-        pct=(level-price)/level*100;return "ENTER",f"{pct:.1f}% at/below entry threshold","enter"
-    pct=(price-level)/level*100;return "WAIT",f"{pct:.1f}% above entry threshold","wait"
+    """Four simple states around the planned entry threshold."""
+    if not price or not level:
+        return "REVIEW","Price or entry level unavailable","review"
+    diff=(price-level)/level*100
+    if diff < -8:
+        return "REVIEW",f"{abs(diff):.1f}% below planned entry — check what changed before acting","review"
+    if diff <= 0:
+        return "ENTER",f"{abs(diff):.1f}% at/below planned entry","enter"
+    if diff <= 3:
+        return "NEAR ENTRY",f"Only {diff:.1f}% above planned entry","near"
+    return "WAIT",f"{diff:.1f}% above planned entry","wait"
 
 def _day_change(v):
     if v is None:return '<span class="ledger-muted">—</span>'
@@ -74,8 +92,22 @@ def _day_change(v):
 def _signal_class(sig):
     return {"STRONG BUY":"sig-strong","BUY":"sig-buy","HOLD":"sig-hold","SELL":"sig-sell"}.get(sig,"sig-hold")
 
+def _plain_english(s,basis):
+    lifecycle=(s.get("lifecycle") or "").lower()
+    market=(s.get("market_regime") or "").lower()
+    lifecycle_text=TERM_HELP.get(lifecycle, "Company type used by the model to decide which factors matter most.")
+    market_text=TERM_HELP.get(market, "Current overall market backdrop used by the model.")
+    conviction=(s.get("conviction") or "—").lower()
+    conviction_text={
+        "high":"Most important model inputs agree and data coverage is strong.",
+        "medium":"Some signals agree, but not enough for maximum confidence.",
+        "low":"Signals conflict or important data is missing.",
+    }.get(conviction,"Confidence level based on how much the model signals agree.")
+    basis_text="How the planned entry price was chosen. " + ("It is a manually selected conservative price." if "Curated" in basis else "It is based on moving-average support or a fallback pullback level.")
+    return lifecycle_text,market_text,conviction_text,basis_text
+
 def _render_card(s):
-    ticker=s["ticker"];meta=STOCK_META.get(ticker,{"reasons":[]});price=s.get("price") or 0;level,basis=_entry_level(s);action,detail,akey=_action(price,level);target=_target_6m(s);upside=s.get("upside_pct");score=s.get("health_score",0);grade=s.get("grade","?");signal=s.get("signal","HOLD");lifecycle=s.get("lifecycle","—");regime=s.get("weight_profile","—");reasons="".join(f"<li>{escape(r)}</li>" for r in meta["reasons"])
+    ticker=s["ticker"];meta=STOCK_META.get(ticker,{"reasons":[]});price=s.get("price") or 0;level,basis=_entry_level(s);action,detail,akey=_action(price,level);target=_target_6m(s);upside=s.get("upside_pct");score=s.get("health_score",0);grade=s.get("grade","?");signal=s.get("signal","HOLD");lifecycle=s.get("lifecycle","—");regime=s.get("weight_profile","—");reasons="".join(f"<li>{escape(r)}</li>" for r in meta["reasons"]);life_help,market_help,conv_help,basis_help=_plain_english(s,basis)
     return f"""
     <article class="ledger-card action-{akey}">
       <div class="ledger-card-head">
@@ -86,11 +118,12 @@ def _render_card(s):
         </div>
         <div class="ledger-action action-label-{akey}">{action}</div>
       </div>
+      <div class="term-inline"><b>{escape(lifecycle.title())}:</b> {escape(life_help)}</div>
       <div class="ledger-price-row"><div class="ledger-price">{_money(price)}</div><div class="ledger-day">{_day_change(s.get('day_change'))}</div></div>
-      <div class="entry-row"><span>ENTER AT / BELOW</span><strong>{_money(level)}</strong><small>{escape(detail)}</small></div>
+      <div class="entry-row"><span>PLANNED ENTRY</span><strong>{_money(level)}</strong><small>{escape(detail)}</small></div>
       <div class="target-strip"><div><span>6-MO TARGET*</span><strong>{_money(target)}</strong></div><div class="target-right"><span>UPSIDE</span><strong>{('+'+str(upside)+'%') if upside is not None else '—'}</strong></div></div>
       <div class="ledger-metrics"><div><strong>{escape(s.get('market_regime','—'))}</strong><span>Market</span></div><div><strong>{escape(s.get('sector_health','—'))}</strong><span>Sector</span></div><div><strong>{escape(s.get('conviction','—'))}</strong><span>Conviction</span></div><div><strong>{escape(basis)}</strong><span>Entry basis</span></div></div>
-      <div class="model-line"><b>40-factor profile:</b> {escape(regime)}</div>
+      <div class="plain-box"><b>Plain English</b><span><strong>Market:</strong> {escape(market_help)}</span><span><strong>Conviction:</strong> {escape(conv_help)}</span><span><strong>Entry basis:</strong> {escape(basis_help)}</span><span><strong>40-factor profile:</strong> the model changes factor weights for this company type and market environment. “N/A” means data was unavailable, not guessed.</span></div>
       <div class="ledger-why">WHY IT STAYS ON THE LIST</div><ul class="ledger-reasons">{reasons}</ul>
     </article>"""
 
@@ -100,41 +133,50 @@ def render_stock_section(stocks:list)->str:
     for c in CATEGORY_DEFS:
         for t in c["tickers"]:
             if t in by:ordered.append(by[t])
-    enter=[s["ticker"] for s in ordered if _action(s.get("price") or 0,_entry_level(s)[0])[0]=="ENTER"];wait=[s["ticker"] for s in ordered if _action(s.get("price") or 0,_entry_level(s)[0])[0]=="WAIT"]
+    states={"ENTER":[],"NEAR ENTRY":[],"WAIT":[],"REVIEW":[]}
+    for s in ordered:
+        states[_action(s.get("price") or 0,_entry_level(s)[0])[0]].append(s["ticker"])
     sections=[]
     for c in CATEGORY_DEFS:
         items=[by[t] for t in c["tickers"] if t in by]
         if not items:continue
         sections.append(f"""<section class="ledger-section"><div class="ledger-section-title"><h2>{escape(c['name'])}</h2><span>{escape(c['thesis'])}</span></div><div class="ledger-grid">{''.join(_render_card(s) for s in items)}</div></section>""")
-    now=datetime.now().strftime("%b %d, %Y · %I:%M %p");enter_text=" · ".join(enter) if enter else "none right now";wait_text=" · ".join(wait) if wait else "none"
+    now=datetime.now().strftime("%b %d, %Y · %I:%M %p")
+    def names(k):return " · ".join(states[k]) if states[k] else "none"
     return f"""
     <style>
-      :root{{--paper:#f3ede2;--ink:#171713;--muted:#69645b;--rule:#25241f;--green:#1f6b49;--amber:#a56a16;--red:#a54336;--bar:#15211c}}
+      :root{{--paper:#f3ede2;--ink:#171713;--muted:#69645b;--rule:#25241f;--green:#1f6b49;--amber:#a56a16;--red:#a54336;--blue:#315f8c;--bar:#15211c}}
       body{{background:#e9e4da!important}} .ledger-page{{max-width:1180px;margin:0 auto;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif;padding:22px 28px 34px}}
-      .ledger-masthead{{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:2px solid var(--rule);padding-bottom:12px}} .ledger-title{{font-size:40px;line-height:.95;font-weight:700;letter-spacing:-1px;margin:0}} .ledger-deck{{font-size:11px;font-style:italic;color:var(--muted);margin-top:6px}} .ledger-edition{{font-family:Arial,sans-serif;text-align:right;font-size:9px;line-height:1.55;white-space:nowrap}}
-      .tape{{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding:8px 0 7px;font-family:Arial,sans-serif;font-size:9px;text-transform:uppercase}} .tape-label{{font-family:Georgia,serif;font-style:italic;font-weight:700}} .tape-dot{{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}} .dot-green{{background:var(--green)}} .dot-amber{{background:var(--amber)}}
+      .ledger-masthead{{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:2px solid var(--rule);padding-bottom:12px}} .ledger-title{{font-size:40px;line-height:.95;font-weight:700;letter-spacing:-1px;margin:0}} .ledger-deck{{font-size:11px;font-style:italic;color:var(--muted);margin-top:6px;max-width:720px}} .ledger-edition{{font-family:Arial,sans-serif;text-align:right;font-size:9px;line-height:1.55;white-space:nowrap}}
+      .briefing-box{{border-bottom:1px solid var(--rule);padding:9px 0 10px;font-family:Arial,sans-serif;font-size:8px;line-height:1.45}} .briefing-box b{{font-family:Georgia,serif;font-size:10px}} .briefing-legend{{display:flex;gap:12px;flex-wrap:wrap;margin-top:5px}} .briefing-legend span{{white-space:nowrap}} .b-enter{{color:var(--green)}} .b-near{{color:var(--blue)}} .b-wait{{color:var(--amber)}} .b-review{{color:var(--red)}}
+      .tape{{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding:8px 0 7px;font-family:Arial,sans-serif;font-size:8px;text-transform:uppercase}} .tape-label{{font-family:Georgia,serif;font-style:italic;font-weight:700}}
       .ledger-section{{margin-top:25px}} .ledger-section-title{{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--rule);padding-bottom:5px}} .ledger-section-title h2{{font-size:21px;margin:0}} .ledger-section-title span{{font-size:9px;font-style:italic;color:var(--muted)}} .ledger-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-left:1px solid var(--rule)}}
-      .ledger-card{{padding:10px 12px 12px;border-right:1px solid var(--rule);border-bottom:1px solid #a49d90;min-width:0}} .ledger-card.action-enter{{border-left:3px solid var(--green);background:rgba(255,255,255,.13)}} .ledger-card-head{{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}} .ticker-line{{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}} .ledger-ticker{{font-size:17px;font-weight:700;line-height:1}} .health-inline{{font-family:Arial,sans-serif;font-size:8.5px;letter-spacing:.1px}} .sig-strong,.sig-buy{{color:var(--green)}} .sig-hold{{color:var(--amber)}} .sig-sell{{color:var(--red)}}
-      .ledger-company{{font-family:Arial,sans-serif;font-size:8px;color:var(--muted);margin:2px 0 4px;max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}} .ledger-lifecycle{{display:inline-block;border:1px solid var(--rule);padding:1px 4px;font-family:Arial,sans-serif;font-size:6.7px}} .ledger-action{{font-family:Arial,sans-serif;font-size:8px;font-weight:800;letter-spacing:.6px}} .action-label-enter{{color:var(--green)}} .action-label-wait{{color:#6b665c}}
+      .ledger-card{{padding:10px 12px 12px;border-right:1px solid var(--rule);border-bottom:1px solid #a49d90;min-width:0}} .ledger-card.action-enter{{border-left:3px solid var(--green);background:rgba(255,255,255,.13)}} .ledger-card.action-near{{border-left:3px solid var(--blue)}} .ledger-card.action-review{{border-left:3px solid var(--red)}} .ledger-card-head{{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}} .ticker-line{{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}} .ledger-ticker{{font-size:17px;font-weight:700;line-height:1}} .health-inline{{font-family:Arial,sans-serif;font-size:8.5px;letter-spacing:.1px}} .sig-strong,.sig-buy{{color:var(--green)}} .sig-hold{{color:var(--amber)}} .sig-sell{{color:var(--red)}}
+      .ledger-company{{font-family:Arial,sans-serif;font-size:8px;color:var(--muted);margin:2px 0 4px;max-width:190px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}} .ledger-lifecycle{{display:inline-block;border:1px solid var(--rule);padding:1px 4px;font-family:Arial,sans-serif;font-size:6.7px}} .term-inline{{font-family:Arial,sans-serif;font-size:7px;line-height:1.3;color:#514c44;margin-top:5px}} .ledger-action{{font-family:Arial,sans-serif;font-size:8px;font-weight:800;letter-spacing:.5px;white-space:nowrap}} .action-label-enter{{color:var(--green)}} .action-label-near{{color:var(--blue)}} .action-label-wait{{color:var(--amber)}} .action-label-review{{color:var(--red)}}
       .ledger-price-row{{display:flex;align-items:baseline;gap:8px;margin-top:8px}} .ledger-price{{font-family:Arial,sans-serif;font-size:24px;font-weight:700;letter-spacing:-.5px}} .ledger-day{{font-family:Arial,sans-serif;font-size:8px}} .ledger-up{{color:var(--green);font-weight:700}} .ledger-down{{color:var(--red);font-weight:700}}
       .entry-row{{display:grid;grid-template-columns:auto auto;align-items:baseline;gap:3px 7px;border-top:1px solid #756f65;border-bottom:1px solid #756f65;padding:5px 0;margin:7px 0;font-family:Arial,sans-serif}} .entry-row span{{font-size:6.5px;letter-spacing:.5px}} .entry-row strong{{font-size:12px;text-align:right}} .entry-row small{{grid-column:1/-1;font-size:7px;color:var(--muted)}}
       .target-strip{{display:grid;grid-template-columns:1fr 1fr;background:var(--bar);color:#fff;padding:7px 8px;font-family:Arial,sans-serif}} .target-strip span{{display:block;font-size:6.4px;color:#c9d1cd;letter-spacing:.4px}} .target-strip strong{{display:block;font-size:12px;margin-top:2px}} .target-right{{text-align:right}} .target-right strong{{color:#71d39a}}
-      .ledger-metrics{{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:8px 0 6px;font-family:Arial,sans-serif}} .ledger-metrics strong{{display:block;font-size:7.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}} .ledger-metrics span{{font-size:6.2px;color:var(--muted)}} .model-line{{font-family:Arial,sans-serif;font-size:7px;color:#49453e;border-top:1px solid #c1baae;padding-top:5px}} .ledger-why{{font-family:Arial,sans-serif;font-size:6.8px;font-weight:700;margin-top:6px}} .ledger-reasons{{font-family:Arial,sans-serif;font-size:7.2px;line-height:1.35;padding-left:12px;margin:3px 0 0}}
+      .ledger-metrics{{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:8px 0 6px;font-family:Arial,sans-serif}} .ledger-metrics strong{{display:block;font-size:7.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}} .ledger-metrics span{{font-size:6.2px;color:var(--muted)}} .plain-box{{font-family:Arial,sans-serif;font-size:6.8px;line-height:1.35;color:#49453e;border-top:1px solid #c1baae;border-bottom:1px solid #c1baae;padding:5px 0;display:grid;gap:2px}} .plain-box>b{{font-family:Georgia,serif;font-size:8px;color:var(--ink)}} .ledger-why{{font-family:Arial,sans-serif;font-size:6.8px;font-weight:700;margin-top:6px}} .ledger-reasons{{font-family:Arial,sans-serif;font-size:7.2px;line-height:1.35;padding-left:12px;margin:3px 0 0}}
       .how-read{{border:1.5px solid var(--rule);margin-top:28px;padding:12px 14px}} .how-read h3{{font-size:13px;margin:0 0 8px}} .read-grid{{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}} .read-item{{font-family:Arial,sans-serif;font-size:7px;line-height:1.4}} .read-item b{{display:block;font-family:Georgia,serif;font-size:8px;margin-bottom:2px}} .footnote{{font-family:Arial,sans-serif;font-size:6.8px;color:var(--muted);margin-top:8px;line-height:1.4}}
       @media(max-width:800px){{.ledger-page{{padding:14px 10px 24px}}.ledger-title{{font-size:29px}}.ledger-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.ledger-section-title{{display:block}}.ledger-section-title span{{display:block;margin-top:3px}}.read-grid{{grid-template-columns:repeat(2,1fr)}}.ledger-edition{{font-size:7px}}}} @media(max-width:430px){{.ledger-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.ledger-card{{padding:8px 7px}}.ledger-ticker{{font-size:15px}}.health-inline{{font-size:7px}}.ledger-price{{font-size:19px}}.ledger-metrics{{grid-template-columns:repeat(2,1fr)}}.ledger-title{{font-size:26px}}}}
     </style>
     <section class="ledger-page" id="stocks">
-      <header class="ledger-masthead"><div><h1 class="ledger-title">The Chai Ledger</h1><div class="ledger-deck">Entry levels, live prices, six-month targets — one glance tells you ENTER or WAIT.</div></div><div class="ledger-edition"><b>Edition:</b> Stocks Only · Action First<br><b>Updated:</b> {escape(now)}</div></header>
-      <div class="tape"><span class="tape-label">ON THE TAPE</span><span><i class="tape-dot dot-green"></i><b>ENTER:</b> {escape(enter_text)}</span><span><i class="tape-dot dot-amber"></i><b>WAIT:</b> {escape(wait_text)}</span></div>
+      <header class="ledger-masthead"><div><h1 class="ledger-title">The Chai Ledger</h1><div class="ledger-deck">Entry levels, live prices and six-month targets — with every model term translated into plain English.</div></div><div class="ledger-edition"><b>Edition:</b> Stocks Only · Action First<br><b>Updated:</b> {escape(now)}</div></header>
+      <section class="briefing-box"><b>30-second briefing</b><div>This dashboard does not use only ENTER and WAIT anymore. It separates stocks that are close to your planned price from stocks that need more investigation.</div><div class="briefing-legend"><span class="b-enter"><b>ENTER</b> = at or slightly below planned price</span><span class="b-near"><b>NEAR ENTRY</b> = within 3% above it</span><span class="b-wait"><b>WAIT</b> = more than 3% above it</span><span class="b-review"><b>REVIEW</b> = over 8% below it or data missing; check why before buying</span></div></section>
+      <div class="tape"><span class="tape-label">ON THE TAPE</span><span class="b-enter"><b>ENTER:</b> {escape(names('ENTER'))}</span><span class="b-near"><b>NEAR:</b> {escape(names('NEAR ENTRY'))}</span><span class="b-wait"><b>WAIT:</b> {escape(names('WAIT'))}</span><span class="b-review"><b>REVIEW:</b> {escape(names('REVIEW'))}</span></div>
       {''.join(sections)}
-      <section class="how-read"><h3>How to read this page</h3><div class="read-grid">
-        <div class="read-item"><b>● ENTER</b>Price is at or below the conservative entry threshold. This is the only positive action state.</div>
-        <div class="read-item"><b>● WAIT</b>Price is above the entry threshold. Do not chase; wait for the level.</div>
-        <div class="read-item"><b>Health score</b>The bold score next to each ticker uses the regime-aware 40-parameter model. Grade: A+ 90–100, A 80–89, B 70–79, C 60–69, D 50–59, F below 50.</div>
-        <div class="read-item"><b>Signal</b>STRONG BUY / BUY / HOLD / SELL follows the weighted score, hard-disqualifier rules, and data conviction. Missing data is N/A and renormalized—not guessed.</div>
-        <div class="read-item"><b>Entry level</b>Curated levels are intentionally conservative. NVDA is now ENTER at or below $200. ORCL/PSTG use 2% below useful MA support.</div>
-        <div class="read-item"><b>40-factor weights</b>Weights change with Risk-on/Neutral/Risk-off conditions and lifecycle: Hypergrowth, Compounder, Turnaround, or Cyclical-trough.</div>
-        <div class="read-item"><b>GICS peer data</b>Official GICS peer-median fields remain N/A unless an authoritative peer feed is available; the bucket is renormalized exactly per the model.</div>
-        <div class="read-item"><b>6-month target</b>Uses the current consensus mean analyst target as a planning proxy, not a guaranteed forecast.</div>
-      </div><div class="footnote">The health model is a decision-support framework, not a guarantee of returns. Technical, ownership, filing, and peer-group fields can be unavailable or delayed in public market feeds.</div></section>
+      <section class="how-read"><h3>Simple glossary — what the words mean</h3><div class="read-grid">
+        <div class="read-item"><b>Compounder</b>A proven company that steadily grows profits/cash for years. Think “quality that keeps building on itself.”</div>
+        <div class="read-item"><b>Hypergrowth</b>A company growing unusually fast. Bigger opportunity, but usually more volatility and valuation risk.</div>
+        <div class="read-item"><b>Turnaround</b>A company recovering from slower growth or business problems. We want evidence the recovery is actually working.</div>
+        <div class="read-item"><b>Cyclical / Cyclical-trough</b>A business whose results move with the economy or industry cycle. “Trough” means near a weaker point in that cycle.</div>
+        <div class="read-item"><b>Risk-on / Neutral / Risk-off</b>Risk-on = investors favor growth and risk. Neutral = mixed signals. Risk-off = investors favor safety.</div>
+        <div class="read-item"><b>Conviction</b>How strongly the available data agrees. High = many important signals line up; Low = conflicting or missing signals.</div>
+        <div class="read-item"><b>Entry basis</b>Why that entry price exists: a manually chosen conservative level, moving-average support, or fallback pullback calculation.</div>
+        <div class="read-item"><b>40-factor profile</b>The model looks at many valuation, growth, quality, technical and sentiment factors. Their importance changes by company type and market environment.</div>
+        <div class="read-item"><b>Health score / Grade</b>A summary score from the model. Higher generally means stronger fundamentals/market setup; it is not a guarantee of future returns.</div>
+        <div class="read-item"><b>Signal</b>STRONG BUY / BUY / HOLD / SELL is the model's broad attractiveness score. It is separate from whether today's price is at your planned entry.</div>
+        <div class="read-item"><b>6-month target / Upside</b>The current analyst consensus target and the percentage difference from today's price. It is an estimate, not a promised return.</div>
+        <div class="read-item"><b>N/A</b>The data source did not provide that metric. The model leaves it missing rather than inventing a number.</div>
+      </div><div class="footnote">Action state answers “how close is price to my planned entry?” Signal answers “how attractive does the stock look overall?” Those are intentionally different questions.</div></section>
     </section>"""
