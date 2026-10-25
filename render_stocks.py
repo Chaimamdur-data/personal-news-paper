@@ -1,6 +1,7 @@
 """Stocks-only Chai Ledger renderer."""
 from html import escape
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 CATEGORY_DEFS = [
     {"name":"AI Compute & Semis","tickers":["MU","NVDA","AVGO"],"thesis":"Infrastructure leaders — best entries come on disciplined pullbacks, not vertical moves."},
@@ -141,7 +142,7 @@ def render_stock_section(stocks:list)->str:
         items=[by[t] for t in c["tickers"] if t in by]
         if not items:continue
         sections.append(f"""<section class="ledger-section"><div class="ledger-section-title"><h2>{escape(c['name'])}</h2><span>{escape(c['thesis'])}</span></div><div class="ledger-grid">{''.join(_render_card(s) for s in items)}</div></section>""")
-    now=datetime.now().strftime("%b %d, %Y · %I:%M %p")
+    now=datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%b %d, %Y · %I:%M %p PT")
     def names(k):return " · ".join(states[k]) if states[k] else "none"
     return f"""
     <style>
@@ -161,7 +162,27 @@ def render_stock_section(stocks:list)->str:
       @media(max-width:800px){{.ledger-page{{padding:14px 10px 24px}}.ledger-title{{font-size:29px}}.ledger-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.ledger-section-title{{display:block}}.ledger-section-title span{{display:block;margin-top:3px}}.read-grid{{grid-template-columns:repeat(2,1fr)}}.ledger-edition{{font-size:7px}}}} @media(max-width:430px){{.ledger-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.ledger-card{{padding:8px 7px}}.ledger-ticker{{font-size:15px}}.health-inline{{font-size:7px}}.ledger-price{{font-size:19px}}.ledger-metrics{{grid-template-columns:repeat(2,1fr)}}.ledger-title{{font-size:26px}}}}
     </style>
     <section class="ledger-page" id="stocks">
-      <header class="ledger-masthead"><div><h1 class="ledger-title">The Chai Ledger</h1><div class="ledger-deck">Entry levels, live prices and six-month targets — with every model term translated into plain English.</div></div><div class="ledger-edition"><b>Edition:</b> Stocks Only · Action First<br><b>Updated:</b> {escape(now)}</div></header>
+      <header class="ledger-masthead">
+        <div>
+          <div class="market-kicker">The Chai Ledger / Markets</div>
+          <h1 class="ledger-title">Markets</h1>
+          <div class="ledger-deck">Your focused market dashboard — planned entry levels, live prices, six-month targets, and a 40-factor health view.</div>
+        </div>
+        <div class="ledger-edition">
+          <b>Updated:</b> {escape(now)}<br><b>Refresh:</b> Hourly + on demand
+          <div class="market-actions">
+            <a class="market-btn market-btn-primary" href="https://github.com/Chaimamdur-data/personal-news-paper/actions/workflows/refresh.yml" target="_blank" rel="noopener" title="Open the secure GitHub Actions page, then choose Run workflow"><span class="market-btn-icon">↻</span>Refresh Data</a>
+            <button class="market-btn market-btn-secondary" type="button" onclick="window.location.reload()" title="Reload this page to pick up the newest published data"><span class="market-btn-icon">⟳</span>Reload Page</button>
+          </div>
+          <div class="refresh-note">Secure refresh opens GitHub Actions → Run workflow. No access token is stored in this page.</div>
+        </div>
+      </header>
+      <section class="market-status-strip">
+        <div class="status-cell"><span class="status-label">Watchlist</span><span class="status-value">{len(ordered)} stocks</span><span class="status-sub">Focused universe</span></div>
+        <div class="status-cell"><span class="status-label">At / near plan</span><span class="status-value">{len(states['ENTER']) + len(states['NEAR ENTRY'])}</span><span class="status-sub">{len(states['ENTER'])} at entry · {len(states['NEAR ENTRY'])} near</span></div>
+        <div class="status-cell"><span class="status-label">Waiting</span><span class="status-value">{len(states['WAIT'])}</span><span class="status-sub">Above planned entry</span></div>
+        <div class="status-cell"><span class="status-label">Needs review</span><span class="status-value">{len(states['REVIEW'])}</span><span class="status-sub">Deep below plan or data issue</span></div>
+      </section>
       <section class="briefing-box"><b>30-second briefing</b><div>This dashboard does not use only ENTER and WAIT anymore. It separates stocks that are close to your planned price from stocks that need more investigation.</div><div class="briefing-legend"><span class="b-enter"><b>ENTER</b> = at or slightly below planned price</span><span class="b-near"><b>NEAR ENTRY</b> = within 3% above it</span><span class="b-wait"><b>WAIT</b> = more than 3% above it</span><span class="b-review"><b>REVIEW</b> = over 8% below it or data missing; check why before buying</span></div></section>
       <div class="tape"><span class="tape-label">ON THE TAPE</span><span class="b-enter"><b>ENTER:</b> {escape(names('ENTER'))}</span><span class="b-near"><b>NEAR:</b> {escape(names('NEAR ENTRY'))}</span><span class="b-wait"><b>WAIT:</b> {escape(names('WAIT'))}</span><span class="b-review"><b>REVIEW:</b> {escape(names('REVIEW'))}</span></div>
       {''.join(sections)}
