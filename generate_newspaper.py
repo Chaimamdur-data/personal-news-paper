@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 
 from stock_health import run_watchlist
 from render_stocks import render_stock_section
+from render_ott import fetch_ott_recommendations, render_ott_tab
 
 CONFIG_FILE = "config.yml"
 OUTPUT_FILE = "index.html"
@@ -358,7 +359,7 @@ def render_news_tab(tab, stories):
     </section>"""
 
 
-def render_shell(stock_html, news_html):
+def render_shell(stock_html, news_html, ott_html):
     tabs = [
         ("markets", "Markets"),
         ("ap-telangana", "AP + Telangana"),
@@ -367,6 +368,7 @@ def render_shell(stock_html, news_html):
         ("ai-data", "AI + Data"),
         ("sports", "Sports"),
         ("entertainment", "Movies + Gossip"),
+        ("ott", "OTT Picks"),
     ]
     nav = "".join(
         f'<button class="ledger-tab-btn{" active" if slug == "markets" else ""}" data-tab="{slug}">{escape(label)}</button>'
@@ -374,6 +376,7 @@ def render_shell(stock_html, news_html):
     )
     panels = f'<div class="ledger-tab-panel active" id="tab-markets">{stock_html}</div>'
     panels += "".join(f'<div class="ledger-tab-panel" id="tab-{slug}">{html}</div>' for slug, html in news_html.items())
+    panels += f'<div class="ledger-tab-panel" id="tab-ott">{ott_html}</div>'
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -557,7 +560,12 @@ def main():
         print(f"  ✅ {len(stories)} stories inside last {NEWS_WINDOW_HOURS}h")
         news_html[tab["slug"]] = render_news_tab(tab, stories)
 
-    html = render_shell(stock_html, news_html)
+    print("Fetching OTT recommendations...")
+    ott_data = fetch_ott_recommendations()
+    print(f"  ✅ OTT: {len(ott_data['watch_now'])} watch-now · {len(ott_data['recent'])} recent · {len(ott_data['upcoming'])} upcoming")
+    ott_html = render_ott_tab(ott_data)
+
+    html = render_shell(stock_html, news_html, ott_html)
     Path(OUTPUT_FILE).write_text(html, encoding="utf-8")
     print(f"✅ Done → {OUTPUT_FILE}")
 
