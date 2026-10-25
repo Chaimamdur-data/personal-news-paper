@@ -71,6 +71,68 @@ a{color:inherit}
   .briefs-grid{grid-template-columns:1fr}
   .learning-ribbon{align-items:flex-start;flex-direction:column}
 }
+
+/* dark product override */
+:root{--ui-bg:#0e1116;--ui-surface:#161a21;--ui-surface2:#1d222b;--ui-line:#2b323e;--ui-text:#f2f5f7;--ui-muted:#94a0ad;--ui-green:#34d27b;--ui-blue:#63a9ff;--ui-amber:#f4b740;--ui-red:#ff6a4d}
+html,body{background:var(--ui-bg);color:var(--ui-text)}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.ledger-tabs-wrap{background:rgba(14,17,22,.94);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:none}
+.ledger-tabs{max-width:1220px;padding:0 12px}
+.ledger-tab-btn{color:#8995a3;font-family:Inter,ui-sans-serif,sans-serif;border-bottom-width:2px}
+.ledger-tab-btn:hover{color:#dfe6ec}
+.ledger-tab-btn.active{color:#fff;border-bottom-color:var(--ui-green);background:linear-gradient(180deg,rgba(52,210,123,.04),transparent)}
+.news-page{max-width:1220px;min-height:100vh;padding:28px 22px 44px;background:
+radial-gradient(820px 420px at 16% -7%,rgba(52,210,123,.08),transparent 58%),
+radial-gradient(740px 390px at 88% 0%,rgba(99,169,255,.08),transparent 58%),
+var(--ui-bg);color:var(--ui-text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.news-masthead{padding:4px 0 22px;margin-bottom:18px;border-bottom:1px solid var(--ui-line)}
+.news-eyebrow{color:var(--ui-green);font-family:Inter,ui-sans-serif,sans-serif}
+.news-masthead h1{font-size:36px;line-height:1;margin:0 0 9px;letter-spacing:-1.2px}
+.news-masthead p{font-size:12px;line-height:1.5;color:var(--ui-muted);font-style:normal}
+.news-date{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ui-muted);font-variant-numeric:tabular-nums}
+.news-date strong{color:var(--ui-text)}
+.learning-ribbon{border:1px solid var(--ui-line);background:linear-gradient(180deg,var(--ui-surface2),var(--ui-surface));padding:10px 12px;margin-bottom:16px;border-radius:14px;color:#b6c0ca;font-family:Inter,ui-sans-serif,sans-serif}
+.learning-ribbon strong{background:rgba(52,210,123,.13);color:var(--ui-green);padding:5px 7px;border-radius:999px}
+.news-front-grid{grid-template-columns:minmax(0,1.42fr) minmax(280px,.78fr);gap:14px;border:0}
+.lead-story,.side-story,.brief-story{background:linear-gradient(180deg,var(--ui-surface),#13171d);border:1px solid var(--ui-line);border-radius:20px;overflow:hidden}
+.lead-story{padding:16px;border:1px solid var(--ui-line)}
+.side-stack{padding-left:0;display:grid;gap:12px}
+.side-story{padding:13px;border-bottom:0}
+.lead-image,.side-image,.brief-image{border-radius:14px;background:#1b2028}
+.lead-image{height:330px}
+.side-image{height:135px}
+.brief-image{height:145px}
+.lead-image img,.side-image img,.brief-image img{transition:transform .2s ease}
+.lead-image:hover img,.side-image:hover img,.brief-image:hover img{transform:scale(1.015)}
+.story-meta{font-family:Inter,ui-sans-serif,sans-serif}
+.story-source{color:var(--ui-green)}
+.story-age{color:#778391}
+.lead-story h2{font-size:29px;line-height:1.05}
+.lead-story h2 a:hover,.side-story h3 a:hover,.brief-story h3 a:hover{color:#dff9e9;text-decoration:none}
+.lead-story p{font-size:12px;line-height:1.55;color:#aeb8c3}
+.read-link{border:1px solid #303947;background:#20262f;border-radius:999px;padding:8px 10px;text-decoration:none;font-family:Inter,ui-sans-serif,sans-serif}
+.side-story h3{font-size:16px;line-height:1.18}
+.side-story p{font-size:10.5px;line-height:1.48;color:#9eabb7}
+.simple-take{margin:9px 0 0;padding:10px 11px;background:rgba(99,169,255,.07);border:1px solid rgba(99,169,255,.18);border-radius:12px;color:#c6d4df;font-family:Inter,ui-sans-serif,sans-serif}
+.simple-take strong{display:block;color:var(--ui-blue);margin-bottom:4px}
+.briefs-title{border:0;padding:24px 2px 8px;color:#d9e0e6;font-family:Inter,ui-sans-serif,sans-serif}
+.briefs-title span:last-child{color:#727e8b}
+.briefs-grid{gap:12px;column-gap:12px}
+.brief-story{padding:12px;border-bottom:1px solid var(--ui-line)}
+.brief-num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#4b5663}
+.brief-story h3{font-size:13px;line-height:1.28}
+.empty-news{border:1px solid var(--ui-line);background:var(--ui-surface);border-radius:18px;color:var(--ui-muted)}
+.news-footer{border-top:1px solid var(--ui-line);color:#6f7a87}
+@media(max-width:760px){
+  .news-page{padding:20px 11px 32px}
+  .news-masthead{display:block}
+  .news-masthead h1{font-size:30px}
+  .news-date{text-align:left;margin-top:11px}
+  .news-front-grid{grid-template-columns:1fr}
+  .lead-image{height:225px}
+  .side-stack{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
 </head>
 <body>
@@ -112,7 +174,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
     <header class="ew-top">
       <div class="ew-brand">
         <div class="ew-logo" aria-hidden="true"></div>
-        <div><div class="ew-title">Entry Watchlist</div><div class="ew-subtitle">Prices: <span id="ew-price-time">Oct 25, 2026 · 12:00:29 PM PT</span></div></div>
+        <div><div class="ew-title">Entry Watchlist</div><div class="ew-subtitle">Prices: <span id="ew-price-time">Oct 25, 2026 · 12:17:26 PM PT</span></div></div>
       </div>
       <div class="ew-actions">
         <button class="ew-btn primary" id="ew-refresh"><span class="spin">↻</span> Refresh</button>
@@ -328,7 +390,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="side-story">
               
-              <div class="story-meta"><span class="story-source">Politics Archives - Telugu360</span><span class="story-age">3h ago</span></div>
+              <div class="story-meta"><span class="story-source">Politics Archives - Telugu360</span><span class="story-age">4h ago</span></div>
               <h3><a href="https://www.telugu360.com/tdp-fields-21453-candidates-ysrcp-19171-across-mptc-and-zptc-elections/" target="_blank" rel="noopener">TDP Fields 21,453 Candidates, YSRCP 19,171 Across MPTC and ZPTC Elections</a></h3>
               <p>Amaravati, October 25: Andhra Pradesh’s upcoming local body elections have attracted 50,815 validly nominated candidates for 10,488 MPTC and ZPTC seats, with the Telugu Desam Party (TDP) and YSR Congress Party (YSRCP) accounting for nearly 80% of the contestants. According to district-wise nomination reports dated October 24, the TDP has fielded 21,453…</p>
               
@@ -369,7 +431,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">09</span><div class="story-meta"><span class="story-source">Daily Pioneer</span><span class="story-age">17h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">09</span><div class="story-meta"><span class="story-source">Daily Pioneer</span><span class="story-age">18h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxNd1ZtamM5cTJYOGh2cUJqOUlRb2NJRjJUT29jRmJBYlRnTS1uU05HeWxmVjF1RWpxbnRkTExMbUt1WHBVakhmQmZOakVyeXZnLThwZ2lWXzRJdGp6cnhzeEdaVUJHbmZwOGhLZlhPRUgzQkxjb1h6ZDY5c1BXR1BMdm83M1JkelBDUmVfMXRjT0ZURzBGYWZlN0RZNElGZFVZdXNEeFN5SjI3OHVxNjF0MNIBsAFBVV95cUxNd1ZtamM5cTJYOGh2cUJqOUlRb2NJRjJUT29jRmJBYlRnTS1uU05HeWxmVjF1RWpxbnRkTExMbUt1WHBVakhmQmZOakVyeXZnLThwZ2lWXzRJdGp6cnhzeEdaVUJHbmZwOGhLZlhPRUgzQkxjb1h6ZDY5c1BXR1BMdm83M1JkelBDUmVfMXRjT0ZURzBGYWZlN0RZNElGZFVZdXNEeFN5SjI3OHVxNjF0MA?oc=5" target="_blank" rel="noopener">Naidu, YSRCP trade charges over violence during Andhra local body polls</a></h3>
               
             </article>
@@ -393,14 +455,14 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">13</span><div class="story-meta"><span class="story-source">Asianet Newsable</span><span class="story-age">1h ago</span></div></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxPb0tfU3U4YWZkbnZYb2V4T0pOSHJqMEk2eW42T094TGlSa3FiUnV3V0I3c3U1MzRuQ0s3R2VTQ0NacWZRVXJTM1ZqX2V5ekJBWVppUHM2alVNb3R5YW9Nc0w2dWNUS0s5NFFFV0YweWItUThwLXFVbEVuMnFRcTNpVndIRkh6amVUMFc1YURVYXZtSHlXSXpJbE1KeHhMSVFOUTB3U2hkYTJaa0lCWnJXZ3lCMW9XQWdza0pRMU5WVG9PQdIBxwFBVV95cUxNZ29NaEFJenB5NkJVMFp3LXRBTTltbGU4Z2ktbGJvaFRITTJDdHM4Wkg4dTZDZXNLZWpfSDRqNlA4MkRzX01GalBLZGdoUFFnY1FrbFVVaDFqS3NnNTdNNVRFaktNN1dEdDlBQW52cWZ3T19Pem42MGx0WlM0bFlOb1ItU0RSWmZlWm9jWWJwN1d3RVJmamxtSHJZS2JSaWwxQmRYR1kxQURKc2E4dk5WcVZfYVZ3aGYxd1dFQ1hETFZjX1VkbWNB?oc=5" target="_blank" rel="noopener">KTR Slams Rahul Gandhi for Failing Telangana Election Commitments</a></h3>
+              <div class="brief-head"><span class="brief-num">13</span><div class="story-meta"><span class="story-source">The News Mill</span><span class="story-age">1h ago</span></div></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMivAFBVV95cUxNVlZaWVpFUno1dzl0UHFndi1FLURNVElVdGE0SmFpNng1b2VVNVNfZ19lV1FuTEd2MmRRTl9uUUk0VEZ5bWpCRWI2VXl5cGlPb29lQlNXOVVaQlY5YkVZOEJydzZsSm5rNk93eUNZZEhLNGU2WTdqeTNmc3FFdVJwTzVGZ3RLd0FWMnFhNXhRTThYbTVZMklLY0JQd0IwdzVpcG9YX0UyWjhCR1Q4ZVBvNDVSaC1RWE5JNTlRQw?oc=5" target="_blank" rel="noopener">KTR accuses Congress of failing Telangana promises, calls state Rahul Gandhi’s ATM</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">14</span><div class="story-meta"><span class="story-source">The News Mill</span><span class="story-age">1h ago</span></div></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMivAFBVV95cUxNVlZaWVpFUno1dzl0UHFndi1FLURNVElVdGE0SmFpNng1b2VVNVNfZ19lV1FuTEd2MmRRTl9uUUk0VEZ5bWpCRWI2VXl5cGlPb29lQlNXOVVaQlY5YkVZOEJydzZsSm5rNk93eUNZZEhLNGU2WTdqeTNmc3FFdVJwTzVGZ3RLd0FWMnFhNXhRTThYbTVZMklLY0JQd0IwdzVpcG9YX0UyWjhCR1Q4ZVBvNDVSaC1RWE5JNTlRQw?oc=5" target="_blank" rel="noopener">KTR accuses Congress of failing Telangana promises, calls state Rahul Gandhi’s ATM</a></h3>
+              <div class="brief-head"><span class="brief-num">14</span><div class="story-meta"><span class="story-source">ANI News</span><span class="story-age">1h ago</span></div></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMi-AFBVV95cUxPVzR4emhQNE1kTlVsU0pkai1JaVJTeG5mMC10Vy1HV0E0VG12TXBYLWlwYXYtVDFBYXo4TGZIaGs1VEFFUl9hRDBSU1RZWHdxUnZ3WTVLdlR5a1BlU1JGeGZ0WVhNdjl4UkZDemVfbkhXS2FrVG40N2ViVTBPVkx3cVNueHM5Zi0wVjlQNUp4TTZCQzY0RUxzUGRGNnQ2OFJBYzJlTWFLQmlIQjN4d2RWWWl5VVhTbmJsTW5TTXhiUjVHeFZ1a2F4LThDYm1wbjRjUDF4b2hKNTVqQzhYU0xZQ1ZxaW9jb2FucnF3TmdEa2tWbm1lMjA2RQ?oc=5" target="_blank" rel="noopener">&quot;Telangana has become ATM for Rahul Gandhi&quot;: KTR targets Congress over unfulfilled pre-election promises</a></h3>
               
             </article>
             <article class="brief-story">
@@ -417,13 +479,13 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">17</span><div class="story-meta"><span class="story-source">The News Mill</span><span class="story-age">2h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">17</span><div class="story-meta"><span class="story-source">The News Mill</span><span class="story-age">3h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMivwFBVV95cUxQVDFST3BNanY4Yk5ZWjFPblVoUmNPdHp5RzVYRGNwakV1ODFDN0w1cWxDOTl1MkY2aE9zdm5JSlpuWXdpcjVTM180XzluYU9mZVZhUjRKVE5uQTRZVmhlTVhRbm1LemlnWUo2VmxwelN0MlNPQXZaTFB5bVA1bmo2c2hnak5ReGJnYm8xdHhsVER5MUdoZ0pScXhlT3poVGd6RTVHNVMxV3ZGNmswaEFVU2hzMGJCNlJoalliT2E5dw?oc=5" target="_blank" rel="noopener">Telangana CM Revanth Reddy visits Mumbai to discuss Tummidihatti barrage with Maharashtra</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">18</span><div class="story-meta"><span class="story-source">Asianet Newsable</span><span class="story-age">2h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">18</span><div class="story-meta"><span class="story-source">Asianet Newsable</span><span class="story-age">3h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiywFBVV95cUxOMnhuNHdRa2lQVWFOdXg0T21maktvMG44VVRsU2VzQk03dmNUYXJVVjF5V25vMFBwTlhiTG1ndGdoc3BwNzFmakZzejhtTHhqN3pNTFVFNWN4MzExUGJVMjBZMnd3ODJDejlFUzJ3bGJBR1lEVGowMm8xSF9FSjVfS1Vwb1NLdFE1bmxVNTFlRWQ0eHpuT0ozbVpBMHpJOW9yVUdmTDlCUXVlbl9DdFl3cnVDckN5MFo3d1JBb2VaeXlLcHdDM1h0cTZGMNIB0AFBVV95cUxNY0tzOGRQdXIwZFllVkxjd0JSY2liMktYb2NPaFluRlMwTXlqM0hIYjd6R0dVTWtGaHBzTXg5Ri1jdUVrVVNrT3RUdHBIb3ZLT1B0S1dhRDZVUlJzVkVPcFJLMUZQWFpDV3BONUFjOWxJLUZmbGVfVFQwT1RmNHFfaDVuVTV6cDdxbW13NkNfeDVjREZlZFlfaUlfNlRtUGVmeGRqR2pxSGt2dC1LbVZKd29tQVZPNjFXRGJ4Y0FwSnZBOXpDY0MwNGd5YkRXcXlH?oc=5" target="_blank" rel="noopener">Telangana CM Revanth Reddy Heads to Mumbai for Tummidihatti Barrage Talk</a></h3>
               
             </article>
@@ -447,7 +509,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">22</span><div class="story-meta"><span class="story-source">Politics Archives - Telugu360</span><span class="story-age">3h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">22</span><div class="story-meta"><span class="story-source">Politics Archives - Telugu360</span><span class="story-age">4h ago</span></div></div>
               <h3><a href="https://www.telugu360.com/cyclone-arnab-likely-to-cross-andhra-coast-on-october-28-chandrababu-naidu-orders-maximum-preparedness/" target="_blank" rel="noopener">Cyclone Arnab Likely to Cross Andhra Coast on October 28; Chandrababu Naidu Orders Maximum Preparedness</a></h3>
               
             </article>
@@ -459,7 +521,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">24</span><div class="story-meta"><span class="story-source">The Times of India</span><span class="story-age">4h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">24</span><div class="story-meta"><span class="story-source">The Times of India</span><span class="story-age">5h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxPcGItUkQtdXJxZ0ZiLVlLY1VQcHlxU294RjJEOG8xSG1WdHNYdnlwN3drSlNHeWtvTVVEbm85Y2R1VTdxTlRRc05NZVFjOEhlcGFEMG1NZHE2N3J6MUJYWklOYzNWWDEybERFX0VWbWNqdFRiZlA0c0cyOGdtR19IS1lrZmJOdHdwQmM1Skh6eUNNQXhHLWJCOTFSRkNFVmZISk0taERnVGQ0d1lBcjhwenFR0gG3AUFVX3lxTFA4WkVLaXIwV2QwWnczYmJlRE9KWDFIdjduUVo3SzYtQnZyZFZLRk4xanhnRlhZUGtBaEc2NGtVTkFJNFo1SWtEeHl3cWlnNlRwSVR3Q3o3QzN0aF9KNGxUN05GdmNweklhN09zN2E4ZVQyQ3VUS01HTGtLcjZsNmN1RjR0R3NET2lqMmJya0dzVWVXQkhvR1hVSXB0RFA1aXh4dWlwX01GelMwYVpJcHY2Mm52d1NXcw?oc=5" target="_blank" rel="noopener">Telangana has become Rahul’s ATM: KTR</a></h3>
               
             </article>
@@ -503,13 +565,13 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             <article class="side-story">
               
               <div class="story-meta"><span class="story-source">The Tribune</span><span class="story-age">1h ago</span></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMi8wFBVV95cUxQSVQ3TENPMm5POUJZTGtKSHg3SVF2b2pONzE1cFNpX2pWQ2FzYmhESWhIMHVyV2pKR3hLOUJuaDZkaFJJY3N3RUxPcFdGaWVzWlh4d0FoM1JpS29Pc2NPeDduSWV5QzlkaEE0SmxzT1doNlptN0UyQ19DSGwtNXFBYXBlc1RNRHNkVEE1ZVdrMHZpQVVPMFJ2NFBwUWZhRjVDdnU4YlRzZXlEVDVnVV80LXROQldTcXZGbkRqUDB6MDNvX0pXZFZPbG0tVHotWFVYYVBqQWZSU0UwWU5tMkVuYjlWYkJMWUktUFRXcl8wazBPSGPSAfcBQVVfeXFMTTJveHlzSU4wS1pIMlBSLXdjejY4WFVEMUtreG5OR195a2gyQWdTWkVqazdLMVNVc0hjaHZBVjU1OGh6WFdBa2xLSWJ2ekdqUDhDbFc2ZnpLTDFxWDgzRDl2S1RMNXlaVWhXOFpQNU1Ga281Q1I5aVF1RnQ2M19wbDI1dTUxVVFxampYQzc4TjJWaXBfYmRWS0lCVFZuNXRHY2dzVUI4a3hvaFpObk9KR2UtcWNpRk1CREJrcDRNSGtzSDRNbHBXcmJsMllLWkUtaVZaLXNma3dfQ3g5Q3dXYjd2RFRoc2Zqdzk4X2JxSFJNaVY0VXZBVQ?oc=5" target="_blank" rel="noopener">Bangladesh: State Minister Humaiun Kobir granted Cabinet Minister status, appointed acting Foreign Minister for CHOGM 2026</a></h3>
+              <h3><a href="https://news.google.com/rss/articles/CBMi6wFBVV95cUxOUVpFVDh0ZmpmUHdfc3RBaVhoWC1Bb3BiR2dZR1RqMFZSMjBpYkJUQURURTBKTllRc0FFV00xWHAyWUxfY1g4U2N1Tjh2d1JrV2M1c1VQMWlTWWUtM213ME1zVVR0R2hIRVI2bC1fX0RMR3V0TGo1WXRUVUpJVzlPS1cxY0k4OWZtOXc4NEYwM0FrcmxUTWZzR1JqWUdrMDdyaGRiZXZ5SDRRV1dfM19hOGdaNFJ3M3d4NGtYZFVxTHJ4WDR1ZnlrNnRsU1U1eDhraUowcjMtRVdvZlgyZ0p4cjFiR1hLNmxhdksw0gH3AUFVX3lxTE0yb3h5c0lOMEtaSDJQUi13Y3o2OFhVRDFLa3huTkdfeWtoMkFnU1pFams3SzFTVXNIY2h2QVY1NThoelhXQWtsS0lidnpHalA4Q2xXNmZ6S0wxcVg4M0Q5dktUTDV5WlVoVzhaUDVNRmtvNUNSOWlRdUZ0NjNfcGwyNXU1MVVRcWpqWEM3OE4yVmlwX2JkVktJQlRWbjV0R2Nnc1VCOGt4b2haTm5PSkdlLXFjaUZNQkRCa3A0TUhrc0g0TWxwV3JibDJZS1pFLWlWWi1zZmt3X0N4OUN3V2I3dkRUaHNmanc5OF9icUhSTWlWNFV2QVU?oc=5" target="_blank" rel="noopener">Bangladesh: State Minister Humaiun Kobir granted Cabinet Minister status, appointed acting Foreign Minister for CHOGM 2026</a></h3>
               <p>Bangladesh: State Minister Humaiun Kobir granted Cabinet Minister status, appointed acting Foreign Minister for CHOGM 2026 The Tribune</p>
               
             </article>
             <article class="side-story">
               <a class="side-image" href="https://www.thehindu.com/news/national/muizzu-could-stir-up-anti-india-campaign-again-former-maldives-minister-abdullah-shahid/article71624124.ece" target="_blank" rel="noopener"><img src="https://th-i.thgim.com/public/incoming/5ayk6s/article71624395.ece/alternates/LANDSCAPE_1200/2021-09-22T134638Z_751706329_RC21VP9BDCYZ_RTRMADP_3_UN-ASSEMBLY.JPG" alt="" loading="lazy" referrerpolicy="no-referrer"></a>
-              <div class="story-meta"><span class="story-source">The Hindu: Latest News today from India…</span><span class="story-age">1h ago</span></div>
+              <div class="story-meta"><span class="story-source">The Hindu: Latest News today from India…</span><span class="story-age">2h ago</span></div>
               <h3><a href="https://www.thehindu.com/news/national/muizzu-could-stir-up-anti-india-campaign-again-former-maldives-minister-abdullah-shahid/article71624124.ece" target="_blank" rel="noopener">Muizzu could stir up anti-India campaign again: Former Maldives Minister Abdullah Shahid</a></h3>
               <p>Following Maldivian President Mohamed Muizzu’s Pakistan visit, Abdulla Shahid, running to be a presidential contender in 2028, hits out at Mr. Muizzu, saying the President will ‘try to create some narrative on hate’ before the elections</p>
               
@@ -519,7 +581,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
         <div class="briefs-grid">
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">05</span><div class="story-meta"><span class="story-source">Bhaskar English</span><span class="story-age">4h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">05</span><div class="story-meta"><span class="story-source">Bhaskar English</span><span class="story-age">5h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMi0AFBVV95cUxPN2FFNTdkTUFJQm55em11Mk9MUE5IMmQydUNnaVdUaEN0bFFFYjBMWWlObmxqMFcyaHpkTE5LREI4MUN1cncybXY2cGFCeW8yZHF1RE8tOWhWRHhIUEk0cmhkUkFiNEFJX19pb0JhOXhHOUtZczhrYzJjbmNFZGZkZU1RSmgwYm9KYVdIRWtxdWZ0b3hVMllQMlFxaFYxVzZhR1E4Tm51QlZ4QXVGX3E4dWZ1dUtzQ2FnU0VOYkRualdPeHhmaHZVMWhtU1h3ZXpJ0gHQAUFVX3lxTE83YUU1N2RNQUlCbnl6bXUyT0xQTkgyZDJ1Q2dpV1RoQ3RsUUViMExZaU5ubGowVzJoemRMTktEQjgxQ3VydzJtdjZwYUJ5bzJkcXVETy05aFZEeEhQSTRyaGRSQWI0QUlfX2lvQmE5eEc5S1lzOGtjMmNuY0VkZmRlTVFKaDBib0phV0hFa3F1ZnRveFUyWVAyUXFoVjFXNmFHUThObnVCVnhBdUZfcTh1ZnV1S3NDYWdTRU5iRG5qV094eGZodlUxaG1TWHdlekk?oc=5" target="_blank" rel="noopener">Pakistan reopens border with Iran: Bilateral-trade to resume after week-long suspension amid LPG shortages</a></h3>
               
             </article>
@@ -531,7 +593,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">07</span><div class="story-meta"><span class="story-source">The Indian Express</span><span class="story-age">8h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">07</span><div class="story-meta"><span class="story-source">The Indian Express</span><span class="story-age">9h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMi2AFBVV95cUxPcjdkOWtsbU83TWpuOFQxTTI1TG5DUjltOEJvN1VlMnJoYWU3c1hseVdGbmZWR1pvdmdvY3U4cGFYOFlMaFl6aDlRZGJrclp2ekV3QTQ2cUItZGo2dDJmdFlfSXNrdEtKQ3BMUWhWUTlmbkxyWXB2Q3hGWjhKLUM1aUlxRlA2QUVYVEFWeTdhcndNdmVnaUlaVDl5b0M2NVBGN01BV0JQYlYtbTRUNEpmeGIyNVFiRjFTS04yMDVhb3lqSE9uZnNkTnhGcXJSVXN0TVNMdnU5LUTSAd8BQVVfeXFMTkcwOE1ZNHVWZzBHWFBMUDJMd3NlM3RjZTFDZXB4bl9rOGozaXFyc3p1V1p4RURrN19DLU1pazlrUXVaaEpETlFvM2tJU0poUmY2Zks3bEFrTTc2UGVwQ3ljamRwckY5NUQ5YWtXN21TTTNLVXMtUVdITV9LTDZtc0ctZGpTYjZQSGRlYVpVYVJPTDJvUzNkWDR1T0N6N1BfNk5rTXdTVkQ2V1NHV1lrcnlwaHNvRzc0enBBcHNrS1BHcXdNV1VjS0c0QU9lZm5oeHVNQ3VETXY5VGJ4dEptaw?oc=5" target="_blank" rel="noopener">How US and UK tried to create a joint India-Pakistan front against China after 1962 war</a></h3>
               
             </article>
@@ -585,7 +647,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">16</span><div class="story-meta"><span class="story-source">South Asia Press</span><span class="story-age">16h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">16</span><div class="story-meta"><span class="story-source">South Asia Press</span><span class="story-age">17h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiuwFBVV95cUxQRjFIaWxCNnNuZU9Ua2lWN1BSeVZ4ckhoWXh5c3B2aXZOR3p1SE5JQzRQWUFWdzhnWVRRM3JVREoxSk9xMmRxVlVoc2xsMEU1R0ZoQkNiRGpxU0ZIUm1LeGlZeVVpbHNPSnJ2UTVxaE4tb3NhbXhPdHBIaTR5UDBCN1BXT0o2WUFQU1BJUE5oRmp5c1M4b0pkdzR1SHJKaVpTTlRmdjMxU1pVbjRxWTRrcmJGSmp1NFdfT0hB?oc=5" target="_blank" rel="noopener">A Familiar Weapon, a New Target: Pakistan’s Dangerous Game on the Afghan Border</a></h3>
               
             </article>
@@ -597,13 +659,13 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">18</span><div class="story-meta"><span class="story-source">Eurasia Review</span><span class="story-age">17h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">18</span><div class="story-meta"><span class="story-source">Eurasia Review</span><span class="story-age">18h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxOUFoxUWd1azc4dWFUMmRmRVZwUnJJNnlUN3YzdWl5QTJUeFlQUkF0U25ORHRwcjJjSVhJdDFJZnQ3T2FobVRLVlRUY19La0tFa2FHQ1NPdVVwcDI2UG9EdGtiSVNoTTBTNEp4dk15d3pib1lOTDlKRkFmdU5MS3lFM29kSERuWFpWSlAtdU85QlY5cXlQeGcyNjBjV01mb2hWdTQ1Zms1V3E3aHBmTkUtUkdvVDIxckFy?oc=5" target="_blank" rel="noopener">Afghanistan-Pakistan Trade Declines Sharply As Border Crossings Remain Closed</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">19</span><div class="story-meta"><span class="story-source">The Daily Star</span><span class="story-age">47m ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">19</span><div class="story-meta"><span class="story-source">The Daily Star</span><span class="story-age">1h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxONnlYMmtlRnR6d1BIY0lJdkFfUHVpQTRLc1c5Qk9UQmFFaHpXNkNmMVFkVkwybmZEcmtqaEFZUERvdEoyMmRKR0JEbmw5NU9ZV3VMRGF3TkZ4ckF4QUctd00xUFdEZWIxWmViV1NkQ2liWGhzbkZaRDdIQ3BOXzIyLVAycWNfLVNsT3MyaVdJT2Z5RGdydy05QzhYczhlUVVYR2pjcGdhMUVhNkRTaVRyR3lBWWcyN1lPTzhyRUN5MEFKdw?oc=5" target="_blank" rel="noopener">Bangladesh-Germany relations in a changing world order</a></h3>
               
             </article>
@@ -639,7 +701,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               <a class="brief-image" href="https://www.thehindu.com/news/national/why-has-west-bengal-cleared-land-for-the-bsf-now-explained/article71301118.ece" target="_blank" rel="noopener"><img src="https://th-i.thgim.com/public/incoming/a5w5ga/article71302603.ece/alternates/LANDSCAPE_1200/PTI08_14_2025_000087B.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></a>
-              <div class="brief-head"><span class="brief-num">25</span><div class="story-meta"><span class="story-source">The Hindu: Latest News today from India…</span><span class="story-age">1h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">25</span><div class="story-meta"><span class="story-source">The Hindu: Latest News today from India…</span><span class="story-age">2h ago</span></div></div>
               <h3><a href="https://www.thehindu.com/news/national/why-has-west-bengal-cleared-land-for-the-bsf-now-explained/article71301118.ece" target="_blank" rel="noopener">Why has West Bengal cleared land for the BSF now? | Explained</a></h3>
               
             </article></div>
@@ -660,7 +722,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
           
         <article class="lead-story">
           <a class="lead-image" href="https://thehill.com/homenews/administration/6170922-hassett-economy-midterms/" target="_blank" rel="noopener"><img src="https://thehill.com/wp-content/uploads/sites/2/2026/10/AP26247526526087-e1792436714475.jpg?w=900" alt="" loading="lazy" referrerpolicy="no-referrer"></a>
-          <div class="story-meta"><span class="story-source">The Hill News</span><span class="story-age">42m ago</span></div>
+          <div class="story-meta"><span class="story-source">The Hill News</span><span class="story-age">59m ago</span></div>
           <h2><a href="https://thehill.com/homenews/administration/6170922-hassett-economy-midterms/" target="_blank" rel="noopener">Hassett says the economy is ‘best we’ve ever seen’</a></h2>
           <p>Kevin Hassett, the director of the National Economic Council (NEC), on Sunday said the economy is the “best we’ve ever seen” as the Trump administration and Republicans make their final pitches heading into the midterm elections. “So the great big picture about the economy is that it’s about the best economy we’ve ever seen,” Hassett…</p>
           
@@ -699,13 +761,13 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               <a class="brief-image" href="https://www.nytimes.com/2026/10/25/us/politics/trumps-election-alaska.html" target="_blank" rel="noopener"><img src="https://static01.nyt.com/images/2026/10/25/multimedia/25dc-trump-elections1-vcth/25dc-trump-elections1-vcth-mediumSquareAt3X.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></a>
-              <div class="brief-head"><span class="brief-num">06</span><div class="story-meta"><span class="story-source">NYT &gt; U.S. News</span><span class="story-age">18m ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">06</span><div class="story-meta"><span class="story-source">NYT &gt; U.S. News</span><span class="story-age">35m ago</span></div></div>
               <h3><a href="https://www.nytimes.com/2026/10/25/us/politics/trumps-election-alaska.html" target="_blank" rel="noopener">Trump’s Election Attacks Enter New Pre-emptive Phase</a></h3>
               
             </article>
             <article class="brief-story">
               <a class="brief-image" href="https://www.nytimes.com/2026/10/25/upshot/election-midterms-times-voter-trends.html" target="_blank" rel="noopener"><img src="https://static01.nyt.com/images/2026/10/24/multimedia/us-estimates-2024-promo/us-estimates-2024-promo-mediumSquareAt3X.png" alt="" loading="lazy" referrerpolicy="no-referrer"></a>
-              <div class="brief-head"><span class="brief-num">07</span><div class="story-meta"><span class="story-source">NYT &gt; U.S. &gt; Politics</span><span class="story-age">35m ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">07</span><div class="story-meta"><span class="story-source">NYT &gt; U.S. &gt; Politics</span><span class="story-age">52m ago</span></div></div>
               <h3><a href="https://www.nytimes.com/2026/10/25/upshot/election-midterms-times-voter-trends.html" target="_blank" rel="noopener">Introducing a New Way to Understand the Election: Times Voter Trends</a></h3>
               
             </article>
@@ -807,7 +869,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">24</span><div class="story-meta"><span class="story-source">جريدة القدس</span><span class="story-age">8h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">24</span><div class="story-meta"><span class="story-source">جريدة القدس</span><span class="story-age">9h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxQOFNjOEZVcldjWXA5SDByc2FFSGRCX0FjWmlFZW1QRm42QTF3VlhTN1FCMkNtT0l1a1FnQmZ2aS1RSG43YlF3XzZ5UktiTFFWYmNOa3ZMTDRLNE84czd4WTFtcEZMNFFWSUMxR3BYcjRuR3pwRnpURjI2bmQ3V2NYSmR6TlUwNm5BMGhOMzRQQlUxeXdmVGd4eXBlaVI2d1RYd3ZEQjljLWwweVRfYnc?oc=5" target="_blank" rel="noopener">US Midterm Elections: Are Republicans Paying the Price for Trump&#x27;s Policies?</a></h3>
               
             </article>
@@ -838,7 +900,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
           
         <article class="lead-story">
           
-          <div class="story-meta"><span class="story-source">BankInfoSecurity</span><span class="story-age">3h ago</span></div>
+          <div class="story-meta"><span class="story-source">BankInfoSecurity</span><span class="story-age">4h ago</span></div>
           <h2><a href="https://news.google.com/rss/articles/CBMiogFBVV95cUxQWUlZbVNEbmd2eXB5cnFKejVjMU5VdXBsTkZjQmdpUzVITG1tdUNCZzFOZmp1bWRlV192Y2ZwLUxPX1ZTdFJPcXUwUlpBUkdOTUthREdQRTBNQkZkMXRBYk1fUWZ3cGdneERKd05PQzlLZXR0OFdvYS1MVTB1dTRZMXNObjkzTHpSRWZVYW84YlZ0Skd5MUZtOW1kT1gwSWswbXc?oc=5" target="_blank" rel="noopener">China-Aligned Hackers Used Agentic AI to Target ConnectWise</a></h2>
           <p>China-Aligned Hackers Used Agentic AI to Target ConnectWise BankInfoSecurity</p>
           <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: China-Aligned Hackers Used Agentic AI to Target ConnectWise BankInfoSecurity</div>
@@ -847,27 +909,27 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
           <div class="side-stack">
             <article class="side-story">
               
-              <div class="story-meta"><span class="story-source">Cybersecurity Insiders</span><span class="story-age">5h ago</span></div>
+              <div class="story-meta"><span class="story-source">Cybersecurity Insiders</span><span class="story-age">6h ago</span></div>
               <h3><a href="https://news.google.com/rss/articles/CBMi7AFBVV95cUxPdnZqZkFYbjc1QnNHS3NMbXBpZmRyYTVHWUl3clViaFQtTV9CMWJGU2pBTl9qMGxaOEpuOWt1U1JENnpPSnZnMDllZm8wRHRGRUpjVmlnNUJaTzBEY3BTNEV3QUJxMUZidXVqSHl2ZkxaV21pbGRnRkVmNkFzY2QyelFfRHY4MDBHX09mNDhtMXBxeENUM1ExUWRKb2JPbWlYY1VJbUU4MzJxcTl3SHBELUgxN1FpRWxISU9YcFdBbFd1SlFUYk9QMVlMZDdQTDZQMll6eS1TUFE1MXFybm9zSGdVdzNkaGpHaTFWRA?oc=5" target="_blank" rel="noopener">Arkose Labs Report Finds Fewer Than 3% of Personal AI Agents Disclose Their Identity as Agentic AI Transactions Surge</a></h3>
               <p>Arkose Labs Report Finds Fewer Than 3% of Personal AI Agents Disclose Their Identity as Agentic AI Transactions Surge Cybersecurity Insiders</p>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Arkose Labs Report Finds Fewer Than 3% of Personal AI Agents Disclose Their Identity as Agentic AI Transactions Surge Cybersecurity Insiders</div>
             </article>
             <article class="side-story">
               
-              <div class="story-meta"><span class="story-source">The Manila Times</span><span class="story-age">7h ago</span></div>
+              <div class="story-meta"><span class="story-source">The Manila Times</span><span class="story-age">8h ago</span></div>
               <h3><a href="https://news.google.com/rss/articles/CBMi7AFBVV95cUxNbER1cWdGVnFLX1g1WWI2TGI4MWhRYlRnWjlSWmdmd1NnOHNEdFE5azFsNFpWV0JRSzJ1MnZoTjBwdWU4dHhYR0R1VnQ5eXU1NTR5eVktOHVsU3U5WU1jQ0JuQjBUdjY3dFNNQUxtRkh4Y1pNd0ROZ21JVEM3Mk9jclBRSmVOWm9obllNLW5BQTdGYTlEUnk5M0hqS3hpMmNZM1E4R3B0d2R1TFdhRllhaWpjTXhlRGVlOFdsRTRLd3pnT0hXTl9FUzgwcnlpOFVMTXBZb1EwQjA2eEZGSUtsTTd4SnBfYUdoT2liMNIB8gFBVV95cUxPbFdtRGFpaDJFZnZ4T2lSd0JTc2ZybWRSRW5uWXpZbzRidmMxSGtRS3lQQ3ByN2RBdUx6Xy1wTW85MVV5UmdPSkJNQ3VrZDhBNXd3NFdKbklfS3I0MFVzRjMxMlJ0Qm4zRFpBVk9IU0tKbzN6Q3NuQ29VOTRhXzZoamVDaG11cUZteXhERFYtWkZmb3ZiVlBBYk5JSkdmbEE3M0RzQUh5SVdsWld2RzA2enBLM0pTYjRnbjlEbzRaa0ZVOEhBMHR4UEJZODJYR2RHOXVsNWZRdWdodUx5dHBHbWg1X1NaMU1QSXQtU1FPSWFuQQ?oc=5" target="_blank" rel="noopener">Automating SEO and Link Building for AI Agents with Rapid Indexer&#x27;s New MCP Server1</a></h3>
               <p>Automating SEO and Link Building for AI Agents with Rapid Indexer&#x27;s New MCP Server1 The Manila Times</p>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Automating SEO and Link Building for AI Agents with Rapid Indexer&#x27;s New MCP Server1 The Manila Times</div>
             </article>
             <article class="side-story">
               
-              <div class="story-meta"><span class="story-source">Ventureburn</span><span class="story-age">7h ago</span></div>
+              <div class="story-meta"><span class="story-source">Ventureburn</span><span class="story-age">8h ago</span></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiakFVX3lxTE1KdHBhcWhEd1pINW13S1lBcHNLTktpMnkzU05vei11clhWZ0c0NW9CLVZBYk02dUtWN1pTNm5CR3BPMFR3cUJQLUU4UTJhNnJtVktzN3ZjdFdoUVgxS3h1YzI2RjA1RUMxNnfSAWpBVV95cUxNSnRwYXFoRHdaSDVtd0tZQXBzS05LaTJ5M1NOb3otdXJYVmdHNDVvQi1WQWJNNnVLVjdaUzZuQkdwTzBUd3FCUC1FOFEyYTZybVZLczd2Y3RXaFFYMUt4dWMyNkYwNUVDMTZ3?oc=5" target="_blank" rel="noopener">Opply Secures $7.5M to Scale Agentic AI for CPG Supply Chains</a></h3>
               <p>Opply Secures $7.5M to Scale Agentic AI for CPG Supply Chains Ventureburn</p>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Opply Secures $7.5M to Scale Agentic AI for CPG Supply Chains Ventureburn</div>
             </article></div>
         </div>
-        <div class="briefs-title"><span>THE REST OF THE LAST 24 HOURS</span><span>24 curated stories</span></div>
+        <div class="briefs-title"><span>THE REST OF THE LAST 24 HOURS</span><span>25 curated stories</span></div>
         <div class="briefs-grid">
             <article class="brief-story">
               
@@ -895,97 +957,103 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">09</span><div class="story-meta"><span class="story-source">TyN Magazine</span><span class="story-age">2h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">09</span><div class="story-meta"><span class="story-source">Forkast News</span><span class="story-age">5m ago</span></div></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMixgFBVV95cUxPaGN3RC1wOGx6R3FkcDhKU0RKejM3YWJOMHFkZmpwa0dQR2JmVDF4THFqYWgyUkpYNVRQVjd2WTBmZjNJTlF1RFN4MHpxeXdBenNFVmlwTFBMQW9keW5UdXZQbHF5SWtxMVh4cWxDZmJRX3VjMm52ckc2SkpRYV96eURVb0pYS1dualZpdFFRaG50MWFqT2NFOHh5aC1sSWh3YjkxRTV3TlJ1ZHpDMkF4Y0JoYm9fblpOVmM3NXgzZG10Qm5UbGc?oc=5" target="_blank" rel="noopener">The Meter Arrives in November: Salesforce Will Charge for Every Call Your Agents Make – and the Price Is TBA</a></h3>
+              <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: The Meter Arrives in November: Salesforce Will Charge for Every Call Your Agents Make – and the Price Is TBA Forkast News</div>
+            </article>
+            <article class="brief-story">
+              
+              <div class="brief-head"><span class="brief-num">10</span><div class="story-meta"><span class="story-source">TyN Magazine</span><span class="story-age">2h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxQRk1TWmV1RnFkZFV2eDhzOGwwMktLWjFkcl9ILUo2SzFZQWYwRVc0MGNaVmpQTERsTUpvdWRoSG5MbmxEVDE5dFhtdlc5LWZSNTljZVhJUGtJTjNfeFFHX0VoRDB6LW54aDJkd3BscjNDRTJpQUVqT1JUeWhyZ2NybEkzSU5tMUJKTU1PTEtxOA?oc=5" target="_blank" rel="noopener">You Can’t Read 10,000 AI Answers. That’s What an LLM Judge Is For</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: You Can’t Read 10,000 AI Answers.</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">10</span><div class="story-meta"><span class="story-source">Forbes</span><span class="story-age">3h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">11</span><div class="story-meta"><span class="story-source">Forbes</span><span class="story-age">3h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxNQ0FCOGIzakpUMVpPd0ExOThTRHBtaGpTeWhRQ21NeWZuNXNtRlFCaVVPclNZa0FWY2RoN0VFTWxtYm5HcENvLTJiYTVVa2RidnZrY2xXdkUzMzBVb09PbGdmZ1UyUUt0aFhUdDR6T2hiY0o1bWxjTXNBUTdhQ21sZVJ3TWdwQzJnN29aeEN6WU5DT2JWT1ZjV29Zay14c240WmZxcW9JczhuQUNoTWVKVU1MMU5qZUk?oc=5" target="_blank" rel="noopener">Anthropic’s AI Agents Outwork Humans By 6x. So Why Are You Needed?</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Anthropic’s AI Agents Outwork Humans By 6x.</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">11</span><div class="story-meta"><span class="story-source">AI Insider</span><span class="story-age">4h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">12</span><div class="story-meta"><span class="story-source">AI Insider</span><span class="story-age">5h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiogFBVV95cUxQb0lpMXA3ZGxiSWxUMkE2cFZkLWU4THhfRmh6WWRValVoZWdEZkxHR1Nfa0hyMnR2aFc2VGE5by1icXo4UGlNZ3RNMjJmLUZPeEM3VU94YXdQb0JzOWxOTUw1WTAtVmJGcElRUDRGTzc0VXcwMnlvUE4yME1jWkJDS3d3QzB1OVprbTZVd0hRaWNodnhHMmxndU55X2FCWDlGbGc?oc=5" target="_blank" rel="noopener">X Pay Secures $1M to Scale Payment Infrastructure for AI Agents</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: X Pay Secures $1M to Scale Payment Infrastructure for AI Agents AI Insider</div>
             </article>
             <article class="brief-story">
               <a class="brief-image" href="https://thenewstack.io/kubernetes-ready-ai-agents/" target="_blank" rel="noopener"><img src="https://cdn.thenewstack.io/media/2026/10/040396f0-rohit-choudhari-qbftawsipsq-unsplash-1024x576.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"></a>
-              <div class="brief-head"><span class="brief-num">12</span><div class="story-meta"><span class="story-source">The New Stack</span><span class="story-age">5h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">13</span><div class="story-meta"><span class="story-source">The New Stack</span><span class="story-age">5h ago</span></div></div>
               <h3><a href="https://thenewstack.io/kubernetes-ready-ai-agents/" target="_blank" rel="noopener">Is Kubernetes ready for AI agents?</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Kubernetes was built around a fairly simple assumption.</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">13</span><div class="story-meta"><span class="story-source">Forbes</span><span class="story-age">6h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">14</span><div class="story-meta"><span class="story-source">Forbes</span><span class="story-age">6h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMitwFBVV95cUxQYzBacnFXX29yWngzelFsOTd5S3dxTHBQeDJGai1kcTBlSFJ6ZlhPdFg0bFZheHpSUkV1c1BldHhCN0V1VmNKMjZIaEUtUDR5UG1SMGtoZ0l1WkZ2RnF5U0dMdGxqNkU3RVY1YkQ2em41TXB4cm9LLTExQUl4LUQ5YXNyVnpwRVUtVU5paDZIQmphMVVJMGJ6NXJaTEV6bmluWDlaelVRcjBuaXJETDhXV2VRQVIwaXM?oc=5" target="_blank" rel="noopener">AI Agents Are Splitting The Customer Relationship Into Pieces</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: AI Agents Are Splitting The Customer Relationship Into Pieces Forbes</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">14</span><div class="story-meta"><span class="story-source">Business Matters</span><span class="story-age">6h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">15</span><div class="story-meta"><span class="story-source">Business Matters</span><span class="story-age">6h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxNWGxTcVBkVFZMVnFEYW5zaU9TUTdDd1BGcUJneUtNRmdoQnlaSnpwYnl6Wi1rNzJzbGNJSU5rMVRlV2ExUE9XTndBZHcwR0NrTzNNTGo2bGlJbElTSWV6bFlSbkktUDdXRmxycERnM1B2ZDVuWXNrOGtVcmsyak9Va0luNXRiVnRG?oc=5" target="_blank" rel="noopener">Top 10 AI agent development companies for 2026</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Top 10 AI agent development companies for 2026 Business Matters</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">15</span><div class="story-meta"><span class="story-source">shattered.io</span><span class="story-age">8h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">16</span><div class="story-meta"><span class="story-source">shattered.io</span><span class="story-age">8h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiZkFVX3lxTFBIYkRDQ1FlalExTUg3akdXQWdKaENhLUZHSXh3Nm5nWjE5SUlrV3g1X1hJNDBvUHUzeXNKbEtvVFRUeHE4YlpaVW5NSWlWcGxDY2RVQmRJb2xWT1JzWnNrUndoaVF0UQ?oc=5" target="_blank" rel="noopener">Fine-Tune an LLM With QLoRA: 12 Steps, 90 Min [2026]</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Fine-Tune an LLM With QLoRA: 12 Steps, 90 Min [2026] shattered.io</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">16</span><div class="story-meta"><span class="story-source">finance.biggo.com</span><span class="story-age">8h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">17</span><div class="story-meta"><span class="story-source">finance.biggo.com</span><span class="story-age">8h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiX0FVX3lxTE5rMTVkSktrZi1sR3NoSzVNbWJUdHEtUXFfdDk1RWRqV1dSTTZqbUdSdzVlZGU4WkVhaWRIa0c5cnctWC15Y2drNUhzQnhtb3lodVdrVTBUa3pwR0NlbDgw?oc=5" target="_blank" rel="noopener">How to Build Financial Agents That Work Across the Web - Jay Sahnan &amp; Arik Bird, Browserbase｜AI Engineer</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: How to Build Financial Agents That Work Across the Web - Jay Sahnan &amp; Arik Bird, Browserbase｜AI Engineer finance.biggo.com</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">17</span><div class="story-meta"><span class="story-source">AIMultiple</span><span class="story-age">8h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">18</span><div class="story-meta"><span class="story-source">AIMultiple</span><span class="story-age">9h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiSkFVX3lxTE5XVno1NGlTNktyYVgyRkpFZ25TZmhUS2U4U1ZsYU5qSk5QcGlCNFhKUi1UXy1iN1Y0cko5Nm5uUXBZZ08wbW5OdEdn?oc=5" target="_blank" rel="noopener">Compare 12 Agent Swarm Frameworks: OpenAI, Google, Microsoft</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Compare 12 Agent Swarm Frameworks: OpenAI, Google, Microsoft AIMultiple</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">18</span><div class="story-meta"><span class="story-source">Yahoo Finance</span><span class="story-age">9h ago</span></div></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMimAFBVV95cUxNZmctZlRRN1Z5d0pzZVQwSDN0WlF3NG5FY3hzN05mdVJtVmpJR3FlVXNmMGVqT2YwNFFXTW1RZ0hEMW1fS1NfdjlkSzZwZldhN3dHNE9jcHFoWXRDVC1hMTI4MF81b3hlUDB3ckwxRFhhQTRneWJnTVhORmg0bkY3UUptMHdlSjZ4UnpPam9CM0tZa2laRzhCMw?oc=5" target="_blank" rel="noopener">Walmart Opened the Gate for AI Agents. Only the Rulebook Is Actually Live.</a></h3>
+              <div class="brief-head"><span class="brief-num">19</span><div class="story-meta"><span class="story-source">Forkast News</span><span class="story-age">9h ago</span></div></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMimgFBVV95cUxNQmFwVXVMc3AtNGYzdU9SSTlKRl9ZblB5WHFWQUNzbk5pS1dJRGNSZzY1dWg1ZTl5YUtrTUpJZDlmQXZjenJjUGNCbjl0NFlmV0tCcGJ0RGVEQ0htVjdMZTAtTkEtVmhkeGNERE9mdlZSb0t3bXRSS3pmMDlhb2tzRXA2aGN1QXMyZE9udWRoNTBYdDcxSU1DQzhR?oc=5" target="_blank" rel="noopener">Walmart Opened the Gate for AI Agents. Only the Rulebook Is Actually Live.</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Walmart Opened the Gate for AI Agents.</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">19</span><div class="story-meta"><span class="story-source">Forkast News</span><span class="story-age">9h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">20</span><div class="story-meta"><span class="story-source">Forkast News</span><span class="story-age">9h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiigFBVV95cUxPMlRZMVJVS0NTVVVuN0ZjS3FRbXJpUFFKN1J3b1JBY3VNdTFoektFWlRuZjRZM2NrY01WQzVjdFNfd1N5Q3FCUjl4Smd2Uko3VFBWdm1tcHNGV2RramJWZmpEaGI5T0xxS25BT1U4d0JpQmdOUWtWNmFlaXE2NG5wV0RwdEVtVlUtcEE?oc=5" target="_blank" rel="noopener">The Login That Lies: Why Agent Auth Is Still Built for Humans</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: The Login That Lies: Why Agent Auth Is Still Built for Humans Forkast News</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">20</span><div class="story-meta"><span class="story-source">Yahoo Finance</span><span class="story-age">12h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">21</span><div class="story-meta"><span class="story-source">Yahoo Finance</span><span class="story-age">12h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxQNWdRMVNjeDhYYzJPLUtkWTktQk96OHNlWnZia3JDcEs1emtRRXhkRldMbmZxcUVLMzlkSGlHMlRjSzVWYnRadGdtZUk4dURRNjZ6bVJuMTA0cmdvOVhoanJkc2FYS1h2T25MRXVmLUxpUmV6ak9ObHRMZHpxNzlCY2FWdFB6eE1GTTl3YlBvd2VUQUlmc1E?oc=5" target="_blank" rel="noopener">Should Aggregators block AI Agents?</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Should Aggregators block AI Agents?</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">21</span><div class="story-meta"><span class="story-source">MarkTechPost</span><span class="story-age">16h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">22</span><div class="story-meta"><span class="story-source">MarkTechPost</span><span class="story-age">16h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiswFBVV95cUxOazBfZFVSUzhmT05hZlVnRXNqNFphdGFtUVFnb0RwRXlIdzhIclZEblJYd25BTnBISlBBZTJWWEExa3REX0p3ZVBTSEI4NjAyZ1VTSUIzaWJsQVBXSkh4alUwVm1CdjQwbUdhN2hDeEhLWkFXcm5HNXNVdEFzZ0l3SEY2cUJZYUFOYlFLbjNDVFJnd2ljNWs3REdLcGJaUFR4SE5SUVJZT3M4VnBOZ1JtQ01xVdIBswFBVV95cUxOazBfZFVSUzhmT05hZlVnRXNqNFphdGFtUVFnb0RwRXlIdzhIclZEblJYd25BTnBISlBBZTJWWEExa3REX0p3ZVBTSEI4NjAyZ1VTSUIzaWJsQVBXSkh4alUwVm1CdjQwbUdhN2hDeEhLWkFXcm5HNXNVdEFzZ0l3SEY2cUJZYUFOYlFLbjNDVFJnd2ljNWs3REdLcGJaUFR4SE5SUVJZT3M4VnBOZ1JtQ01xVQ?oc=5" target="_blank" rel="noopener">Cognition Open-Sources an Agent Plugin that Helps Secure Systems against Recent Cybersecurity Threats</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Cognition Open-Sources an Agent Plugin that Helps Secure Systems against Recent Cybersecurity Threats MarkTechPost</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">22</span><div class="story-meta"><span class="story-source">AIM Media House</span><span class="story-age">16h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">23</span><div class="story-meta"><span class="story-source">AIM Media House</span><span class="story-age">16h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxQTVgzbTZvVXNFdkV0a1hIQ3hvaWp5ZnM4UGRKSmx2QjhEWlRhR3NRMUdnMmdkQXQ1QmhIN1Y1MG55bURRWmJESlEwc3M2MjY0OURnQXdZZTBTRkhSWVFqOV9mdHVZM2NEM0RtQVRPd1dzdDZYQkJHQzN2ZGdwYk5OZHFlZ21RczJxd1JILUR2RFpXanE4MGhHUGhkcjBYRWVTRm05LUxwbEZjQjhObVE?oc=5" target="_blank" rel="noopener">Synovus Is Building Its Own AI Agents in the Middle of a $117 Billion Merger</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Synovus Is Building Its Own AI Agents in the Middle of a $117 Billion Merger AIM Media House</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">23</span><div class="story-meta"><span class="story-source">Crypto Briefing</span><span class="story-age">20h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">24</span><div class="story-meta"><span class="story-source">Crypto Briefing</span><span class="story-age">20h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiekFVX3lxTFBMNHFkUTlzODlycGlFQUQ0NWdFVGs2b0lGdmZmY2pScC1qX0V2bHNHdDNRZEY2VjE3YkZOTXVmc2hZTjI3cTBXZ1ZfbjA5YTYwMi1YcThSRlh2b3JZTTNMb3FYeXp0NGJ6anVRZ0dYNDd3MVNtaUcyZXpR?oc=5" target="_blank" rel="noopener">Salesforce plans to make external AI agents register before they get in</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: Salesforce plans to make external AI agents register before they get in Crypto Briefing</div>
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">24</span><div class="story-meta"><span class="story-source">بوابة التكنولوجيا المالية</span><span class="story-age">7h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">25</span><div class="story-meta"><span class="story-source">بوابة التكنولوجيا المالية</span><span class="story-age">7h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiREFVX3lxTE5zNFVWeGxVa3Q2d0xYaG04Nm44Q25JUFFDellNbXQwa1Z1dXhMdFVHb2NCTGdIUXdyUGlSNndUbUhSSHpj?oc=5" target="_blank" rel="noopener">HPE and NVIDIA Expand Secure AI Infrastructure for Enterprises and Industrial Operations</a></h3>
               <div class="simple-take"><strong>SIMPLE TAKE</strong> In simple terms: HPE and NVIDIA Expand Secure AI Infrastructure for Enterprises and Industrial Operations بوابة التكنولوجيا المالية</div>
             </article></div>
@@ -1006,7 +1074,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
           
         <article class="lead-story">
           
-          <div class="story-meta"><span class="story-source">Outlook India</span><span class="story-age">15h ago</span></div>
+          <div class="story-meta"><span class="story-source">Outlook India</span><span class="story-age">16h ago</span></div>
           <h2><a href="https://news.google.com/rss/articles/CBMi-wFBVV95cUxPOFo3YkhXbGhvSU9UZmZpWXB5TDczRDQxOVpKdDlRY09DTy0yV3pFUXk2ZnRDUDV2cjhqWjNrU29PY2dOeHU4cWxlbFYxbVZ6TUVWcDFxUGNLZHFCYzJTUTk1cXlhdVR0aXI2MXB6OGVXbUhESXViaHBwd0RPWWRsRnFjajRrVER2eWFfR2pKUFlfYVJlN2IyeElzVXp1Wm13UmFiTjBDZjNab1F6QnZ1WXNfMlEwemczaFZNN0dEcDJySEhsRVUzWHZkdnZuNWRzSzFzWjc0d2pNZ256VFlNX25qYUtFdTBGeUpsdkUtSzh1c2lXTW13MGRFUdIBiAJBVV95cUxPcE5teXN1dlpscEh4cERBVnVNN0JGVEJkcEl6UDlSSnd4ZVJlaHZScHg0b2kzdGdMWk5jRzV6OUhmSUxOTk9TV2I0Uy1EV2otNDVpNGIyVFlFYVRtMTBBYlZ0di1YbUM1ZzYwQURiU1VWajhzLXRjQVhJQ2V4RDZBU3dXTzQ2azhBN2I1RFdLamJhcXllS0hRRUtmWFZmdF90RzA0X1dka19nU1U2c05HbF9xX1pVUVRSOHhHSUMtVTVhUlloWjJuQmxUSFRveXVSVV9TME5CR1BGQUxsVEtOQVRtUXZDVlNGRGF3dVgwZjl6YnJjY0RlLXZrTDhOMkhoNkZPekNsWXA?oc=5" target="_blank" rel="noopener">Nepal Cricket’s Big Leap: NPL Season 3 Brings DRS, ICC Recognition And Global T20 Stars</a></h2>
           <p>Nepal Cricket’s Big Leap: NPL Season 3 Brings DRS, ICC Recognition And Global T20 Stars Outlook India</p>
           
@@ -1015,9 +1083,16 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
           <div class="side-stack">
             <article class="side-story">
               
-              <div class="story-meta"><span class="story-source">Cricket World</span><span class="story-age">33m ago</span></div>
+              <div class="story-meta"><span class="story-source">Cricket World</span><span class="story-age">49m ago</span></div>
               <h3><a href="https://news.google.com/rss/articles/CBMi9AFBVV95cUxNejQ1T2pLN21TM3ZhdUtHdnFxNnMxbWNGSFlPdGtmanhQRVlTUjM5T0tIekUyRlJxRzZhVTNoNVJRZ1B4cnFIaHBHdzc2NlZvNTlGanhRSUZZVGg3aXZDa1hvNUJLZHFEY01fWlRqX0RJVXd2V09sTmdZeU8zV0tFMGZZRUJWZzE3UEZMVHJSVjdReVpsbm12T3RaazN0WEJpS256WEw2YkhBS3owb21XUTZfZDRNYi1LVWNXWDFiZEFPMjFIWkxGVkxscDUzUXNMT2hxTmp5SnRfYVRxLU9zckY3VXhvSnpId2Q2Zm8yQ0tpdDM4?oc=5" target="_blank" rel="noopener">Deepti Sharma press conference | India vs Zimbabwe ODI</a></h3>
               <p>Deepti Sharma press conference | India vs Zimbabwe ODI Cricket World</p>
+              
+            </article>
+            <article class="side-story">
+              
+              <div class="story-meta"><span class="story-source">Cricket Times</span><span class="story-age">2h ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMirAFBVV95cUxQQ3U1WUlGSkE3Z1otbHN2M0tXX1BIUm83ekx1RkFlQWdxdW5kU2xsSGpDQmNBbHcyMEJQX1pGNW93djI3NUY3TDk4Rkt5OEQ4ejJBYmpGRER5NUFPOE4wYk5Mc3ptVTB3SjNJRjhDVWpQaUs0Uk5RemUtRm50dEJncUlqSjZXMWYxUmFZV0lCZ3dUTXkwdmVSdG5xNUp1eVRHYTdFUl9NeFZ4U01j?oc=5" target="_blank" rel="noopener">Ajinkya Rahane reveals his all-time India Test XI; no place for Virat Kohli</a></h3>
+              <p>Ajinkya Rahane reveals his all-time India Test XI; no place for Virat Kohli Cricket Times</p>
               
             </article>
             <article class="side-story">
@@ -1026,141 +1101,134 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
               <h3><a href="https://news.google.com/rss/articles/CBMivAFBVV95cUxONlNERVhqdFVKbUNvVUpYTDlTNFZFUWQwTEpUR1Vtc25ycGtTVXFHVDVfVXdyakVkMHFPTVNDRDVQMUpWRmVlbUozUXo0d0pnWHZrSEptTzFSX1dBM1FqNFYtdjlwdnJXNXJldE5KeTQycXVoRVJDeWU5eGVvRV9GdFlVRWVCS1hOMVFxZ1JzWEsybFN1R0ZILW5wWFQ1a2ZhMDFyQmFkeEhzNEQzM3JxT3BPUmlkVkRQMUZCZQ?oc=5" target="_blank" rel="noopener">She is the 13-time Grand Slam doubles champion who has just won her sixth WTA Tour singles title</a></h3>
               <p>She is the 13-time Grand Slam doubles champion who has just won her sixth WTA Tour singles title Tennishead</p>
               
-            </article>
-            <article class="side-story">
-              
-              <div class="story-meta"><span class="story-source">Cricket World</span><span class="story-age">3h ago</span></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMi_wFBVV95cUxPM0h0TWJid0xST0VuQVI1QmhZUnNXY3BJRFY4TlhjRUFiUm85Wk93Zl9vVExIdEZrbFBWaW5EUzZsbm9zNml4VDlYVXF6MC1TNktueHNsdmdyZWV3Vmh0R3dCZjMwT0N6ZzUybkFaRlo0QWFzZE8wcnBFR3NFWDNhVmpEZmZXOEx3SWVtWWpFSkhMWklrTzhHTklxZk9lUmlhMHVLQ0J4Y3FtNjhqaE1weV8wMWNaRjhEdG92SlFqdllXY1BGZEJCV1lrWUk3SDdSV0VYei1yZmtaMkNzem5FYVhwVE1WSnJUVzU2UlMtbWFOQWZHbVBlVVJyRzdqMWM?oc=5" target="_blank" rel="noopener">India Women beat Zimbabwe by 121 Runs | 2nd ODI</a></h3>
-              <p>India Women beat Zimbabwe by 121 Runs | 2nd ODI Cricket World</p>
-              
             </article></div>
         </div>
         <div class="briefs-title"><span>THE REST OF THE LAST 24 HOURS</span><span>25 curated stories</span></div>
         <div class="briefs-grid">
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">05</span><div class="story-meta"><span class="story-source">ICC</span><span class="story-age">4h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">05</span><div class="story-meta"><span class="story-source">Cricket World</span><span class="story-age">3h ago</span></div></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMi_wFBVV95cUxPM0h0TWJid0xST0VuQVI1QmhZUnNXY3BJRFY4TlhjRUFiUm85Wk93Zl9vVExIdEZrbFBWaW5EUzZsbm9zNml4VDlYVXF6MC1TNktueHNsdmdyZWV3Vmh0R3dCZjMwT0N6ZzUybkFaRlo0QWFzZE8wcnBFR3NFWDNhVmpEZmZXOEx3SWVtWWpFSkhMWklrTzhHTklxZk9lUmlhMHVLQ0J4Y3FtNjhqaE1weV8wMWNaRjhEdG92SlFqdllXY1BGZEJCV1lrWUk3SDdSV0VYei1yZmtaMkNzem5FYVhwVE1WSnJUVzU2UlMtbWFOQWZHbVBlVVJyRzdqMWM?oc=5" target="_blank" rel="noopener">India Women beat Zimbabwe by 121 Runs | 2nd ODI</a></h3>
+              
+            </article>
+            <article class="brief-story">
+              
+              <div class="brief-head"><span class="brief-num">06</span><div class="story-meta"><span class="story-source">ICC</span><span class="story-age">4h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMicEFVX3lxTE5RRmJUU2FDcGgzUE1VMkJHSnlDcXhVaDVCUXh2Mi1WRmd5eFZfemgwMS02QmI0Tkhkby1yV0piLXRCc1EwUVF0NUFyUURmWnNMekJvZHAya0hBZGNIZGFvTkhjVGdmb0thbkhYempEUWs?oc=5" target="_blank" rel="noopener">New Zealand vs. India | IND in NZ, 5 T20Is, 2026 | ICC</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">06</span><div class="story-meta"><span class="story-source">Cricbuzz</span><span class="story-age">7h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">07</span><div class="story-meta"><span class="story-source">Cricketnmore</span><span class="story-age">5h ago</span></div></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxON2RIRndIUF9hOTJNZEtod2c3UnJORXhHejIwbWdZbFNyMk1OTnJMVXI0MWJLWVJNQ21xOVBPN3pKVGRmZG1HOVFUajhwYmxZbC1pbmRoWHlLMHd4QUQ4c1QyTnp4X2xNYTJ5SzV1M3lLYVlReGZLM0t0WlloUzEtTUNpOVlVRko2OG1CWDV0S245MzdIbGMtZGZDWnFmV3BqbHJNbVRxMTF6MFM5c3VVNWJINm94U1NWMVB4azYyckp3a1U?oc=5" target="_blank" rel="noopener">2nd ODI: Harmanpreet, Deepti Hit Centuries As India Post 328/6 Against Zimbabwe</a></h3>
+              
+            </article>
+            <article class="brief-story">
+              
+              <div class="brief-head"><span class="brief-num">08</span><div class="story-meta"><span class="story-source">Cricbuzz</span><span class="story-age">7h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMivwFBVV95cUxQTFVjNUxwa0tlSDloUTIyT3V4ZkVsUHlWcFY4TlVya3VmMWItNy05X3Jyc2NmNjJBOXp2TlVLa242U2UwMGh6bi1tcGxOWXl4VUR4QXZHYThJSS1oVkZLVm1tNGZkS2RETkxTZlNRN25hQXdUX3JUT0RRdmswZEdMb1Q4a09ybmNNbzJKYzJPbjNRdFRsanJJNEZRTVctcFItV1FGd0V5NlRaUkZnUjZRclRjVkUyb0xldWdDdzVYNA?oc=5" target="_blank" rel="noopener">Cricket match squads | INDW vs ENGW, 11th Match, ICC Womens T20 World Cup Warm-up Matches 2026</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">07</span><div class="story-meta"><span class="story-source">Cricbuzz</span><span class="story-age">9h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">09</span><div class="story-meta"><span class="story-source">Cricbuzz</span><span class="story-age">10h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMizgFBVV95cUxPTk12NF9XZGpVenBTMVVKaVZWbTZuYUExR2gxbW93Q3ZkTHdLOHNWQ3BBQjNZcldIbXBQbkhFaExLMm9NSjVVcTM1MGtkTHZocERzSW1YbTVsX3JKSGxfbjdkaHc2WDVSMG1IQTZYb2R4bFdMVG0wUzVHd1hGOVNVQlNfVzBqMTFSWGc1a001UUVKUi1zMmJud0p4a1dyNVNGNW1xNV9uZmJFNDIybURrelVubzRQVmNTaXBGbFUyb0p4TzBJWXd1aUlCbmRJUQ?oc=5" target="_blank" rel="noopener">Cricket match squads | GM vs LSO, 13th Match, ICC Men&#x27;s T20 World Cup Africa Sub Regional Qualifier C 2026</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">08</span><div class="story-meta"><span class="story-source">News24Online</span><span class="story-age">10h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">10</span><div class="story-meta"><span class="story-source">News24Online</span><span class="story-age">10h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMi3AFBVV95cUxPampXbmZHOXVPNkZMUFNqRk02cTBVWFFsNTlKMTFtUkd0N1JuamxOWjZmUjRxR0xqcXZXV1RQSG5ZX2lsa3c2aTczWWQzV1ZoZkNuTnRZU0xsR3p4ZjF1dG5fQ2JERDlDaGh4eDRQVVRWT1FDN2lCZmVGb3B4ZzlkT3FRUlVQRTFlRk5EYzVyM3NiTVRkRVhieEJvZ3pBQ2RwelpHbngtUGx4ZWJNaG53SUVPR084bkVrQVdSTXZreFV1QmViVC0yUjhTZmdfLXZJS3hQNWVRQ2xLNmVE0gHgAUFVX3lxTE9mNGQyaHhLbGY2amlvekJDYUc4eV9qUGNTTnVVRnVUNU5yS0FQbWhLdEszQUFBdXFmR29QeFJONnpNVktyVTVJUXlJUzdXZUlweV8tMHdBVlZMdHdnTzJJU2c0MzZXNDIwRnZ3UlVsWkpWNFEyejdWRjJhQmJTaTgzTWlmU0hwTmFwOXZvcV83Z2hMWXNYb2M0RlZhUWpqdi10TGZ3dmlWNnlPdHk3TU84aTNhVFFjNDZSaTc1N0wtSUEyelRRT1paeThldzRoZEoteDNXTTFBQU1kN1JOQjEt?oc=5" target="_blank" rel="noopener">Pakistan in a fix over Women&#x27;s T20 World Cup 2028? PCB urges ICC to settle India match venue issue</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">09</span><div class="story-meta"><span class="story-source">Hindustan Times</span><span class="story-age">10h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">11</span><div class="story-meta"><span class="story-source">Hindustan Times</span><span class="story-age">10h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMicEFVX3lxTE1uNnZ4YzNQLXYwTWt5dmNTR0M1bzNZWThmZFRkbnREd2NwSTBNaUZjMEZxYjUxcDFkTXRPaEhsMVFselg5d0JidXppSk1tRWJiSVZoMmNRMFM4QklycjVINzcwdldfYWsyeVlwUVRZTm4?oc=5" target="_blank" rel="noopener">Akbar Ali Profile - Stats, ICC Ranking, Records, Awards, Age Career | Akbar Ali Latest News | Cricket News</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">10</span><div class="story-meta"><span class="story-source">Hindustan Times</span><span class="story-age">11h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">12</span><div class="story-meta"><span class="story-source">Hindustan Times</span><span class="story-age">11h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTFBISXFtVVoyOUZyUl91OVlNTHdieVlHQlJXQi1FSDRXeWp4aFBkMVBSeGlQQnhYdjJXREJaeWlveDhYTHlEdkVDTzc4RGpnbWxrNWxBcHhaVHVrVzNiSlpya2lYRFJXTGstX2xWOEFkX3ZBVXc?oc=5" target="_blank" rel="noopener">Judith Diaz Profile - Stats, ICC Ranking, Records, Awards, Age Career | Judith Diaz Latest News | Cricket News</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">11</span><div class="story-meta"><span class="story-source">Pajhwok Afghan News</span><span class="story-age">12h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">13</span><div class="story-meta"><span class="story-source">Pajhwok Afghan News</span><span class="story-age">12h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxOYTJ1RENFSERlWlJQcUhMY0pYclRBSmFyaDRicmlJWEdGTzhZem1PcDlxVFVRc0ZQbk9Cay05dDZlNzNham41a1ZFSjBEaWR5OXY1STc5VGNkUXpoTzNyMDRONDBDcXR6VC1vZ1ZiQVM4VkpZLUFnM2tuMzJLaVNROENlOENZOTRoX3dkelBxX2g?oc=5" target="_blank" rel="noopener">Afghanistan climb to seventh in latest ICC ODI rankings</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">12</span><div class="story-meta"><span class="story-source">Cricket Addictor</span><span class="story-age">12h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">14</span><div class="story-meta"><span class="story-source">Cricket Addictor</span><span class="story-age">13h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMivwFBVV95cUxOdlpsNnFKa0ZSZzJBYXlHbWZ6UVU3VE5yQW5Kd2FPQXlFOWNsUmp0aDNNR1lpR181UHdySzZ3NUpySllEUU5oUXdxMjJ4a2d4WWdSUWZ1S29sbTY2QUdZVmFyYktmVDEyRkJCbHhGUmtyMnVJVzZkem45RGlCSkdtdm9LS01SLTFla0JEeUR3SXd0WUR3S2RoYmlWQTlvdGVEdFpQaE9ZSmkzalN6NDZpemt4amdFb3lfY2RIQ3JUZw?oc=5" target="_blank" rel="noopener">PCB pushes for Champions Trophy formula for ICC Women&#x27;s T20 World Cup 2028</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">13</span><div class="story-meta"><span class="story-source">ICC</span><span class="story-age">13h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">15</span><div class="story-meta"><span class="story-source">ICC</span><span class="story-age">13h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMimgFBVV95cUxPUnBTVXZlY1NrZjU2cENPc2gwUUd1OFpHNG1MUXFWUWwxMTZjN1dJejIyQVBuSnNKWHlaSmlMN1oxc2lIRTZ0c1NucEphbU9oc3hXUmhuUDgzWWloek1uNHlKTWFRRUc2N2tZdkVyZy1oQjJHQkVqbEZIQklzaHBUM2VCclA4Z3I5SU5sQjRaN3I3b3MwX2hITEFR?oc=5" target="_blank" rel="noopener">New Zealand announce key updates for T20I squad against India</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">14</span><div class="story-meta"><span class="story-source">Hindustan Times</span><span class="story-age">15h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">16</span><div class="story-meta"><span class="story-source">Hindustan Times</span><span class="story-age">15h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMidkFVX3lxTE9CaUxKMUV5N0hlLXlTZDUyd0lfVktPNU1VMC15RFltQ1I2aWNwN1o4NzFIVE42UTNuT2M4NjdRTDBzZVp1YkcyQnRDWm5Ob2dZNUpoTTAxZVoxSWNaeVg5QlY3aW5uQnFBRVZyMk5kLXZsenJNQXc?oc=5" target="_blank" rel="noopener">Musa Jobarteh Profile - Stats, ICC Ranking, Records, Awards, Age Career | Musa Jobarteh Latest News | Cricket News</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">15</span><div class="story-meta"><span class="story-source">India Today</span><span class="story-age">15h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">17</span><div class="story-meta"><span class="story-source">India Today</span><span class="story-age">16h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxQXzhIZXplRTFHcFFEdVZnMFZ1eXgtMGhvMmxvVEFYYW5mc09fVGVfdF92Wks5UXJ2YVZRMFVKS21jTGlBMUI3Qklad2FwMTh1VEQwXzctaDZuUHRDV18zOFk2RWswVmRrclNYaUpLU3dKRkdsdmxXaHdWM3JkcmloUGJYSGhIVENhd0cwcGttTHXSAZYBQVVfeXFMUDFwRzJZdkh6OWhqYVNWczhHcnRrVHNBWDctU3MzVFh1MTNvR3lVcF94WHp5eFkyNU5lbV9UaTQ1cXAyYUJ3Y2hZTVdjWk9vRWlHY1g0cTdhQ2wzbkhmcUtfeDFZTFB2QVlFR3FhSk53amo2Zk5wUmd3d3hKNVA0OTctdTI3MkRLb1Rma0Z3aHMzbm81YkV3?oc=5" target="_blank" rel="noopener">Bad times test character: MS Dhoni on CSK&#x27;s slump in IPL</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">16</span><div class="story-meta"><span class="story-source">NDTV Profit</span><span class="story-age">16h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">18</span><div class="story-meta"><span class="story-source">NDTV Profit</span><span class="story-age">16h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMi4wFBVV95cUxPT2xZUkZ4Q19PWUg1UW9WMVJpbElaZlYtMDc2aGJrWUNjOWVKd0N5eTA3TTM0Z2FXcnpfMTEzYzlVem1wZVMtNEJHUDUwTy1qNWtfbWItVTVXYmNzbUlzYmtvaUVxTW5vWF93N2hvTnhhY2JlYV9DTU9iM1h2TWt6ak91TW5vTURacHpNNmN6dHBGQ2xiM3hNNUwxb1EtdVg3cEUxcnZZYUdVWHZsbU1Ic3ZncmlabENSeW9qNWRBaDdGRmgtSkRfeDhPQW1xMlJpQ0JNdlM2VVZNUU1QaHRVb3Bhb9IB6wFBVV95cUxONTlkQ1RBUkZ4b19lTmhrSFNmQk42X25kbUFVUmo5UE1KbWhKS1BNYjdQejlVUl93TkVUNHJJS20wYXFLQW4xQVF3MUhWYUplUUJIMklHNGR0RUZxNVpfMWtrVU9MR3dmTGNtal9rQms4bG9obXNJRWk4SnlqVDFSSzdPQTJtc2ZNVnZKWTRGVXk4M0VhYnlQWHpoVzdTMW9fTFZ1akx2NVgwMEpNZkdJdXFtTXFzMnNjb2lKZ1Q0eEZLemk1SmdQSVVOMUtya2gwTE53MDhjRENSSmhkVy1sYnhZMlQtcDYwcHNR?oc=5" target="_blank" rel="noopener">UAE vs Netherlands: Live Streaming: When And Where To Watch ICC Cricket World Cup League 2 Match Live In India</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">17</span><div class="story-meta"><span class="story-source">Tennis Now</span><span class="story-age">1h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">19</span><div class="story-meta"><span class="story-source">Tennishead</span><span class="story-age">17m ago</span></div></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxPSkVXXzNJbWlvTmc2LVRSNUpNampnN21WS3lZb0xZWFdnd240Ri1CSzYxaWNjaHNyNHI3MkZHbU1WS296U2xGRkhjY25hSUV6emdDNGZfRFNTRkttRkxHekJMV0daS0xGX3R2RHpQUnV3eEtvQjRodVV0WlJNRnNfVzRyOU9VQU5vYS04UGM5aFVWRzMzMEE?oc=5" target="_blank" rel="noopener">Victoria Mboko names the WTA tennis legend who she admires the most</a></h3>
+              
+            </article>
+            <article class="brief-story">
+              
+              <div class="brief-head"><span class="brief-num">20</span><div class="story-meta"><span class="story-source">Cricket Addictor</span><span class="story-age">1h ago</span></div></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMizgFBVV95cUxONXFTUHlTSFFmRG9NVHpRM1Y0VXhrTVc4LU9YUFRWWk1RTTZfbzYyRkU1Y2pvcHlQNGlaQXdOdC05MDVOTjQ5U2NnTnhfOWtsdy1vQ3JvbHA0WUI5TzZqaVY0SVZxTUVLU2JNYmppclNtYTRXQXhNUnJzbDE0d1hadXRZQlJLMi1IZTAxcFFKMGpPdTJYeTRVWVB4bWlyWDd3bXZ4bzZQRGd3VDJjcDRWTDFMR2dEdzFhWFZBc1d3RmZtZkNybVdjUllfZ3ZCdw?oc=5" target="_blank" rel="noopener">Harmanpreet Kaur scripts history with record-breaking ODI ton against Zimbabwe Women</a></h3>
+              
+            </article>
+            <article class="brief-story">
+              
+              <div class="brief-head"><span class="brief-num">21</span><div class="story-meta"><span class="story-source">Tennis Now</span><span class="story-age">2h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxPYTVlRHlNdGlrOVBGNEx4V3Vjb3hwVktKSmlFbFJENnVKRkRoT3FrOVRXcjFXdXBZc1ZKajNCWC1BeFlJT3NmZll4WFpsRFY4Z1IwS1pPOFR6YlgwRjNFX1pxUnpyYUdORjJKM2tXQmFqY1padUZPTDBFczZlRGEzUnpIZGkxancybGdMSHFDZ1BPeFVwY3F2WmFrS29hZGZBVGlsTTZGcEhINlBzZmdYa1ZWcTc?oc=5" target="_blank" rel="noopener">Stacked Vienna Draw Features Eight of ATP’s Top 16, Alcaraz Returns for First Time Since 2021</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">18</span><div class="story-meta"><span class="story-source">INDIA New England News</span><span class="story-age">1h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">22</span><div class="story-meta"><span class="story-source">INDIA New England News</span><span class="story-age">2h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxNd1RJbW1xSC02MVN0OXgtTlZPUTE4VENkSV9TZWZJRGtzTzNtdUJPdmdORGotRGIwLUF4SHI0djhVcm8yMGNGRU1rVUZPSG5EMjdzZU8tQjJsNW44TGl3blFrekdFUjNfUmo5NWNZbjQ2ajg0dkNqWTV1Rml1akJ4cEVQdjd0dXBucnNtUHRWM3I2QUNzaWZZMVJoc2RGakFkWG9IdTJR?oc=5" target="_blank" rel="noopener">2027 ODI World Cup Ticket Demand Tops 1 Million Applications in Three Days</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">19</span><div class="story-meta"><span class="story-source">Crictoday</span><span class="story-age">2h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">23</span><div class="story-meta"><span class="story-source">Crictoday</span><span class="story-age">2h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMivAFBVV95cUxQUUJISzJReXFnY0NBRWdOZVYwNHRJdjA0Vi0zMmw4YnN3cFhZT0dDNFg4d1V1SnlIdWxMdGJuTlBnMm1hVFk2NldkbHRHXzBBUWNzMURkamMzQjdxa21CWU9uRG9DMnlCUG5INHBoOGdranJtb1RuZkFEaVNic2JQUjFEWktnWXF1cDh0cDhsVVkxZFVyb0hYUUVVRjgzVzV6SFJxUG5VZnN5bVFEOWFmV29ocVNxYUhFTnJrWNIBwgFBVV95cUxNN3ZyZnJQQktKeFlkMDJOd29ld3hKakV6YTFoeDJnTGRVYVpqZ0xrZWtWYlpVei1nYkh3SlJqVW5tanhJbTNHQTNCT1dNT3NoaGU0UFRiRVh3UkxkWnZkbUJqcVN3RUYtNTlHcExDdzZTRElMWTdpa2EtbFpBUjRvSzh4YmZSbUFZR1JGSWtFY0trNXZyZ1NqSWdZX2E2NEExZjZ2MkF0aGhtdFdhUUNsWFlQTHNrZFJFOTJmbWlRTUxLQQ?oc=5" target="_blank" rel="noopener">Pakistan propose ambitious 2028 Women&#x27;s T20 World Cup plan, India must meet one demand</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">20</span><div class="story-meta"><span class="story-source">Outlook India</span><span class="story-age">2h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">24</span><div class="story-meta"><span class="story-source">Outlook India</span><span class="story-age">2h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMi2gFBVV95cUxNQi1vSWtGT0dxdDBMdlBtZUtnT3dsVzhRQWFkWThDaVJ0VldIOGpZLWxUaUppcXMzcnd0TU8teXJrejJLUlpTSVN2NE42RTFTdzczYjFZcTNQRmNiSi1WRDNTQVo3MkpwUndVM2x6Q3E0QUYtc0RmMnFnMVBKRzZhSFRjLURPanptdU84QTR1S2ZDd1Y3SWxXUS16VWJZY2RfZWdZUjJ0MnNVMldqemQ0OFhxYUZTaHZidXJnNkdwSEhNa0tzX3o2Qll0RWFldk9PUHFzR0NNT1U3Zw?oc=5" target="_blank" rel="noopener">&#x27;Blinder&#x27; From Shadab Khan: All-Rounder Smashes Maiden ODI Century As Pakistan Beat England</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">21</span><div class="story-meta"><span class="story-source">Hindustan Times</span><span class="story-age">3h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">25</span><div class="story-meta"><span class="story-source">Hindustan Times</span><span class="story-age">3h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxNWWhhWm5EWVM5M20xS0c5WDZuYXAwTkFOb1ZMb3NpUDZGWjUxdjlvZXJ0UkZuVnFwZC1JXzlkWDFaQU14c2tKSFVqeGpiZ0UtSUxPUEpKUWpxRHhwQ0Fjd1lpdWVTZjJuOFJKVW4tcjFDSFhZTzlReGFITlE0cjk5bl9VNVZfNXZaV2kzbkt1RnA1RFRaaUxYTTU0TmhsaURMS0wzeTlGb2taSmR0eV9jUm52bUROZ1BVWXNWTTBB0gG-AUFVX3lxTE1ZaGFabkRZUzkzbTFLRzlYNm5hcDBOQU5vVkxvc2lQNkZaNTF2OW9lcnRSRm5WcXBkLUlfOWRYMVpBTXhza0pIVWp4amJnRS1JTE9QSkpRanFEeHBDQWN3WWl1ZVNmMm44UkpVbi1yMUNIWFlPOVF4YUhOUTRyOTluX1U1Vl81dlpXaTNuS3VGcDVEVFppTFhNNTROaGxpRExLTDN5OUZva1pKZHR5X2NSbnZtRE5nUFVZc1ZNMEE?oc=5" target="_blank" rel="noopener">Tilak Varma&#x27;s old-school finishing is just what India need | Cricket</a></h3>
-              
-            </article>
-            <article class="brief-story">
-              
-              <div class="brief-head"><span class="brief-num">22</span><div class="story-meta"><span class="story-source">Tennis Majors</span><span class="story-age">3h ago</span></div></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMi9wFBVV95cUxQNjh2ejNKaHlibUJZb1VidG93VVVjZlBsd0lEZjlUenhTRkdFai1RdGRmVVR6WXlxMDU4SkNQelk4dW5TYlpLUWVtSDJNMlFNX2tzNDgxYjZHVjM3YWNVV3RUVEQtZC1BNTRxM1FqWDJhUTRBTEhLZExxYXcydVI2MFpYV0E2eUJHdXhvc2p1dHlQZFZNZXU3em9MVE5LZDBJbnk2dFFDNzhiUV9XajlTR0lDQUdqc2UyWFRSbnRRR2l1RGVWbmpGZlJMZXFCSnNKWHNnT0tNZTFURkJCZXRQeXhoUmgxS2lhWVRKcHFWclItckRLRXRN?oc=5" target="_blank" rel="noopener">Tennis, ATP – Grand Prix Auvergne-Rhône-Alpes 2026: Musetti lifts the trophy against Fritz</a></h3>
-              
-            </article>
-            <article class="brief-story">
-              
-              <div class="brief-head"><span class="brief-num">23</span><div class="story-meta"><span class="story-source">Cricbuzz</span><span class="story-age">4h ago</span></div></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxOdFp4OEYtNHFLUkYtWExSSmJhclhXOW0wSzlYaG13TVhpaDloNjhpOXZtR01sVHFhdVdqRnYzRUNJcUg2NV9jMUp0eTVQTDdvZ2R2UkNHNDBwWnJ4VnZWNllJNHJqcUVDNGZMRmtBVXEwRVFKYzNmQ2hqbHhJU0FIUHRmZWFPU0lPQlRmWGRlcURKWGNwLXpKTFRIUTB6RjNBQVQxSmFLOVM4OG53dnFpaUtzY3JRbXk1dXhYa3NB?oc=5" target="_blank" rel="noopener">INDW vs ENGW, 11th Match, ICC Womens T20 World Cup Warm-up Matches 2026 - Commentary</a></h3>
-              
-            </article>
-            <article class="brief-story">
-              
-              <div class="brief-head"><span class="brief-num">24</span><div class="story-meta"><span class="story-source">Tennisuptodate.com</span><span class="story-age">5h ago</span></div></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMiggJBVV95cUxPeWJmNmtSNWgwTmZmb3VBekZmZkVvd0RKLWhnVm5NTF9uMUtWckxGUHA5anVtM1dnRDdZTkJkc19IQVVLWTVpd2I0QUNrV3pCc3o0aVoyWlZ2X3NIaE9XaVhUMzhtUGppRUdIQmRyLW9OSFlnRE5CS1ZlTkhaTTBTWk1ZdVJwTEZGSjhTTjZZYWxiTXByZ1g2b0ZJa1phV2hQMWRmMGN3cjEzVV9sNklOc0MtWHEzQ0RCZHNOTi1TZVpDenV6emlQZUNsVWRDRzN6YU5tMTBqX3REQUxXZVRFajdUMmJwZTgxc0dVbDNNLUprc0V2NWdHN19fa1h0S005UWc?oc=5" target="_blank" rel="noopener">Naomi Osaka&#x27;s former partner still dealing with fallout of breakup in latest song: &quot;Was never my intention to raise a daughter in separate homes&quot;</a></h3>
-              
-            </article>
-            <article class="brief-story">
-              
-              <div class="brief-head"><span class="brief-num">25</span><div class="story-meta"><span class="story-source">Outlook India</span><span class="story-age">5h ago</span></div></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxOdGV5ZzFBTUJNaTBYYjVkc2NvNDZCWnJUckNoemxUYU1LQVh4aWJLRUpjc0pfOHplZjZlTzBoem1IZHZ2OWNHSmxDX0J5cFltS1pQWkFOSVVkeEFaYWkwQVp4NTVuVE9iVXBQTlptUlFVczZzejBLa29iMXVQNEg5b0lpcmd2U2pWNnBoUkpreDBjX3NsRU1aT2xJeDZvWGkyMmVqMGVwM2JHQ3lrTG11aWFjSTFMYkdqSTFPbDhCWHNnd9IBzwFBVV95cUxQNU44QkFaY200NXVPbnVrb0lTY1BvTzNMdFd1WGJBZHpJZWkzRVZiSEVmV1VKTGhaVGZ2ZXlKdlgxbDlCandrMDI1MVNIWUVOVmJKSVVXZWowN1JpSTQ3cGlvY09pUy03b0hPRDBDS1lDcC1QNUpNcVNMQWc2aThUZnhPWFhURTVzTWNQOGFJNXVQVFgyQjgzbFFvdmd6eWRid1JNM3lsZFRKUmMySE1xTUxmSVVVMHBpTUx1NXg0OExrZk1QUzJxa0lybzdVU1U?oc=5" target="_blank" rel="noopener">&#x27;What Did I Do Wrong?&#x27;: Ex-India Cricketer Reveals How Being Dropped From India Team Affected His Mental Health</a></h3>
               
             </article></div>
       <footer class="news-footer">Only stories with a publish time inside the last 24 hours are eligible. Images appear when the source feed supplies one. Headlines link to the source.</footer>
@@ -1180,13 +1248,20 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
           
         <article class="lead-story">
           
-          <div class="story-meta"><span class="story-source">Bollywood Mascot</span><span class="story-age">2m ago</span></div>
-          <h2><a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxPYXRyUkZUQzY4R2c0LXNQb0hfSUppX0FWRjdWR3c3Y05zSTd2VE5EUjZraVRxNWlsdGJrRTA5anhyTFJvOGJGbkZKTzZBUmxKc1BCQ1VRWTk5QzBJdVdJd2R0dGV4VHdFYWcwdEgzeEl1MEVmOEdSM09Td0trdEZHd2ZadXUyS3hqSUxQR0tjNWJyLUlyWE1Id25BS3VyZGVjR3EwQ2NWYllmZUswSHlld3YtdVZxaVNYMFNzbTRB?oc=5" target="_blank" rel="noopener">Vidyut Jammwal Reveals 1 Big Difference Between Hollywood and Indian Film Sets</a></h2>
-          <p>Vidyut Jammwal Reveals 1 Big Difference Between Hollywood and Indian Film Sets Bollywood Mascot</p>
+          <div class="story-meta"><span class="story-source">Filmymantra</span><span class="story-age">17h ago</span></div>
+          <h2><a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxPcTJsNEp4bmtFV0t0R1kzX1IwU3NYWkdWUkF3RThGeEQ2YTBIb3gyYmxfVmtVeVVUSjBfWVZFMzkzR0lCQ1RiZTh0TGFCWnBLNjFnX3JKY1U5a0Y3ekEyRVJMZS1oRnJLSlFvY0hhaG5xd28tN041czh1SEVMNk1uU3FR?oc=5" target="_blank" rel="noopener">Isha Chaturvedi: Rising Actress &amp; Model Eyes Bollywood Debut</a></h2>
+          <p>Isha Chaturvedi: Rising Actress &amp; Model Eyes Bollywood Debut Filmymantra</p>
           
-          <a class="read-link" href="https://news.google.com/rss/articles/CBMivgFBVV95cUxPYXRyUkZUQzY4R2c0LXNQb0hfSUppX0FWRjdWR3c3Y05zSTd2VE5EUjZraVRxNWlsdGJrRTA5anhyTFJvOGJGbkZKTzZBUmxKc1BCQ1VRWTk5QzBJdVdJd2R0dGV4VHdFYWcwdEgzeEl1MEVmOEdSM09Td0trdEZHd2ZadXUyS3hqSUxQR0tjNWJyLUlyWE1Id25BS3VyZGVjR3EwQ2NWYllmZUswSHlld3YtdVZxaVNYMFNzbTRB?oc=5" target="_blank" rel="noopener">Read full story →</a>
+          <a class="read-link" href="https://news.google.com/rss/articles/CBMiggFBVV95cUxPcTJsNEp4bmtFV0t0R1kzX1IwU3NYWkdWUkF3RThGeEQ2YTBIb3gyYmxfVmtVeVVUSjBfWVZFMzkzR0lCQ1RiZTh0TGFCWnBLNjFnX3JKY1U5a0Y3ekEyRVJMZS1oRnJLSlFvY0hhaG5xd28tN041czh1SEVMNk1uU3FR?oc=5" target="_blank" rel="noopener">Read full story →</a>
         </article>
           <div class="side-stack">
+            <article class="side-story">
+              
+              <div class="story-meta"><span class="story-source">Bollywood Mascot</span><span class="story-age">19m ago</span></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxPYXRyUkZUQzY4R2c0LXNQb0hfSUppX0FWRjdWR3c3Y05zSTd2VE5EUjZraVRxNWlsdGJrRTA5anhyTFJvOGJGbkZKTzZBUmxKc1BCQ1VRWTk5QzBJdVdJd2R0dGV4VHdFYWcwdEgzeEl1MEVmOEdSM09Td0trdEZHd2ZadXUyS3hqSUxQR0tjNWJyLUlyWE1Id25BS3VyZGVjR3EwQ2NWYllmZUswSHlld3YtdVZxaVNYMFNzbTRB?oc=5" target="_blank" rel="noopener">Vidyut Jammwal Reveals 1 Big Difference Between Hollywood and Indian Film Sets</a></h3>
+              <p>Vidyut Jammwal Reveals 1 Big Difference Between Hollywood and Indian Film Sets Bollywood Mascot</p>
+              
+            </article>
             <article class="side-story">
               
               <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">2h ago</span></div>
@@ -1199,13 +1274,6 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
               <div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">2h ago</span></div>
               <h3><a href="https://www.m9.news/movienews/hero-nikhil-confident-about-swayambhus-visual-effects/" target="_blank" rel="noopener">Nikhil Confident About Swayambhu’s Visual Effects</a></h3>
               <p>Nikhil Siddhartha has shared an update on his upcoming pan-India adventure, Swayambhu, confirming that the film is scheduled for a theatrical release this year. The actor spoke about the film’s ongoing post-production work, particularly the progress of its visual effects. Having reviewed the latest footage, he highlighted the role of the VFX studio in…</p>
-              
-            </article>
-            <article class="side-story">
-              
-              <div class="story-meta"><span class="story-source">www.iifa.com</span><span class="story-age">3h ago</span></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMi1AFBVV95cUxQM19YZDg1MGhaMW5MQktQa25wekFZcXJNU3QzTHFwZnBSNzBEak5Ddk9NVHVaTmY3VEVpbFBRd1AwQWFWU1l5QVR6aGI0XzNmX0U3ZnU2V1g3MDE1bkltMzBESTBObkVhYm5vZTlOVmQ0bThodlphQkpSZG5PNkJmOTNZc2VXR1ZMb0l1azFkTnVCSFNsRldDeTh1NlY5Z0ZmNjVveHlEQmNyTUhFSDhSelU3MDdSWS03Nl9tUktVM3gweFNLM19VZjhtNGxwajljaWlSTQ?oc=5" target="_blank" rel="noopener">Bollywood This Week: From Celebrity Updates to Big Announcements, Here’s Everything That Made Headlines</a></h3>
-              <p>Bollywood This Week: From Celebrity Updates to Big Announcements, Here’s Everything That Made Headlines www.iifa.com</p>
               
             </article></div>
         </div>
@@ -1225,7 +1293,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">07</span><div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">12h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">07</span><div class="story-meta"><span class="story-source">Tollywood News: Latest Telugu Movie…</span><span class="story-age">13h ago</span></div></div>
               <h3><a href="https://www.m9.news/movienews/i-spent-more-time-with-director-for-vrushakarma-naga-chaitanya/" target="_blank" rel="noopener">I Spent More Time With Director for Vrushakarma</a></h3>
               
             </article>
@@ -1243,19 +1311,19 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">10</span><div class="story-meta"><span class="story-source">Bollywood Mascot</span><span class="story-age">21m ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">10</span><div class="story-meta"><span class="story-source">Bollywood Mascot</span><span class="story-age">38m ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMimAFBVV95cUxOclo1MjdycEZMdHhqN3BtYVlwb182bktkQWRibFJjTTBDUVhtMDMzcmxnb1JrR0NHdUxtdTRfRzl2V1h2SWM1UkFMNjAtdDZWYmtadmhTM3ZPTXhMNEx2bjIxV3hOREJEaDh2aC1sZmNSUFBpWDRUYjhUUzBjLXIyMXdNbjY3ZHRzZjNYY2tCeHFCcWpGMTRrUw?oc=5" target="_blank" rel="noopener">Aham Sharma on Reality TV Boom: ‘I Truly Love Acting’</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">11</span><div class="story-meta"><span class="story-source">News18</span><span class="story-age">31m ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">11</span><div class="story-meta"><span class="story-source">News18</span><span class="story-age">48m ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMijwJBVV95cUxPTzhibHFQc2s1dTRER0hoZVlZR203d1dJUksxb3ZLcW1iTnAwcGJSdUtldzdITDVaRTU5MzhDVjlLeUZnZFBRSG03b3Z5MkQ5OHp2ME05VU9TdzVLb3lnNXVZd0E2ckFHTFBGQ2tVNVMyd3pGbzRnRjdLNzJmWEh6ckV5TGVYLUtjYWlYS1B2V0daNHRMVUxjVUE1cHJjUEk1dC16aDloYW1FQm1DUEx3cnF2ekRpNFN4TkxfVS1NUnhsOXZEbklHR2pKQTNBX3pjU1l5SmFzZFU0NDFzSElEaDJCOERyMm9VcnlFZTN5c1NWelVBeF9FSm9Zb3Y0aENULXNDTmN3eDZJcjZ0S0c40gGUAkFVX3lxTE9KVWtVTWFKOEtqY0V1SE55U1pkOEpXeTlPVExqX3hiczN4TFZfd2JiWjBaUWFkQWVKdERUa0tvRkp3c1RBeXAxQmFtcWJWYzRxTXRBeFQtVWh2TDFmMjJKeDBXbm9HOHdkb3RtNVpJY0g5TEZ1a0tXQzVFWjhQWlM2cUdkZnpiX29XV2FOcXlndW5ma080VWo5dVJYa2c5dGlWR3BaT1VGRXFpRmpNNkVTQXQzT3BpYU9vYXp1MjJ4RTJpSm1hTVF4YjhkdEtUUDliSDY4S0w2OW5CcW80UV9HTkVyeW1iUm5kX214UllBeDBuRVdiZTZGWlk1N2hlRFE0bmNEaDBlVGpsanh4Q0hjT1JyVw?oc=5" target="_blank" rel="noopener">Top Ent News: Tiger Shroff’s Team Denies Actor Questioning Attack Reason; Shilpa Rao’s Performance Cut Midw</a></h3>
               
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">12</span><div class="story-meta"><span class="story-source">Bollywood Mascot</span><span class="story-age">44m ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">12</span><div class="story-meta"><span class="story-source">Bollywood Mascot</span><span class="story-age">1h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxPUUN5TjloVm5EMmYwOGFNRFlQRVhZenhUZ2RJeTBxRzJ1YzUxQ1VMNHFJSHVJRnAzYXRKTUxUcFpydGpxbS1TX1NuT0FwSG1VOGNWRjZUbHFWSU43QWZSNENOd0NONEpETnlURjBHQ0std3FWUzJfUkJRc2tCRVFVYS1qekpDTEFmNjlzMWNyZXlMSU82cTIzZTgxbGVUSndlRXY5eUlvbWRRVEU?oc=5" target="_blank" rel="noopener">Mrunal Thakur, Huma Qureshi Shine at 2026 ITRH Diwali Celebration</a></h3>
               
             </article>
@@ -1279,7 +1347,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">16</span><div class="story-meta"><span class="story-source">Filmibeat</span><span class="story-age">3h ago</span></div></div>
+              <div class="brief-head"><span class="brief-num">16</span><div class="story-meta"><span class="story-source">Filmibeat</span><span class="story-age">4h ago</span></div></div>
               <h3><a href="https://news.google.com/rss/articles/CBMi7gFBVV95cUxPR0VPLTFsN0ktQ0VEaUoyRWh0cEk4alNuRDJxdWZocTgzRENPSUJ5amoxYTVKUlk0ekdpSzVJampJX0VuVFNjUDlJTXU0SnlQeUJ5TE9tcDB6Ui1fVmNNRWsxVnRPRmdNb1lzTkFoWUk0aDVfa1k0RFllT2l4dTI0SF9ySGcxOW5IcXp1elNEMUZxN2d1UmRMVGtZLXVFZ2NUNFB6RmtFSmg2NUJ2M3lOdDlnQzl2YzU0RGhTUlNMR3ZOalFWNGc0WUZSU2dQcnRxU2p5b3F1bEdhWEdOOWU4TERDWk9vdDJvUGtCU053?oc=5" target="_blank" rel="noopener">India’s Got Latent 2 MC Stan Episode Dailymotion: Where To Watch Samay Raina Show New Episode 8 For Free?</a></h3>
               
             </article>
@@ -1333,8 +1401,8 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
             </article>
             <article class="brief-story">
               
-              <div class="brief-head"><span class="brief-num">25</span><div class="story-meta"><span class="story-source">Telugu Cinema</span><span class="story-age">9h ago</span></div></div>
-              <h3><a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxQUnAxUUdOZzVaanlqQ3dZeUNNLXhEQUJyNGNBeWNaSmFlWHpFSWxyNnBwbXhEM1A1ekFBTGVTSmplU05PWWlVSy0yNF8zanQwREd2dXE4QVRYeHdlMFY4cFBUZUg3R2R2RXE5MDdIZHZnbGVRZS1zM1lydWRFRzdxcVgwYjFWVGxGUkNPcNIBjAFBVV95cUxQUnAxUUdOZzVaanlqQ3dZeUNNLXhEQUJyNGNBeWNaSmFlWHpFSWxyNnBwbXhEM1A1ekFBTGVTSmplU05PWWlVSy0yNF8zanQwREd2dXE4QVRYeHdlMFY4cFBUZUg3R2R2RXE5MDdIZHZnbGVRZS1zM1lydWRFRzdxcVgwYjFWVGxGUkNPcA?oc=5" target="_blank" rel="noopener">Megaverse: Chiranjeevi’s debut OTT show gets a title - Telugu Cinema | News, Reviews &amp; Daily Entertainment</a></h3>
+              <div class="brief-head"><span class="brief-num">25</span><div class="story-meta"><span class="story-source">cinematalk.in</span><span class="story-age">8h ago</span></div></div>
+              <h3><a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxQeU5wSVNlaUt4Njc4eHJ4RzliUWxOdkRYOWNWRDNYSWFjQUF6MFBJOTlOUEhscVV2b1lUQTJVS0M3S2kxa3l5UnlwTDlwZmhtOHBqQWxSeXQ5TERBZExyLVB2ek5lblJmYnBodENoM0Rrbjg3N1YxZ21NRnRnMXNCdg?oc=5" target="_blank" rel="noopener">Singa Update: Gopichand की Action Film की 50% Shooting पूरी, New Poster हुआ जारी</a></h3>
               
             </article></div>
       <footer class="news-footer">Only stories with a publish time inside the last 24 hours are eligible. Images appear when the source feed supplies one. Headlines link to the source.</footer>
