@@ -162,7 +162,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
     <header class="ew-top">
       <div class="ew-brand">
         <div class="ew-logo" aria-hidden="true"></div>
-        <div><div class="ew-title">Entry Watchlist</div><div class="ew-subtitle">Prices: <span id="ew-price-time">{escape(now)}</span></div></div>
+        <div><div class="ew-title">Entry Watchlist</div><div class="ew-subtitle">Prices: <span id="ew-price-time">__NOW__</span></div></div>
       </div>
       <div class="ew-actions">
         <button class="ew-btn primary" id="ew-refresh"><span class="spin">↻</span> Refresh</button>
@@ -212,8 +212,8 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
 
 <script>
 (() => {{
-  const BASE = {payload};
-  const CATEGORY_ORDER = {categories};
+  const BASE = __PAYLOAD__;
+  const CATEGORY_ORDER = __CATEGORIES__;
   const PRICE_URL = window.CHAI_PRICE_URL || './prices.json';
   const LS = {{add:'chai-ew-add-v1',removed:'chai-ew-removed-v1',overrides:'chai-ew-overrides-v1'}};
   const $ = s => document.querySelector(s);
@@ -347,3 +347,10 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
 }})();
 </script>
 """
+    return (html
+        .replace("__PAYLOAD__", payload)
+        .replace("__CATEGORIES__", categories)
+        .replace("__NOW__", escape(now))
+        .replace("{{", "{")
+        .replace("}}", "}")
+    )
