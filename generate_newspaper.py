@@ -541,7 +541,7 @@ def main():
     stock_tickers = config["site"].get("stock_tickers", [])
     print(f"Fetching stock health for {len(stock_tickers)} tickers...")
     stock_data = run_watchlist(stock_tickers)
-    stock_html = render_stock_section(stock_data)
+    stock_html = render_stock_section(stock_data, entry_levels=config["site"].get("stock_entry_levels", {}))
 
     prices = {
         s.get("ticker"): {"price": s.get("price"), "chg": s.get("day_change")}
