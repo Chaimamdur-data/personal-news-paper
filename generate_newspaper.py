@@ -448,6 +448,68 @@ a{{color:inherit}}
   .briefs-grid{{grid-template-columns:1fr}}
   .learning-ribbon{{align-items:flex-start;flex-direction:column}}
 }}
+
+/* dark product override */
+:root{{--ui-bg:#0e1116;--ui-surface:#161a21;--ui-surface2:#1d222b;--ui-line:#2b323e;--ui-text:#f2f5f7;--ui-muted:#94a0ad;--ui-green:#34d27b;--ui-blue:#63a9ff;--ui-amber:#f4b740;--ui-red:#ff6a4d}}
+html,body{{background:var(--ui-bg);color:var(--ui-text)}}
+body{{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}}
+.ledger-tabs-wrap{{background:rgba(14,17,22,.94);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:none}}
+.ledger-tabs{{max-width:1220px;padding:0 12px}}
+.ledger-tab-btn{{color:#8995a3;font-family:Inter,ui-sans-serif,sans-serif;border-bottom-width:2px}}
+.ledger-tab-btn:hover{{color:#dfe6ec}}
+.ledger-tab-btn.active{{color:#fff;border-bottom-color:var(--ui-green);background:linear-gradient(180deg,rgba(52,210,123,.04),transparent)}}
+.news-page{{max-width:1220px;min-height:100vh;padding:28px 22px 44px;background:
+radial-gradient(820px 420px at 16% -7%,rgba(52,210,123,.08),transparent 58%),
+radial-gradient(740px 390px at 88% 0%,rgba(99,169,255,.08),transparent 58%),
+var(--ui-bg);color:var(--ui-text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}}
+.news-masthead{{padding:4px 0 22px;margin-bottom:18px;border-bottom:1px solid var(--ui-line)}}
+.news-eyebrow{{color:var(--ui-green);font-family:Inter,ui-sans-serif,sans-serif}}
+.news-masthead h1{{font-size:36px;line-height:1;margin:0 0 9px;letter-spacing:-1.2px}}
+.news-masthead p{{font-size:12px;line-height:1.5;color:var(--ui-muted);font-style:normal}}
+.news-date{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ui-muted);font-variant-numeric:tabular-nums}}
+.news-date strong{{color:var(--ui-text)}}
+.learning-ribbon{{border:1px solid var(--ui-line);background:linear-gradient(180deg,var(--ui-surface2),var(--ui-surface));padding:10px 12px;margin-bottom:16px;border-radius:14px;color:#b6c0ca;font-family:Inter,ui-sans-serif,sans-serif}}
+.learning-ribbon strong{{background:rgba(52,210,123,.13);color:var(--ui-green);padding:5px 7px;border-radius:999px}}
+.news-front-grid{{grid-template-columns:minmax(0,1.42fr) minmax(280px,.78fr);gap:14px;border:0}}
+.lead-story,.side-story,.brief-story{{background:linear-gradient(180deg,var(--ui-surface),#13171d);border:1px solid var(--ui-line);border-radius:20px;overflow:hidden}}
+.lead-story{{padding:16px;border:1px solid var(--ui-line)}}
+.side-stack{{padding-left:0;display:grid;gap:12px}}
+.side-story{{padding:13px;border-bottom:0}}
+.lead-image,.side-image,.brief-image{{border-radius:14px;background:#1b2028}}
+.lead-image{{height:330px}}
+.side-image{{height:135px}}
+.brief-image{{height:145px}}
+.lead-image img,.side-image img,.brief-image img{{transition:transform .2s ease}}
+.lead-image:hover img,.side-image:hover img,.brief-image:hover img{{transform:scale(1.015)}}
+.story-meta{{font-family:Inter,ui-sans-serif,sans-serif}}
+.story-source{{color:var(--ui-green)}}
+.story-age{{color:#778391}}
+.lead-story h2{{font-size:29px;line-height:1.05}}
+.lead-story h2 a:hover,.side-story h3 a:hover,.brief-story h3 a:hover{{color:#dff9e9;text-decoration:none}}
+.lead-story p{{font-size:12px;line-height:1.55;color:#aeb8c3}}
+.read-link{{border:1px solid #303947;background:#20262f;border-radius:999px;padding:8px 10px;text-decoration:none;font-family:Inter,ui-sans-serif,sans-serif}}
+.side-story h3{{font-size:16px;line-height:1.18}}
+.side-story p{{font-size:10.5px;line-height:1.48;color:#9eabb7}}
+.simple-take{{margin:9px 0 0;padding:10px 11px;background:rgba(99,169,255,.07);border:1px solid rgba(99,169,255,.18);border-radius:12px;color:#c6d4df;font-family:Inter,ui-sans-serif,sans-serif}}
+.simple-take strong{{display:block;color:var(--ui-blue);margin-bottom:4px}}
+.briefs-title{{border:0;padding:24px 2px 8px;color:#d9e0e6;font-family:Inter,ui-sans-serif,sans-serif}}
+.briefs-title span:last-child{{color:#727e8b}}
+.briefs-grid{{gap:12px;column-gap:12px}}
+.brief-story{{padding:12px;border-bottom:1px solid var(--ui-line)}}
+.brief-num{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#4b5663}}
+.brief-story h3{{font-size:13px;line-height:1.28}}
+.empty-news{{border:1px solid var(--ui-line);background:var(--ui-surface);border-radius:18px;color:var(--ui-muted)}}
+.news-footer{{border-top:1px solid var(--ui-line);color:#6f7a87}}
+@media(max-width:760px){{
+  .news-page{{padding:20px 11px 32px}}
+  .news-masthead{{display:block}}
+  .news-masthead h1{{font-size:30px}}
+  .news-date{{text-align:left;margin-top:11px}}
+  .news-front-grid{{grid-template-columns:1fr}}
+  .lead-image{{height:225px}}
+  .side-stack{{grid-template-columns:1fr}}
+}}
+@media(prefers-reduced-motion:reduce){{*{{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}}}
 </style>
 </head>
 <body>
