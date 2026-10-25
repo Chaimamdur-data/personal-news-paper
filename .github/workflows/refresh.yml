@@ -8,6 +8,7 @@ on:
       - "config.yml"
       - "generate_newspaper.py"
       - "render_stocks.py"
+      - "render_ott.py"
       - "render_jobs.py"
       - "inject_jobs.py"
       - "stock_health.py"
