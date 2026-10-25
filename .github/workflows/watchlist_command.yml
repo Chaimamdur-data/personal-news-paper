@@ -1,0 +1,55 @@
+name: Watchlist Command
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  actions: write
+  issues: write
+
+jobs:
+  command:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install packages
+        run: pip install -r requirements.txt
+
+      - name: Process command
+        env:
+          TITLE: ${{ github.event.issue.title }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          if [[ "$TITLE" =~ ^\[Watchlist\]\ ADD\ ([A-Za-z0-9.-]+)$ ]]; then
+            TICKER="${BASH_REMATCH[1]}"
+            TICKER="${TICKER^^}"
+            python manage_watchlist.py add "$TICKER"
+
+            git config user.name "watchlist-command-bot"
+            git config user.email "bot@example.com"
+            git add config.yml
+            if ! git diff --cached --quiet; then
+              git commit -m "Add $TICKER to stock watchlist"
+              git push origin HEAD:main
+              gh issue close "$ISSUE_NUMBER" --comment "Added $TICKER to the GitHub watchlist using its 52-week low as the planned reference. The normal refresh workflow will rebuild the site."
+            else
+              gh issue close "$ISSUE_NUMBER" --comment "$TICKER is already on the GitHub watchlist. No config change was needed."
+            fi
+          elif [[ "$TITLE" == "[Watchlist] REFRESH" ]]; then
+            gh workflow run refresh.yml --ref main
+            gh issue close "$ISSUE_NUMBER" --comment "Refresh workflow started."
+          else
+            echo "Not a recognized watchlist command."
+          fi
