@@ -238,6 +238,55 @@ def _rating_changes(tk):
         return 6,f"{ups} upgrades / {downs} downgrades"
     except Exception:return None,None
 
+def _analyst_breakdown(tk):
+    """Best-effort analyst rating distribution from Yahoo Finance."""
+    out={"strong_buy":None,"buy":None,"hold":None,"sell":None,"strong_sell":None}
+    try:
+        df=tk.recommendations_summary
+        if df is None or getattr(df,"empty",True):return out
+        row=df.iloc[0]
+        aliases={
+            "strong_buy":["strongBuy","strong_buy","Strong Buy","strongBuyCount"],
+            "buy":["buy","Buy","buyCount"],
+            "hold":["hold","Hold","holdCount"],
+            "sell":["sell","Sell","sellCount"],
+            "strong_sell":["strongSell","strong_sell","Strong Sell","strongSellCount"],
+        }
+        for key,names in aliases.items():
+            for name in names:
+                if name in row.index:
+                    try: out[key]=int(row[name])
+                    except Exception: pass
+                    break
+    except Exception:
+        pass
+    return out
+
+def _recent_sector_outlook(info):
+    """Recent ~4-week sector ETF trend vs SPY; a market proxy, not industry research."""
+    sector=info.get("sector") or "";etf=SECTOR_ETF.get(sector)
+    base={"label":"N/A","sector_etf":etf,"return_20d":None,"relative_20d":None,"note":"Recent sector trend unavailable"}
+    if not etf or not YF_AVAILABLE:return base
+    try:
+        h=_history(yf.Ticker(etf),"3mo");spy=_history(yf.Ticker("SPY"),"3mo")
+        if h is None or len(h)<22:return base
+        ret=float(h["Close"].iloc[-1]/h["Close"].iloc[-21]-1)
+        rel=None
+        if spy is not None and len(spy)>=22:
+            spyret=float(spy["Close"].iloc[-1]/spy["Close"].iloc[-21]-1)
+            rel=ret-spyret
+        if ret>=.05 and (rel is None or rel>=0):
+            label="Tailwind"
+        elif ret<=-.05 and (rel is None or rel<=0):
+            label="Headwind"
+        else:
+            label="Mixed"
+        note=f"{etf} {ret*100:+.1f}% over ~4 weeks"
+        if rel is not None: note+=f"; {rel*100:+.1f}% vs SPY"
+        return {"label":label,"sector_etf":etf,"return_20d":round(ret*100,1),"relative_20d":round(rel*100,1) if rel is not None else None,"note":note}
+    except Exception:
+        return base
+
 def _earnings_surprise(tk):
     try:
         df=tk.get_earnings_dates(limit=8)
@@ -276,7 +325,11 @@ def _score_stock_core(ticker):
     except Exception:pass
     try:qcf=tk.quarterly_cashflow
     except Exception:pass
-    market=get_regime_context();sector_health,sector_rel=_sector_health(info);lifecycle=_lifecycle(ticker,info);profile_name,weights=_profile(market["market_regime"],sector_health,lifecycle)
+    market=get_regime_context();sector_health,sector_rel=_sector_health(info);recent_sector=_recent_sector_outlook(info);lifecycle=_lifecycle(ticker,info);profile_name,weights=_profile(market["market_regime"],sector_health,lifecycle)
+    stock_return_20d=None
+    if hist is not None and len(hist)>=22:
+        try: stock_return_20d=round((float(hist["Close"].iloc[-1]/hist["Close"].iloc[-21]-1))*100,1)
+        except Exception: pass
     p={};low_conf=[]
     def add(i,score,finding,source="Yahoo Finance",confidence="normal"):
         p[i]={"parameter":PARAM_NAMES[i],"bucket":PARAM_BUCKET[i],"score":None if score is None else round(_clip(score),2),"finding":finding,"source":source,"confidence":confidence}
@@ -305,7 +358,7 @@ def _score_stock_core(ticker):
     if len(cap_int)>=3 and len(revs)>=3:
         rev_up=revs[0]>=revs[-1];cscore=9 if cap_int[0]<=cap_int[-1] and rev_up else (6 if cap_int[0]>cap_int[-1] and rev_up else (2 if cap_int[0]>cap_int[-1] and not rev_up else 5))
     add(18,cscore,f"{len(cap_int)} quarterly capex-intensity observations");add(19,None,"Restatement/accounting-quality history requires filing-quality data feed","N/A")
-    rec=(safe(info.get("recommendationKey"),"none") or "none").lower();n_analysts=safe(info.get("numberOfAnalystOpinions"),0) or 0;ars=9 if rec=="strong_buy" and n_analysts>=20 else (6.5 if rec in {"buy","strong_buy"} else (3 if rec=="hold" else (1 if rec in {"sell","underperform"} else None)));add(20,ars,f"{rec.replace('_',' ').title()} from {n_analysts} analysts")
+    rec=(safe(info.get("recommendationKey"),"none") or "none").lower();n_analysts=safe(info.get("numberOfAnalystOpinions"),0) or 0;analyst_breakdown=_analyst_breakdown(tk);ars=9 if rec=="strong_buy" and n_analysts>=20 else (6.5 if rec in {"buy","strong_buy"} else (3 if rec=="hold" else (1 if rec in {"sell","underperform"} else None)));add(20,ars,f"{rec.replace('_',' ').title()} from {n_analysts} analysts")
     rs,rf=_rating_changes(tk);add(21,rs,rf or "Rating-change data unavailable");inst=safe(info.get("heldPercentInstitutions"));add(22,_score_band(inst,[(lambda x:x>.70,8.5),(lambda x:x>=.40,5),(lambda x:True,2)]),f"Institutional ownership {inst*100:.1f}%" if inst is not None else "Institutional ownership unavailable");add(23,None,"Two-quarter institutional flow trend unavailable from current feed","N/A")
     short=safe(info.get("shortPercentOfFloat"));add(24,_score_band(short,[(lambda x:x<.03,9),(lambda x:x<.08,6),(lambda x:x<.15,3),(lambda x:True,1)]),f"Short float {short*100:.1f}%" if short is not None else "Short interest unavailable");ns,nf=_news_sentiment(tk);add(25,ns,nf or "Recent news unavailable","Yahoo Finance headlines","low" if ns is not None else "normal");add(26,None,"Open-market vs scheduled 10b5-1 insider activity cannot be separated reliably","N/A")
     hi=safe(info.get("fiftyTwoWeekHigh"));lo=safe(info.get("fiftyTwoWeekLow"));pos=(price-lo)/(hi-lo) if hi and lo and hi>lo and price else None;p27=None
@@ -353,10 +406,10 @@ def _score_stock_core(ticker):
         for i in range(1,41):
             if PARAM_BUCKET[i]==bucket:
                 p[i]["effective_weight"]=round(each*100,2) if p[i]["score"] is not None else 0;p[i]["weighted_points"]=round((p[i]["score"]/10)*each*100,2) if p[i]["score"] is not None else None
-    return {"ticker":ticker,"name":safe(info.get("shortName") or info.get("longName"),ticker),"sector":safe(info.get("sector"),"N/A"),"price":round(price,2),"day_change":round(day,2),"health_score":score,"grade":grade,"recommendation":rec_out,"signal":signal,"conviction":conviction,"market_regime":market["market_regime"],"sector_health":sector_health,"lifecycle":lifecycle,"weight_profile":profile_name,"bucket_weights":{k:round(v*100,1) for k,v in weights.items()},"bucket_scores":{k:(round(v,2) if v is not None else None) for k,v in bucket_scores.items()},"params40":[p[i] for i in range(1,41)],"disqualifiers":disq,"low_confidence_params":low_conf,"upside_pct":round(upside,1) if upside is not None else None,"target_mean":round(target,2) if target is not None else None,"analyst_rec":rec,"ma50":round(ma50,2) if ma50 else None,"ma200":round(ma200,2) if ma200 else None,"fetched_at":datetime.now().strftime("%b %d %Y %I:%M %p"),"model_note":"Official GICS peer-median inputs are N/A until an authoritative peer feed is connected; affected buckets are renormalized."}
+    return {"ticker":ticker,"name":safe(info.get("shortName") or info.get("longName"),ticker),"sector":safe(info.get("sector"),"N/A"),"price":round(price,2),"day_change":round(day,2),"health_score":score,"grade":grade,"recommendation":rec_out,"signal":signal,"conviction":conviction,"market_regime":market["market_regime"],"sector_health":sector_health,"recent_sector_outlook":recent_sector,"return_20d":stock_return_20d,"lifecycle":lifecycle,"weight_profile":profile_name,"bucket_weights":{k:round(v*100,1) for k,v in weights.items()},"bucket_scores":{k:(round(v,2) if v is not None else None) for k,v in bucket_scores.items()},"params40":[p[i] for i in range(1,41)],"disqualifiers":disq,"low_confidence_params":low_conf,"upside_pct":round(upside,1) if upside is not None else None,"target_mean":round(target,2) if target is not None else None,"analyst_rec":rec,"analyst_count":int(n_analysts) if n_analysts else 0,"analyst_breakdown":analyst_breakdown,"ma50":round(ma50,2) if ma50 else None,"ma200":round(ma200,2) if ma200 else None,"fetched_at":datetime.now().strftime("%b %d %Y %I:%M %p"),"model_note":"Official GICS peer-median inputs are N/A until an authoritative peer feed is connected; affected buckets are renormalized."}
 
 def _dummy_score(ticker,reason):
-    return {"ticker":ticker,"name":ticker,"sector":"N/A","price":0,"day_change":0,"health_score":0,"grade":"?","recommendation":"Hold","signal":"HOLD","conviction":"Low","market_regime":"Neutral","sector_health":"Stable","lifecycle":"Unknown","weight_profile":"Neutral / Stable","bucket_weights":{},"bucket_scores":{},"params40":[],"disqualifiers":[],"low_confidence_params":[],"upside_pct":None,"target_mean":None,"analyst_rec":"none","ma50":None,"ma200":None,"fetched_at":datetime.now().strftime("%b %d %Y %I:%M %p"),"error":reason}
+    return {"ticker":ticker,"name":ticker,"sector":"N/A","price":0,"day_change":0,"health_score":0,"grade":"?","recommendation":"Hold","signal":"HOLD","conviction":"Low","market_regime":"Neutral","sector_health":"Stable","recent_sector_outlook":{"label":"N/A","sector_etf":None,"return_20d":None,"relative_20d":None,"note":"Recent sector trend unavailable"},"return_20d":None,"lifecycle":"Unknown","weight_profile":"Neutral / Stable","bucket_weights":{},"bucket_scores":{},"params40":[],"disqualifiers":[],"low_confidence_params":[],"upside_pct":None,"target_mean":None,"analyst_rec":"none","analyst_count":0,"analyst_breakdown":{"strong_buy":None,"buy":None,"hold":None,"sell":None,"strong_sell":None},"ma50":None,"ma200":None,"fetched_at":datetime.now().strftime("%b %d %Y %I:%M %p"),"error":reason}
 
 def score_stock(ticker):
     if not YF_AVAILABLE:return _dummy_score(ticker,"yfinance not installed")
