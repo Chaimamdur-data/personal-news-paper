@@ -14,14 +14,7 @@ CATEGORY_DEFS = [
     {"name":"Travel & Cyclicals","tickers":["DAL","UAL","EXPE"],"thesis":"Cyclical travel and operating leverage"},
 ]
 
-ENTRY_LEVELS = {
-    "MU":925, "NVDA":200, "AVGO":335,
-    "GOOGL":320, "AMZN":245, "MSFT":435, "META":575, "AAPL":300,
-    "V":350, "MA":545, "SPGI":410,
-    "CRM":215, "SNOW":280, "WDAY":160,
-    "DAL":70, "UAL":90, "EXPE":235,
-    "ORCL":None, "PSTG":None,
-}
+ENTRY_LEVELS = {}
 
 STOCK_META = {
     "MU":"AI-memory demand and memory-cycle leverage keep Micron on the list.",
@@ -45,18 +38,14 @@ STOCK_META = {
     "EXPE":"Scale, B2B growth and Vrbo provide multiple travel-platform growth levers.",
 }
 
-def _entry_level(s):
-    curated = ENTRY_LEVELS.get(s["ticker"])
+def _entry_level(s, entry_levels=None):
+    levels = entry_levels or ENTRY_LEVELS
+    curated = levels.get(s["ticker"])
     if curated:
-        return float(curated), "Curated planned entry"
-    price = s.get("price") or 0
-    anchors = [x for x in (s.get("ma50"), s.get("ma200")) if x and x > 0]
-    if anchors:
-        below = [x for x in anchors if not price or x <= price]
-        anchor = max(below) if below else min(anchors)
-        return round(anchor * .98, 2), "2% below moving-average support"
-    if price:
-        return round(price * .92, 2), "8% pullback fallback"
+        return float(curated), "Stored planned reference"
+    low_52w = s.get("low_52w")
+    if low_52w and low_52w > 0:
+        return float(low_52w), "52-week low reference"
     return None, "Not set"
 
 def _state(price, entry):
@@ -74,14 +63,14 @@ def _peer_pulse(items):
         return f"{best[0]} {best[1]:+.1f}% over ~4 weeks."
     return f"{best[0]} leads at {best[1]:+.1f}%; {worst[0]} trails at {worst[1]:+.1f}% over ~4 weeks."
 
-def _payload(stocks):
+def _payload(stocks, entry_levels=None):
     by = {s.get("ticker"): s for s in stocks}
     payload = []
     for cat in CATEGORY_DEFS:
         items = [by[t] for t in cat["tickers"] if t in by]
         pulse = _peer_pulse(items)
         for s in items:
-            entry, basis = _entry_level(s)
+            entry, basis = _entry_level(s, entry_levels)
             price = s.get("price") or None
             state, state_key = _state(price, entry)
             target = s.get("target_mean")
@@ -96,12 +85,13 @@ def _payload(stocks):
                 "chg": s.get("day_change"),
                 "entry": entry,
                 "entry_basis": basis,
+                "low_52w": s.get("low_52w"),
                 "state": state,
                 "state_key": state_key,
                 "target": target,
-                "target_horizon": "6M proxy" if target else None,
+                "target_horizon": "6M" if target else None,
                 "target_upside": upside,
-                "target_note": "Model/analyst target proxy; not validated.",
+                "target_note": "Tentative 6-month model/analyst target; not validated.",
                 "score": s.get("health_score"),
                 "grade": s.get("grade"),
                 "signal": s.get("signal"),
@@ -118,10 +108,10 @@ def _payload(stocks):
             })
     return payload
 
-def render_stock_section(stocks:list)->str:
+def render_stock_section(stocks:list, entry_levels=None)->str:
     if not stocks:
         return ""
-    data = _payload(stocks)
+    data = _payload(stocks, entry_levels)
     now = datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%b %d, %Y · %I:%M:%S %p PT")
     payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
     categories = json.dumps([c["name"] for c in CATEGORY_DEFS])
@@ -145,7 +135,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
 .ew-info{{width:29px;height:29px;border-radius:50%;border:1px solid var(--ew-line);background:var(--ew-surface2);color:#cdd5dd;font:800 12px/1 Georgia,serif;cursor:pointer;position:relative;flex:0 0 auto}}.ew-info.warn:after{{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--ew-amber);right:-1px;top:-1px;box-shadow:0 0 0 2px var(--ew-surface)}}
 .ew-price-row{{display:none}}.ew-chg{{font:700 9px/1 "Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}}.up{{color:var(--ew-green)}}.down{{color:var(--ew-red)}}.muted{{color:var(--ew-muted)}}
 .ew-state{{display:inline-flex;font-size:8.5px;font-weight:820;letter-spacing:.6px;text-transform:uppercase;border-radius:999px;padding:5px 7px;white-space:nowrap;margin-top:9px}}.ew-state.enter{{background:rgba(52,210,123,.12);color:var(--ew-green)}}.ew-state.wait{{background:rgba(244,183,64,.11);color:var(--ew-amber)}}.ew-state.check{{background:rgba(244,183,64,.11);color:var(--ew-amber)}}
-.ew-bar-wrap{{margin-top:10px;padding-top:3px}}.ew-scale-labels{{position:relative;height:17px;font:650 7.5px/1 "Geist Mono",ui-monospace,monospace;color:var(--ew-muted);font-variant-numeric:tabular-nums}}.ew-scale-label{{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}}.ew-scale-label.entry{{color:#d9e2e8}}.ew-scale-label.target{{color:var(--ew-blue);font-weight:800}}.ew-scale-label.now{{color:#aab5c0}}.ew-bar{{position:relative;height:8px;border-radius:999px;background:linear-gradient(90deg,rgba(52,210,123,.25),rgba(95,168,255,.20));margin:4px 0 3px;overflow:visible}}.ew-entry-mark,.ew-target-mark{{position:absolute;top:-4px;width:2px;height:16px;border-radius:2px}}.ew-entry-mark{{background:#d9e2e8}}.ew-target-mark{{background:var(--ew-blue)}}.ew-price-mark{{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:var(--ew-text);border:3px solid var(--ew-bg);box-shadow:0 0 0 1px #6d7784}}.ew-scale-note{{font-size:7.5px;line-height:1.35;color:#66717d;margin-top:6px}}.not-set{{color:var(--ew-amber)!important}}
+.ew-bar-wrap{{margin-top:10px;padding-top:3px}}.ew-scale-labels{{position:relative;height:17px;font:650 7.5px/1 "Geist Mono",ui-monospace,monospace;color:var(--ew-muted);font-variant-numeric:tabular-nums}}.ew-scale-label{{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}}.ew-scale-label.entry{{color:#d9e2e8}}.ew-scale-label.target{{color:var(--ew-blue);font-weight:850;font-size:10.5px;letter-spacing:-.1px}}.ew-scale-label.now{{color:#aab5c0}}.ew-bar{{position:relative;height:8px;border-radius:999px;background:linear-gradient(90deg,rgba(52,210,123,.25),rgba(95,168,255,.20));margin:4px 0 3px;overflow:visible}}.ew-entry-mark,.ew-target-mark{{position:absolute;top:-4px;width:2px;height:16px;border-radius:2px}}.ew-entry-mark{{background:#d9e2e8}}.ew-target-mark{{background:var(--ew-blue)}}.ew-price-mark{{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:var(--ew-text);border:3px solid var(--ew-bg);box-shadow:0 0 0 1px #6d7784}}.ew-scale-note{{font-size:7.5px;line-height:1.35;color:#66717d;margin-top:6px}}.not-set{{color:var(--ew-amber)!important}}
 .ew-pop{{position:fixed;z-index:1000;width:min(390px,calc(100vw - 24px));max-height:min(680px,calc(100vh - 24px));overflow:auto;padding:17px;border:1px solid #384252;border-radius:20px;background:rgba(22,26,33,.98);box-shadow:0 28px 80px rgba(0,0,0,.52);display:none}}.ew-pop.open{{display:block}}.ew-pop-head{{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:1px solid var(--ew-line);padding-bottom:12px;margin-bottom:13px}}.ew-pop-title{{font-size:17px;font-weight:800}}.ew-pop-company{{font-size:11px;color:var(--ew-muted);margin-top:3px}}.ew-pop-close{{border:0;background:transparent;color:var(--ew-muted);font-size:18px;cursor:pointer}}.ew-pop-why{{font-size:12px;line-height:1.45;color:#dbe2e7;margin-bottom:14px}}.ew-detail-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}}.ew-detail{{background:var(--ew-surface2);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:10px}}.ew-detail label{{display:block;color:var(--ew-muted);font-size:9px;margin-bottom:5px}}.ew-detail strong{{font:700 12px/1.25 "Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}}.ew-pop-section{{border-top:1px solid var(--ew-line);margin-top:13px;padding-top:12px}}.ew-pop-section h4{{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--ew-muted);margin:0 0 8px}}.ew-ratings{{display:flex;flex-wrap:wrap;gap:6px}}.ew-chip{{font:650 10px/1 "Geist Mono",ui-monospace,monospace;padding:6px 7px;border:1px solid var(--ew-line);border-radius:999px;color:#d1dae2}}.ew-outlook{{font-size:11px;line-height:1.45;color:#d5dde4}}.ew-warning{{margin-top:11px;padding:9px 10px;border-radius:11px;background:rgba(244,183,64,.08);border:1px solid rgba(244,183,64,.22);font-size:10px;color:#d8c89f}}.ew-remove{{width:100%;margin-top:13px;border:1px solid rgba(255,106,77,.36);background:rgba(255,106,77,.08);color:#ff9a86;border-radius:999px;padding:10px;font-weight:750;cursor:pointer}}
 .ew-modal-backdrop{{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.66);display:none;align-items:center;justify-content:center;padding:16px}}.ew-modal-backdrop.open{{display:flex}}.ew-modal{{width:min(520px,100%);background:var(--ew-surface);border:1px solid #3a4351;border-radius:22px;padding:20px;box-shadow:0 28px 90px rgba(0,0,0,.55)}}.ew-modal-head{{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}}.ew-modal-head h3{{margin:0;font-size:18px}}.ew-form{{display:grid;grid-template-columns:1fr 1fr;gap:12px}}.ew-field.full{{grid-column:1/-1}}.ew-field label{{display:block;font-size:10px;color:var(--ew-muted);margin-bottom:6px}}.ew-input{{width:100%;background:#10141a;color:var(--ew-text);border:1px solid var(--ew-line);border-radius:12px;padding:11px 12px;font:600 12px/1.2 Geist,ui-sans-serif,sans-serif;outline:none}}.ew-input:focus{{border-color:#4c8f70;box-shadow:0 0 0 3px rgba(52,210,123,.08)}}.ew-error{{min-height:14px;color:#ff8c76;font-size:9px;margin-top:4px}}.ew-modal-actions{{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}}
 .ew-toast-stack{{position:fixed;right:18px;bottom:18px;z-index:1200;display:grid;gap:8px}}.ew-toast{{min-width:250px;max-width:360px;background:#1c222b;border:1px solid #384251;border-radius:13px;padding:11px 13px;box-shadow:0 16px 50px rgba(0,0,0,.4);font-size:11px;color:#e6ebef}}.ew-toast.good{{border-color:rgba(52,210,123,.45)}}.ew-toast.bad{{border-color:rgba(255,106,77,.45)}}.ew-toast.warn{{border-color:rgba(244,183,64,.45)}}
@@ -183,7 +173,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
         <option value="compact">Compact list</option>
       </select>
     </div>
-    <div class="ew-scale-note">Price scale shows current price, your planned entry, and the tentative target horizon when available. Target values are unvalidated model/analyst outputs.</div>
+    <div class="ew-scale-note">Scale shows current price, your planned reference level, and the tentative 6-month target when available. Target values are unvalidated model/analyst outputs.</div>
     <div id="ew-sections"></div>
 
     <footer class="ew-footer">
@@ -211,7 +201,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
     <form id="ew-form" novalidate>
       <div class="ew-form">
         <div class="ew-field"><label>Ticker *</label><input class="ew-input" id="f-ticker" autocomplete="off" placeholder="MU"><div class="ew-error" id="e-ticker"></div></div>
-        <div class="ew-field"><label>Planned entry *</label><input class="ew-input" id="f-entry" inputmode="decimal" placeholder="200"><div class="ew-error" id="e-entry"></div></div>
+        <div class="ew-field"><label>Planned reference</label><input class="ew-input" id="f-entry" inputmode="decimal" placeholder="Auto: 52-week low"><div class="ew-error" id="e-entry">New stocks default to the 52-week low after the GitHub refresh.</div></div>
         <div class="ew-field full"><label>Company</label><input class="ew-input" id="f-company" placeholder="Optional"></div>
         <div class="ew-field"><label>Current price</label><input class="ew-input" id="f-price" inputmode="decimal" placeholder="Optional"><div class="ew-error" id="e-price"></div></div>
         <div class="ew-field"><label>Target price</label><input class="ew-input" id="f-target" inputmode="decimal" placeholder="Optional"><div class="ew-error" id="e-target"></div></div>
@@ -275,7 +265,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
       <div class="ew-bar-wrap">
         <div class="ew-scale-labels">
           ${scale.entry!==null?`<span class="ew-scale-label entry" style="left:${scale.entry}%">Entry ${fmt(s.entry)}</span>`:''}
-          ${scale.target!==null?`<span class="ew-scale-label target" style="left:${scale.target}%">${s.target_horizon||'Target'} ${fmt(s.target)}*</span>`:''}
+          ${scale.target!==null?`<span class="ew-scale-label target" style="left:${scale.target}%">${fmt(s.target)}*</span>`:''}
         </div>
         <div class="ew-bar">
           ${scale.entry!==null?`<span class="ew-entry-mark" style="left:${scale.entry}%"></span>`:''}
@@ -329,7 +319,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
         <div class="ew-detail"><label>Model score</label><strong>${Number.isFinite(Number(s.score))?Number(s.score).toFixed(1)+' '+(s.grade||''):'Not available'}</strong></div>
         <div class="ew-detail"><label>Type</label><strong>${s.type||'Not set'}</strong></div>
         <div class="ew-detail"><label>Model signal</label><strong>${s.signal||'Not available'}</strong></div>
-        <div class="ew-detail"><label>${s.target_horizon||'Target'} target</label><strong>${s.target?fmt(s.target):'<span class="not-set">Not set</span>'}</strong></div>
+        <div class="ew-detail"><label>Tentative 6-month target</label><strong>${s.target?fmt(s.target):'<span class="not-set">Not set</span>'}</strong></div>
         <div class="ew-detail"><label>Target vs price</label><strong>${u===null?'—':pct(u)}</strong></div>
       </div>
       <div class="ew-warning">Targets are model/analyst output or user-entered values and are <b>not validated</b>. They are not guaranteed outcomes.</div>
