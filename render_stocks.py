@@ -125,7 +125,7 @@ def render_stock_section(stocks:list)->str:
     now = datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%b %d, %Y · %I:%M:%S %p PT")
     payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
     categories = json.dumps([c["name"] for c in CATEGORY_DEFS])
-    return f"""
+    html = """
 <style>
 @font-face{{font-family:Geist;src:local("Geist"),local("Geist Regular");font-display:swap}}
 @font-face{{font-family:"Geist Mono";src:local("Geist Mono"),local("GeistMono");font-display:swap}}
