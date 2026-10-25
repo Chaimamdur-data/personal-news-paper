@@ -481,6 +481,12 @@ def main():
     stock_data = run_watchlist(stock_tickers)
     stock_html = render_stock_section(stock_data)
 
+    prices = {
+        s.get("ticker"): {"price": s.get("price"), "chg": s.get("day_change")}
+        for s in stock_data if s.get("ticker")
+    }
+    Path("prices.json").write_text(json.dumps(prices, separators=(",", ":")), encoding="utf-8")
+
     max_articles = config["site"].get("max_articles_per_topic", 25)
     news_html = {}
     for tab in config.get("news_tabs", []):
