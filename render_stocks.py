@@ -62,7 +62,7 @@ def _entry_level(s):
 def _state(price, entry):
     if not price or not entry:
         return "CHECK DATA", "check"
-    return ("ENTER", "enter") if price <= entry else ("WAIT", "wait")
+    return ("AT ENTRY", "enter") if price <= entry else ("WAIT", "wait")
 
 def _peer_pulse(items):
     vals = [(x["ticker"], x.get("return_20d")) for x in items if x.get("return_20d") is not None]
@@ -138,21 +138,21 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
 .ew-top{{position:sticky;top:42px;z-index:60;margin:-2px 0 24px;padding:14px 16px;border:1px solid rgba(255,255,255,.08);background:rgba(22,26,33,.91);backdrop-filter:blur(18px);border-radius:20px;box-shadow:0 18px 50px rgba(0,0,0,.24);display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}}
 .ew-brand{{display:flex;align-items:center;gap:12px;min-width:0}}.ew-logo{{width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#2fe17f,#238c5a);box-shadow:0 0 24px rgba(52,210,123,.25);position:relative;flex:0 0 auto}}.ew-logo:before{{content:"";position:absolute;inset:9px;border:2px solid #08150e;border-radius:50%;box-shadow:inset 0 0 0 4px rgba(255,255,255,.18)}}.ew-title{{font-size:18px;font-weight:760;letter-spacing:-.25px}}.ew-subtitle{{font:500 11px/1.35 "Geist Mono",ui-monospace,monospace;color:var(--ew-muted);margin-top:3px;font-variant-numeric:tabular-nums}}
 .ew-actions{{display:flex;gap:9px;align-items:center}}.ew-btn{{border:1px solid var(--ew-line);border-radius:999px;padding:10px 14px;background:var(--ew-surface2);color:var(--ew-text);font:700 12px/1 Geist,ui-sans-serif,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.18s ease}}.ew-btn:hover{{transform:translateY(-1px);border-color:#465062}}.ew-btn.primary{{background:var(--ew-green);color:#07130c;border-color:transparent}}.ew-btn .spin{{display:inline-block}}.ew-btn.loading .spin{{animation:ewspin .8s linear infinite}}@keyframes ewspin{{to{{transform:rotate(360deg)}}}}
-.ew-summary{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:26px}}.ew-summary-card{{border:1px solid var(--ew-line);background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01));border-radius:18px;padding:13px 15px}}.ew-summary-label{{font-size:10px;color:var(--ew-muted);text-transform:uppercase;letter-spacing:.7px}}.ew-summary-value{{font:750 22px/1.2 "Geist Mono",ui-monospace,monospace;margin-top:5px;font-variant-numeric:tabular-nums}}
-.ew-section{{margin:28px 0 34px}}.ew-section-head{{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:12px}}.ew-section-head h2{{font-size:15px;margin:0;letter-spacing:-.1px}}.ew-section-head span{{font-size:11px;color:var(--ew-muted)}}.ew-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}}
-.ew-card{{position:relative;border:1px solid var(--ew-line);background:linear-gradient(180deg,var(--ew-surface),#13171d);border-radius:var(--ew-radius);padding:16px;min-width:0;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}}.ew-card:hover{{transform:translateY(-2px);border-color:#3c4656}}.ew-card.enter{{border-color:rgba(52,210,123,.62);box-shadow:0 0 0 1px rgba(52,210,123,.10),0 14px 38px rgba(22,112,67,.14)}}.ew-card.check{{border-color:rgba(244,183,64,.45)}}
-.ew-card-top{{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}}.ew-ticker-row{{display:flex;gap:8px;align-items:center;flex-wrap:wrap}}.ew-ticker{{font-size:18px;font-weight:820;letter-spacing:-.3px}}.ew-score{{font:700 10px/1 "Geist Mono",ui-monospace,monospace;padding:5px 7px;border:1px solid var(--ew-line);border-radius:999px;color:#cbd4dc;font-variant-numeric:tabular-nums}}.ew-company{{font-size:11px;color:var(--ew-muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}}
+.ew-summary{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}}.ew-summary-card{{border:1px solid var(--ew-line);background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01));border-radius:18px;padding:12px 14px}}.ew-summary-label{{font-size:9px;color:var(--ew-muted);text-transform:uppercase;letter-spacing:.7px}}.ew-summary-value{{font:750 19px/1.2 "Geist Mono",ui-monospace,monospace;margin-top:4px;font-variant-numeric:tabular-nums}}.ew-controls{{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:0 0 18px}}.ew-filter-group{{display:flex;gap:6px;flex-wrap:wrap}}.ew-filter{{border:1px solid var(--ew-line);background:var(--ew-surface);color:var(--ew-muted);padding:7px 10px;border-radius:999px;font:750 9px/1 Geist,ui-sans-serif,sans-serif;cursor:pointer}}.ew-filter.active{{background:#27312c;color:var(--ew-green);border-color:rgba(52,210,123,.35)}}.ew-view-select{{background:var(--ew-surface);color:var(--ew-text);border:1px solid var(--ew-line);border-radius:999px;padding:7px 28px 7px 10px;font:700 9px/1 Geist,ui-sans-serif,sans-serif;outline:none}}
+.ew-section{{margin:20px 0 26px}}.ew-section-head{{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:9px}}.ew-section-head h2{{font-size:13px;margin:0;letter-spacing:-.1px}}.ew-section-head span{{font-size:10px;color:var(--ew-muted)}}.ew-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}}.ew-grid.compact{{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.ew-card{{position:relative;border:1px solid var(--ew-line);background:linear-gradient(180deg,var(--ew-surface),#13171d);border-radius:18px;padding:12px 13px;min-width:0;transition:border-color .18s ease,transform .18s ease,box-shadow .18s ease}}.ew-card:hover{{transform:translateY(-2px);border-color:#3c4656}}.ew-card.enter{{border-color:rgba(52,210,123,.62);box-shadow:0 0 0 1px rgba(52,210,123,.10),0 14px 38px rgba(22,112,67,.14)}}.ew-card.check{{border-color:rgba(244,183,64,.45)}}
+.ew-card-top{{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}}.ew-ticker-row{{display:flex;gap:7px;align-items:center;flex-wrap:wrap}}.ew-ticker{{font-size:16px;font-weight:820;letter-spacing:-.25px}}.ew-inline-price{{font:760 12px/1 "Geist Mono",ui-monospace,monospace;color:#e7edf1;font-variant-numeric:tabular-nums}}.ew-score{{font:700 8.5px/1 "Geist Mono",ui-monospace,monospace;padding:4px 6px;border:1px solid var(--ew-line);border-radius:999px;color:#cbd4dc;font-variant-numeric:tabular-nums}}.ew-company{{font-size:10px;color:var(--ew-muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}}
 .ew-info{{width:29px;height:29px;border-radius:50%;border:1px solid var(--ew-line);background:var(--ew-surface2);color:#cdd5dd;font:800 12px/1 Georgia,serif;cursor:pointer;position:relative;flex:0 0 auto}}.ew-info.warn:after{{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--ew-amber);right:-1px;top:-1px;box-shadow:0 0 0 2px var(--ew-surface)}}
-.ew-price-row{{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:18px 0 12px}}.ew-price{{font:760 29px/1 "Geist Mono",ui-monospace,monospace;letter-spacing:-1px;font-variant-numeric:tabular-nums}}.ew-chg{{font:700 11px/1 "Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}}.up{{color:var(--ew-green)}}.down{{color:var(--ew-red)}}.muted{{color:var(--ew-muted)}}
-.ew-state{{font-size:10px;font-weight:820;letter-spacing:.65px;text-transform:uppercase;border-radius:999px;padding:6px 9px;white-space:nowrap}}.ew-state.enter{{background:rgba(52,210,123,.12);color:var(--ew-green)}}.ew-state.wait{{background:rgba(244,183,64,.11);color:var(--ew-amber)}}.ew-state.check{{background:rgba(244,183,64,.11);color:var(--ew-amber)}}
-.ew-bar-wrap{{margin-top:14px}}.ew-bar-labels{{display:flex;justify-content:space-between;font:600 9px/1.2 "Geist Mono",ui-monospace,monospace;color:var(--ew-muted);font-variant-numeric:tabular-nums}}.ew-bar{{position:relative;height:8px;border-radius:999px;background:linear-gradient(90deg,rgba(52,210,123,.26) 0 50%,rgba(244,183,64,.16) 50% 100%);margin:7px 0 6px;overflow:visible}}.ew-entry-mark{{position:absolute;left:50%;top:-4px;width:2px;height:16px;background:#d9e2e8;border-radius:2px}}.ew-price-mark{{position:absolute;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:var(--ew-text);border:3px solid var(--ew-bg);box-shadow:0 0 0 1px #6d7784}}
-.ew-mini{{display:flex;justify-content:space-between;gap:10px;margin-top:13px;padding-top:11px;border-top:1px solid rgba(255,255,255,.06)}}.ew-mini div{{min-width:0}}.ew-mini label{{display:block;color:var(--ew-muted);font-size:9px;margin-bottom:4px}}.ew-mini strong{{display:block;font:700 12px/1.2 "Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.not-set{{color:var(--ew-amber)!important}}
+.ew-price-row{{display:none}}.ew-chg{{font:700 9px/1 "Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}}.up{{color:var(--ew-green)}}.down{{color:var(--ew-red)}}.muted{{color:var(--ew-muted)}}
+.ew-state{{display:inline-flex;font-size:8.5px;font-weight:820;letter-spacing:.6px;text-transform:uppercase;border-radius:999px;padding:5px 7px;white-space:nowrap;margin-top:9px}}.ew-state.enter{{background:rgba(52,210,123,.12);color:var(--ew-green)}}.ew-state.wait{{background:rgba(244,183,64,.11);color:var(--ew-amber)}}.ew-state.check{{background:rgba(244,183,64,.11);color:var(--ew-amber)}}
+.ew-bar-wrap{{margin-top:10px}}.ew-bar-labels{{display:flex;justify-content:space-between;font:600 9px/1.2 "Geist Mono",ui-monospace,monospace;color:var(--ew-muted);font-variant-numeric:tabular-nums}}.ew-bar{{position:relative;height:8px;border-radius:999px;background:linear-gradient(90deg,rgba(52,210,123,.26) 0 50%,rgba(244,183,64,.16) 50% 100%);margin:7px 0 6px;overflow:visible}}.ew-entry-mark{{position:absolute;left:50%;top:-4px;width:2px;height:16px;background:#d9e2e8;border-radius:2px}}.ew-price-mark{{position:absolute;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:var(--ew-text);border:3px solid var(--ew-bg);box-shadow:0 0 0 1px #6d7784}}
+.ew-mini{{display:flex;justify-content:space-between;gap:10px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06)}}.ew-mini div{{min-width:0}}.ew-mini label{{display:block;color:var(--ew-muted);font-size:9px;margin-bottom:4px}}.ew-mini strong{{display:block;font:700 12px/1.2 "Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}.not-set{{color:var(--ew-amber)!important}}
 .ew-pop{{position:fixed;z-index:1000;width:min(390px,calc(100vw - 24px));max-height:min(680px,calc(100vh - 24px));overflow:auto;padding:17px;border:1px solid #384252;border-radius:20px;background:rgba(22,26,33,.98);box-shadow:0 28px 80px rgba(0,0,0,.52);display:none}}.ew-pop.open{{display:block}}.ew-pop-head{{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:1px solid var(--ew-line);padding-bottom:12px;margin-bottom:13px}}.ew-pop-title{{font-size:17px;font-weight:800}}.ew-pop-company{{font-size:11px;color:var(--ew-muted);margin-top:3px}}.ew-pop-close{{border:0;background:transparent;color:var(--ew-muted);font-size:18px;cursor:pointer}}.ew-pop-why{{font-size:12px;line-height:1.45;color:#dbe2e7;margin-bottom:14px}}.ew-detail-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}}.ew-detail{{background:var(--ew-surface2);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:10px}}.ew-detail label{{display:block;color:var(--ew-muted);font-size:9px;margin-bottom:5px}}.ew-detail strong{{font:700 12px/1.25 "Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}}.ew-pop-section{{border-top:1px solid var(--ew-line);margin-top:13px;padding-top:12px}}.ew-pop-section h4{{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--ew-muted);margin:0 0 8px}}.ew-ratings{{display:flex;flex-wrap:wrap;gap:6px}}.ew-chip{{font:650 10px/1 "Geist Mono",ui-monospace,monospace;padding:6px 7px;border:1px solid var(--ew-line);border-radius:999px;color:#d1dae2}}.ew-outlook{{font-size:11px;line-height:1.45;color:#d5dde4}}.ew-warning{{margin-top:11px;padding:9px 10px;border-radius:11px;background:rgba(244,183,64,.08);border:1px solid rgba(244,183,64,.22);font-size:10px;color:#d8c89f}}.ew-remove{{width:100%;margin-top:13px;border:1px solid rgba(255,106,77,.36);background:rgba(255,106,77,.08);color:#ff9a86;border-radius:999px;padding:10px;font-weight:750;cursor:pointer}}
 .ew-modal-backdrop{{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.66);display:none;align-items:center;justify-content:center;padding:16px}}.ew-modal-backdrop.open{{display:flex}}.ew-modal{{width:min(520px,100%);background:var(--ew-surface);border:1px solid #3a4351;border-radius:22px;padding:20px;box-shadow:0 28px 90px rgba(0,0,0,.55)}}.ew-modal-head{{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}}.ew-modal-head h3{{margin:0;font-size:18px}}.ew-form{{display:grid;grid-template-columns:1fr 1fr;gap:12px}}.ew-field.full{{grid-column:1/-1}}.ew-field label{{display:block;font-size:10px;color:var(--ew-muted);margin-bottom:6px}}.ew-input{{width:100%;background:#10141a;color:var(--ew-text);border:1px solid var(--ew-line);border-radius:12px;padding:11px 12px;font:600 12px/1.2 Geist,ui-sans-serif,sans-serif;outline:none}}.ew-input:focus{{border-color:#4c8f70;box-shadow:0 0 0 3px rgba(52,210,123,.08)}}.ew-error{{min-height:14px;color:#ff8c76;font-size:9px;margin-top:4px}}.ew-modal-actions{{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}}
 .ew-toast-stack{{position:fixed;right:18px;bottom:18px;z-index:1200;display:grid;gap:8px}}.ew-toast{{min-width:250px;max-width:360px;background:#1c222b;border:1px solid #384251;border-radius:13px;padding:11px 13px;box-shadow:0 16px 50px rgba(0,0,0,.4);font-size:11px;color:#e6ebef}}.ew-toast.good{{border-color:rgba(52,210,123,.45)}}.ew-toast.bad{{border-color:rgba(255,106,77,.45)}}.ew-toast.warn{{border-color:rgba(244,183,64,.45)}}
 .ew-footer{{border-top:1px solid var(--ew-line);margin-top:34px;padding-top:22px;color:#a8b2bd}}.ew-footer strong{{color:#eef2f5}}.ew-footer p{{font-size:11px;line-height:1.55;margin:7px 0}}.ew-score-explain{{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:15px}}.ew-score-box{{border:1px solid var(--ew-line);border-radius:14px;background:rgba(255,255,255,.018);padding:11px}}.ew-score-box b{{display:block;color:#edf2f5;font-size:10px;margin-bottom:4px}}.ew-score-box span{{font-size:9.5px;line-height:1.42;color:var(--ew-muted)}}
 @media(max-width:900px){{.ew-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}.ew-score-explain{{grid-template-columns:repeat(2,1fr)}}}}
-@media(max-width:680px){{.entry-watchlist{{padding:14px 10px 34px}}.ew-top{{position:relative;top:auto;grid-template-columns:1fr;border-radius:18px}}.ew-actions{{width:100%;display:grid;grid-template-columns:1fr 1fr}}.ew-btn{{justify-content:center}}.ew-summary{{grid-template-columns:1fr 1fr 1fr}}.ew-grid{{grid-template-columns:1fr}}.ew-card{{border-radius:19px}}.ew-price-row{{margin-bottom:8px}}.ew-bar-wrap{{margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)}}.ew-form{{grid-template-columns:1fr}}.ew-field.full{{grid-column:auto}}}}
+@media(max-width:680px){{.entry-watchlist{{padding:14px 10px 34px}}.ew-top{{position:relative;top:auto;grid-template-columns:1fr;border-radius:18px}}.ew-actions{{width:100%;display:grid;grid-template-columns:1fr 1fr}}.ew-btn{{justify-content:center}}.ew-summary{{grid-template-columns:1fr 1fr 1fr}}.ew-controls{{align-items:flex-start;flex-direction:column}}.ew-view-select{{width:100%}}.ew-grid,.ew-grid.compact{{grid-template-columns:1fr}}.ew-card{{border-radius:17px}}.ew-bar-wrap{{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06)}}.ew-form{{grid-template-columns:1fr}}.ew-field.full{{grid-column:auto}}}}
 @media(max-width:430px){{.ew-summary{{grid-template-columns:1fr}}.ew-score-explain{{grid-template-columns:1fr}}}}
 @media(prefers-reduced-motion:reduce){{*,*:before,*:after{{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}}}
 </style>
@@ -171,11 +171,24 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
     </header>
 
     <div class="ew-summary" id="ew-summary"></div>
+    <div class="ew-controls">
+      <div class="ew-filter-group" id="ew-state-filters">
+        <button class="ew-filter active" data-state-filter="ALL">All</button>
+        <button class="ew-filter" data-state-filter="AT ENTRY">At Entry</button>
+        <button class="ew-filter" data-state-filter="WAIT">Wait</button>
+        <button class="ew-filter" data-state-filter="CHECK DATA">Check Data</button>
+      </div>
+      <select class="ew-view-select" id="ew-view-mode" aria-label="View mode">
+        <option value="category">Group by category</option>
+        <option value="status">Group by status</option>
+        <option value="compact">Compact list</option>
+      </select>
+    </div>
     <div id="ew-sections"></div>
 
     <footer class="ew-footer">
       <strong>Not advice.</strong>
-      <p>The entry bar is centered on your planned entry. Green is at/below the plan; amber is above it. <b>ENTER</b> means current price is at or below your planned entry, <b>WAIT</b> means it is above, and <b>CHECK DATA</b> means price or entry is missing. The bar is a price-distance visual, not a prediction.</p>
+      <p>The entry bar is centered on your planned entry. Green is at/below the plan; amber is above it. <b>AT ENTRY</b> means current price is at or below your planned entry, <b>WAIT</b> means it is above, and <b>CHECK DATA</b> means price or entry is missing. The bar is a price-distance visual, not a prediction.</p>
       <p>Targets shown here are model/analyst outputs or user-entered targets. They are <b>not validated</b> and should not be treated as facts or guaranteed returns.</p>
       <div class="ew-score-explain">
         <div class="ew-score-box"><b>1 · Market setup</b><span>The model first checks whether markets are risk-on, neutral or risk-off, plus whether the sector is expanding, stable or contracting.</span></div>
@@ -185,7 +198,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
         <div class="ew-score-box"><b>5 · Dynamic weights</b><span>Growth matters more in risk-on/hypergrowth setups; valuation and balance sheet matter more in risk-off conditions.</span></div>
         <div class="ew-score-box"><b>6 · Hard checks</b><span>Major cash-flow, debt, filing or multi-quarter revenue problems can cap the recommendation even when the raw score is high.</span></div>
         <div class="ew-score-box"><b>7 · Score + grade</b><span>The weighted result becomes a 0–100 score and A+ through F grade. Higher means the available evidence is stronger.</span></div>
-        <div class="ew-score-box"><b>8 · Signal ≠ entry</b><span>The model signal rates the company/setup. ENTER or WAIT only compares today's price with your planned entry. Keep those two decisions separate.</span></div>
+        <div class="ew-score-box"><b>8 · Signal ≠ entry</b><span>The model signal rates the company/setup. AT ENTRY or WAIT only compares today's price with your planned entry. Keep those two decisions separate.</span></div>
       </div>
     </footer>
   </div>
@@ -222,7 +235,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
   const safeParse = (k,fallback) => {{try{{return JSON.parse(localStorage.getItem(k)||'')||fallback}}catch(e){{return fallback}}}};
   const safeSet = (k,v) => {{try{{localStorage.setItem(k,JSON.stringify(v));return true}}catch(e){{toast('Could not save locally: '+e.message,'bad');return false}}}};
   let additions=safeParse(LS.add,{{}}), removed=new Set(safeParse(LS.removed,[])), overrides=safeParse(LS.overrides,{{}});
-  let active=null, hoverTimer=null;
+  let active=null, hoverTimer=null, stateFilter='ALL', viewMode='category';
 
   function mergedData(){{
     const base=BASE.filter(x=>!removed.has(x.ticker)).map(x=>Object.assign({{}},x,overrides[x.ticker]||{{}}));
@@ -252,25 +265,38 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
     const [state,key]=derive(s), pos=barPos(s), chg=Number(s.chg), score=Number(s.score);
     const warn=!s.stop||!s.size;
     return `<article class="ew-card ${key}" data-ticker="${s.ticker}">
-      <div class="ew-card-top"><div><div class="ew-ticker-row"><span class="ew-ticker">${s.ticker}</span><span class="ew-score">${Number.isFinite(score)?score.toFixed(1)+' '+(s.grade||''):'Score —'}</span></div><div class="ew-company">${s.company||s.ticker}</div></div><button class="ew-info ${warn?'warn':''}" data-info="${s.ticker}" aria-label="Details for ${s.ticker}">i</button></div>
-      <div class="ew-price-row"><div class="ew-price">${fmt(s.price)}</div><div class="ew-chg ${Number.isFinite(chg)?(chg>=0?'up':'down'):'muted'}">${Number.isFinite(chg)?pct(chg):'change —'}</div></div>
+      <div class="ew-card-top"><div><div class="ew-ticker-row"><span class="ew-ticker">${s.ticker}</span><span class="ew-inline-price">${fmt(s.price)}</span><span class="ew-score">${Number.isFinite(score)?score.toFixed(1)+' '+(s.grade||''):'Score —'}</span></div><div class="ew-company">${s.company||s.ticker} · <span class="ew-chg ${Number.isFinite(chg)?(chg>=0?'up':'down'):'muted'}">${Number.isFinite(chg)?pct(chg):'change —'}</span></div></div><button class="ew-info ${warn?'warn':''}" data-info="${s.ticker}" aria-label="Details for ${s.ticker}">i</button></div>
       <div class="ew-state ${key}">${state}</div>
       <div class="ew-bar-wrap"><div class="ew-bar-labels"><span>${s.entry?fmt(Number(s.entry)*.8):'—'}</span><span>Entry ${fmt(s.entry)}</span><span>${s.entry?fmt(Number(s.entry)*1.2):'—'}</span></div><div class="ew-bar"><span class="ew-entry-mark"></span><span class="ew-price-mark" style="left:${pos}%"></span></div></div>
       <div class="ew-mini"><div><label>Planned entry</label><strong>${fmt(s.entry)}</strong></div><div><label>Target / horizon</label><strong>${s.target?fmt(s.target)+' · '+(s.target_horizon||'Not set'):'Not set'}</strong></div></div>
     </article>`;
   }}
   function render(){{
-    const data=mergedData(), sections=$('#ew-sections'); sections.innerHTML='';
-    const states=data.map(derive).map(x=>x[0]);
-    $('#ew-summary').innerHTML=`<div class="ew-summary-card"><div class="ew-summary-label">Watchlist</div><div class="ew-summary-value">${data.length}</div></div><div class="ew-summary-card"><div class="ew-summary-label">At entry</div><div class="ew-summary-value" style="color:var(--ew-green)">${states.filter(x=>x==='ENTER').length}</div></div><div class="ew-summary-card"><div class="ew-summary-label">Check data</div><div class="ew-summary-value" style="color:var(--ew-amber)">${states.filter(x=>x==='CHECK DATA').length}</div></div>`;
-    const cats=[...CATEGORY_ORDER,'My additions'];
-    cats.forEach(cat=>{{
-      const items=data.filter(x=>(x.category||'My additions')===cat); if(!items.length)return;
-      const thesis=items[0].category_thesis||'Locally saved watchlist additions';
-      const sec=document.createElement('section'); sec.className='ew-section';
-      sec.innerHTML=`<div class="ew-section-head"><div><h2>${cat}</h2><span>${thesis}</span></div><span>${items.length} stocks</span></div><div class="ew-grid">${items.map(card).join('')}</div>`;
+    const all=mergedData(), sections=$('#ew-sections'); sections.innerHTML='';
+    const states=all.map(derive).map(x=>x[0]);
+    $('#ew-summary').innerHTML=`<div class="ew-summary-card"><div class="ew-summary-label">Watchlist</div><div class="ew-summary-value">${all.length}</div></div><div class="ew-summary-card"><div class="ew-summary-label">At entry</div><div class="ew-summary-value" style="color:var(--ew-green)">${states.filter(x=>x==='AT ENTRY').length}</div></div><div class="ew-summary-card"><div class="ew-summary-label">Check data</div><div class="ew-summary-value" style="color:var(--ew-amber)">${states.filter(x=>x==='CHECK DATA').length}</div></div>`;
+    const data=stateFilter==='ALL'?all:all.filter(x=>derive(x)[0]===stateFilter);
+    if(!data.length){{sections.innerHTML='<div class="ew-section"><div class="ew-company">No stocks match this filter.</div></div>';return;}}
+    if(viewMode==='compact'){{
+      const sec=document.createElement('section');sec.className='ew-section';
+      sec.innerHTML=`<div class="ew-section-head"><div><h2>${stateFilter==='ALL'?'All stocks':stateFilter}</h2><span>Compact view</span></div><span>${data.length} stocks</span></div><div class="ew-grid compact">${data.map(card).join('')}</div>`;
       sections.appendChild(sec);
-    }});
+    }} else if(viewMode==='status'){{
+      ['AT ENTRY','WAIT','CHECK DATA'].forEach(st=>{{
+        const items=data.filter(x=>derive(x)[0]===st);if(!items.length)return;
+        const sec=document.createElement('section');sec.className='ew-section';
+        sec.innerHTML=`<div class="ew-section-head"><div><h2>${st}</h2><span>Price vs planned entry</span></div><span>${items.length} stocks</span></div><div class="ew-grid">${items.map(card).join('')}</div>`;
+        sections.appendChild(sec);
+      }});
+    }} else {{
+      [...CATEGORY_ORDER,'My additions'].forEach(cat=>{{
+        const items=data.filter(x=>(x.category||'My additions')===cat); if(!items.length)return;
+        const thesis=items[0].category_thesis||'Locally saved watchlist additions';
+        const sec=document.createElement('section'); sec.className='ew-section';
+        sec.innerHTML=`<div class="ew-section-head"><div><h2>${cat}</h2><span>${thesis}</span></div><span>${items.length} stocks</span></div><div class="ew-grid">${items.map(card).join('')}</div>`;
+        sections.appendChild(sec);
+      }});
+    }}
     bindInfo();
   }}
   function stock(ticker){{return mergedData().find(x=>x.ticker===ticker)}}
@@ -342,7 +368,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
   function removeStock(ticker){{removed.add(ticker);delete additions[ticker];safeSet(LS.removed,[...removed]);safeSet(LS.add,additions);closePop();render();toast(ticker+' removed from this browser watchlist.','warn')}}
   document.addEventListener('keydown',e=>{{if(e.key==='Escape'){{closePop();closeModal()}}}});
   document.addEventListener('click',e=>{{if(active&&!e.target.closest('#ew-pop')&&!e.target.closest('[data-info]'))closePop()}});
-  $('#ew-refresh').onclick=refreshPrices;$('#ew-add').onclick=openModal;$('#ew-modal-x').onclick=closeModal;$('#ew-cancel').onclick=closeModal;$('#ew-modal-bg').onclick=e=>{{if(e.target===e.currentTarget)closeModal()}};$('#ew-form').onsubmit=submit;
+  document.querySelectorAll('[data-state-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-state-filter]').forEach(x=>x.classList.toggle('active',x===b));stateFilter=b.dataset.stateFilter;render()});$('#ew-view-mode').onchange=e=>{viewMode=e.target.value;render()};$('#ew-refresh').onclick=refreshPrices;$('#ew-add').onclick=openModal;$('#ew-modal-x').onclick=closeModal;$('#ew-cancel').onclick=closeModal;$('#ew-modal-bg').onclick=e=>{{if(e.target===e.currentTarget)closeModal()}};$('#ew-form').onsubmit=submit;
   render();
 }})();
 </script>
