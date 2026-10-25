@@ -22,6 +22,24 @@ site:
     - UAL
     - EXPE
     - SPGI
+  stock_entry_levels:
+    MU: 925
+    NVDA: 200
+    AVGO: 335
+    GOOGL: 320
+    AMZN: 245
+    MSFT: 435
+    META: 575
+    AAPL: 300
+    V: 350
+    MA: 545
+    SPGI: 410
+    CRM: 215
+    SNOW: 280
+    WDAY: 160
+    DAL: 70
+    UAL: 90
+    EXPE: 235
 
 news_tabs:
   - slug: "ap-telangana"
