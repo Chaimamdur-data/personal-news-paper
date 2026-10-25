@@ -319,8 +319,26 @@ def _near_term_catalyst(tk):
     except Exception:return 6,"No dated positive catalyst verified"
 
 def _score_stock_core(ticker):
-    tk=yf.Ticker(ticker);info=tk.info or {};price=safe(info.get("currentPrice") or info.get("regularMarketPrice"),0) or 0;prev=safe(info.get("regularMarketPreviousClose"),price) or price;day=((price-prev)/prev*100) if prev else 0
-    hist=_history(tk,"1y");qfin=qcf=None
+    tk=yf.Ticker(ticker);info=tk.info or {}
+    price=safe(info.get("currentPrice") or info.get("regularMarketPrice"),0) or 0
+    prev=safe(info.get("regularMarketPreviousClose"),0) or 0
+    hist=_history(tk,"1y")
+    if not price:
+        try:
+            fi=tk.fast_info
+            price=safe(getattr(fi,"last_price",None) or fi.get("lastPrice"),0) or 0
+            prev=prev or safe(getattr(fi,"previous_close",None) or fi.get("previousClose"),0) or 0
+        except Exception:
+            pass
+    if not price and hist is not None and not hist.empty:
+        try: price=float(hist["Close"].iloc[-1])
+        except Exception: pass
+    if not prev and hist is not None and len(hist)>=2:
+        try: prev=float(hist["Close"].iloc[-2])
+        except Exception: prev=price
+    prev=prev or price
+    day=((price-prev)/prev*100) if prev and price else 0
+    qfin=qcf=None
     try:qfin=tk.quarterly_financials
     except Exception:pass
     try:qcf=tk.quarterly_cashflow
@@ -361,7 +379,14 @@ def _score_stock_core(ticker):
     rec=(safe(info.get("recommendationKey"),"none") or "none").lower();n_analysts=safe(info.get("numberOfAnalystOpinions"),0) or 0;analyst_breakdown=_analyst_breakdown(tk);ars=9 if rec=="strong_buy" and n_analysts>=20 else (6.5 if rec in {"buy","strong_buy"} else (3 if rec=="hold" else (1 if rec in {"sell","underperform"} else None)));add(20,ars,f"{rec.replace('_',' ').title()} from {n_analysts} analysts")
     rs,rf=_rating_changes(tk);add(21,rs,rf or "Rating-change data unavailable");inst=safe(info.get("heldPercentInstitutions"));add(22,_score_band(inst,[(lambda x:x>.70,8.5),(lambda x:x>=.40,5),(lambda x:True,2)]),f"Institutional ownership {inst*100:.1f}%" if inst is not None else "Institutional ownership unavailable");add(23,None,"Two-quarter institutional flow trend unavailable from current feed","N/A")
     short=safe(info.get("shortPercentOfFloat"));add(24,_score_band(short,[(lambda x:x<.03,9),(lambda x:x<.08,6),(lambda x:x<.15,3),(lambda x:True,1)]),f"Short float {short*100:.1f}%" if short is not None else "Short interest unavailable");ns,nf=_news_sentiment(tk);add(25,ns,nf or "Recent news unavailable","Yahoo Finance headlines","low" if ns is not None else "normal");add(26,None,"Open-market vs scheduled 10b5-1 insider activity cannot be separated reliably","N/A")
-    hi=safe(info.get("fiftyTwoWeekHigh"));lo=safe(info.get("fiftyTwoWeekLow"));pos=(price-lo)/(hi-lo) if hi and lo and hi>lo and price else None;p27=None
+    hi=safe(info.get("fiftyTwoWeekHigh"));lo=safe(info.get("fiftyTwoWeekLow"))
+    if hist is not None and not hist.empty:
+        try:
+            if hi is None: hi=float(hist["High"].max())
+            if lo is None: lo=float(hist["Low"].min())
+        except Exception:
+            pass
+    pos=(price-lo)/(hi-lo) if hi and lo and hi>lo and price else None;p27=None
     if pos is not None:p27=(8 if (fcfs and fcfs[0]>0) else 6) if pos<1/3 else (5 if pos<2/3 else 4)
     add(27,p27,f"52-week position {pos*100:.1f}%" if pos is not None else "52-week range unavailable")
     ma50=safe(info.get("fiftyDayAverage"));ma200=safe(info.get("twoHundredDayAverage"));ma_score=None
@@ -406,10 +431,10 @@ def _score_stock_core(ticker):
         for i in range(1,41):
             if PARAM_BUCKET[i]==bucket:
                 p[i]["effective_weight"]=round(each*100,2) if p[i]["score"] is not None else 0;p[i]["weighted_points"]=round((p[i]["score"]/10)*each*100,2) if p[i]["score"] is not None else None
-    return {"ticker":ticker,"name":safe(info.get("shortName") or info.get("longName"),ticker),"sector":safe(info.get("sector"),"N/A"),"price":round(price,2),"day_change":round(day,2),"health_score":score,"grade":grade,"recommendation":rec_out,"signal":signal,"conviction":conviction,"market_regime":market["market_regime"],"sector_health":sector_health,"recent_sector_outlook":recent_sector,"return_20d":stock_return_20d,"lifecycle":lifecycle,"weight_profile":profile_name,"bucket_weights":{k:round(v*100,1) for k,v in weights.items()},"bucket_scores":{k:(round(v,2) if v is not None else None) for k,v in bucket_scores.items()},"params40":[p[i] for i in range(1,41)],"disqualifiers":disq,"low_confidence_params":low_conf,"upside_pct":round(upside,1) if upside is not None else None,"target_mean":round(target,2) if target is not None else None,"analyst_rec":rec,"analyst_count":int(n_analysts) if n_analysts else 0,"analyst_breakdown":analyst_breakdown,"ma50":round(ma50,2) if ma50 else None,"ma200":round(ma200,2) if ma200 else None,"fetched_at":datetime.now().strftime("%b %d %Y %I:%M %p"),"model_note":"Official GICS peer-median inputs are N/A until an authoritative peer feed is connected; affected buckets are renormalized."}
+    return {"ticker":ticker,"name":safe(info.get("shortName") or info.get("longName"),ticker),"sector":safe(info.get("sector"),"N/A"),"price":round(price,2),"day_change":round(day,2),"health_score":score,"grade":grade,"recommendation":rec_out,"signal":signal,"conviction":conviction,"market_regime":market["market_regime"],"sector_health":sector_health,"recent_sector_outlook":recent_sector,"return_20d":stock_return_20d,"lifecycle":lifecycle,"weight_profile":profile_name,"bucket_weights":{k:round(v*100,1) for k,v in weights.items()},"bucket_scores":{k:(round(v,2) if v is not None else None) for k,v in bucket_scores.items()},"params40":[p[i] for i in range(1,41)],"disqualifiers":disq,"low_confidence_params":low_conf,"upside_pct":round(upside,1) if upside is not None else None,"target_mean":round(target,2) if target is not None else None,"analyst_rec":rec,"analyst_count":int(n_analysts) if n_analysts else 0,"analyst_breakdown":analyst_breakdown,"ma50":round(ma50,2) if ma50 else None,"ma200":round(ma200,2) if ma200 else None,"low_52w":round(lo,2) if lo else None,"high_52w":round(hi,2) if hi else None,"fetched_at":datetime.now().strftime("%b %d %Y %I:%M %p"),"model_note":"Official GICS peer-median inputs are N/A until an authoritative peer feed is connected; affected buckets are renormalized."}
 
 def _dummy_score(ticker,reason):
-    return {"ticker":ticker,"name":ticker,"sector":"N/A","price":0,"day_change":0,"health_score":0,"grade":"?","recommendation":"Hold","signal":"HOLD","conviction":"Low","market_regime":"Neutral","sector_health":"Stable","recent_sector_outlook":{"label":"N/A","sector_etf":None,"return_20d":None,"relative_20d":None,"note":"Recent sector trend unavailable"},"return_20d":None,"lifecycle":"Unknown","weight_profile":"Neutral / Stable","bucket_weights":{},"bucket_scores":{},"params40":[],"disqualifiers":[],"low_confidence_params":[],"upside_pct":None,"target_mean":None,"analyst_rec":"none","analyst_count":0,"analyst_breakdown":{"strong_buy":None,"buy":None,"hold":None,"sell":None,"strong_sell":None},"ma50":None,"ma200":None,"fetched_at":datetime.now().strftime("%b %d %Y %I:%M %p"),"error":reason}
+    return {"ticker":ticker,"name":ticker,"sector":"N/A","price":0,"day_change":0,"health_score":0,"grade":"?","recommendation":"Hold","signal":"HOLD","conviction":"Low","market_regime":"Neutral","sector_health":"Stable","recent_sector_outlook":{"label":"N/A","sector_etf":None,"return_20d":None,"relative_20d":None,"note":"Recent sector trend unavailable"},"return_20d":None,"lifecycle":"Unknown","weight_profile":"Neutral / Stable","bucket_weights":{},"bucket_scores":{},"params40":[],"disqualifiers":[],"low_confidence_params":[],"upside_pct":None,"target_mean":None,"analyst_rec":"none","analyst_count":0,"analyst_breakdown":{"strong_buy":None,"buy":None,"hold":None,"sell":None,"strong_sell":None},"ma50":None,"ma200":None,"low_52w":None,"high_52w":None,"fetched_at":datetime.now().strftime("%b %d %Y %I:%M %p"),"error":reason}
 
 def score_stock(ticker):
     if not YF_AVAILABLE:return _dummy_score(ticker,"yfinance not installed")
