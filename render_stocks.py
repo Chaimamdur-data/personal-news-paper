@@ -135,7 +135,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
 .ew-info{{width:29px;height:29px;border-radius:50%;border:1px solid var(--ew-line);background:var(--ew-surface2);color:#cdd5dd;font:800 12px/1 Georgia,serif;cursor:pointer;position:relative;flex:0 0 auto}}.ew-info.warn:after{{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--ew-amber);right:-1px;top:-1px;box-shadow:0 0 0 2px var(--ew-surface)}}
 .ew-price-row{{display:none}}.ew-chg{{font:700 9px/1 "Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}}.up{{color:var(--ew-green)}}.down{{color:var(--ew-red)}}.muted{{color:var(--ew-muted)}}
 .ew-state{{display:inline-flex;font-size:8.5px;font-weight:820;letter-spacing:.6px;text-transform:uppercase;border-radius:999px;padding:5px 7px;white-space:nowrap;margin-top:9px}}.ew-state.enter{{background:rgba(52,210,123,.12);color:var(--ew-green)}}.ew-state.wait{{background:rgba(244,183,64,.11);color:var(--ew-amber)}}.ew-state.check{{background:rgba(244,183,64,.11);color:var(--ew-amber)}}
-.ew-bar-wrap{{margin-top:10px;padding-top:3px}}.ew-scale-labels{{position:relative;height:17px;font:650 7.5px/1 "Geist Mono",ui-monospace,monospace;color:var(--ew-muted);font-variant-numeric:tabular-nums}}.ew-scale-label{{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}}.ew-scale-label.entry{{color:#d9e2e8}}.ew-scale-label.target{{color:var(--ew-blue);font-weight:850;font-size:10.5px;letter-spacing:-.1px}}.ew-scale-label.now{{color:#aab5c0}}.ew-bar{{position:relative;height:8px;border-radius:999px;background:linear-gradient(90deg,rgba(52,210,123,.25),rgba(95,168,255,.20));margin:4px 0 3px;overflow:visible}}.ew-entry-mark,.ew-target-mark{{position:absolute;top:-4px;width:2px;height:16px;border-radius:2px}}.ew-entry-mark{{background:#d9e2e8}}.ew-target-mark{{background:var(--ew-blue)}}.ew-price-mark{{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:var(--ew-text);border:3px solid var(--ew-bg);box-shadow:0 0 0 1px #6d7784}}.ew-scale-note{{font-size:7.5px;line-height:1.35;color:#66717d;margin-top:6px}}.not-set{{color:var(--ew-amber)!important}}
+.ew-bar-wrap{{margin-top:10px;padding-top:3px}}.ew-scale-labels{{position:relative;height:17px;font:650 7.5px/1 "Geist Mono",ui-monospace,monospace;color:var(--ew-muted);font-variant-numeric:tabular-nums}}.ew-scale-label{{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}}.ew-scale-label.entry{{color:#d9e2e8}}.ew-scale-label.target{{color:var(--ew-blue);font-weight:850;font-size:12px;letter-spacing:-.15px}}.ew-scale-label.now{{color:#aab5c0}}.ew-bar{{position:relative;height:8px;border-radius:999px;background:linear-gradient(90deg,rgba(52,210,123,.25),rgba(95,168,255,.20));margin:4px 0 3px;overflow:visible}}.ew-entry-mark,.ew-target-mark{{position:absolute;top:-4px;width:2px;height:16px;border-radius:2px}}.ew-entry-mark{{background:#d9e2e8}}.ew-target-mark{{background:var(--ew-blue)}}.ew-price-mark{{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:var(--ew-text);border:3px solid var(--ew-bg);box-shadow:0 0 0 1px #6d7784}}.ew-scale-note{{font-size:7.5px;line-height:1.35;color:#66717d;margin-top:6px}}.not-set{{color:var(--ew-amber)!important}}
 .ew-pop{{position:fixed;z-index:1000;width:min(390px,calc(100vw - 24px));max-height:min(680px,calc(100vh - 24px));overflow:auto;padding:17px;border:1px solid #384252;border-radius:20px;background:rgba(22,26,33,.98);box-shadow:0 28px 80px rgba(0,0,0,.52);display:none}}.ew-pop.open{{display:block}}.ew-pop-head{{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:1px solid var(--ew-line);padding-bottom:12px;margin-bottom:13px}}.ew-pop-title{{font-size:17px;font-weight:800}}.ew-pop-company{{font-size:11px;color:var(--ew-muted);margin-top:3px}}.ew-pop-close{{border:0;background:transparent;color:var(--ew-muted);font-size:18px;cursor:pointer}}.ew-pop-why{{font-size:12px;line-height:1.45;color:#dbe2e7;margin-bottom:14px}}.ew-detail-grid{{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}}.ew-detail{{background:var(--ew-surface2);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:10px}}.ew-detail label{{display:block;color:var(--ew-muted);font-size:9px;margin-bottom:5px}}.ew-detail strong{{font:700 12px/1.25 "Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}}.ew-pop-section{{border-top:1px solid var(--ew-line);margin-top:13px;padding-top:12px}}.ew-pop-section h4{{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--ew-muted);margin:0 0 8px}}.ew-ratings{{display:flex;flex-wrap:wrap;gap:6px}}.ew-chip{{font:650 10px/1 "Geist Mono",ui-monospace,monospace;padding:6px 7px;border:1px solid var(--ew-line);border-radius:999px;color:#d1dae2}}.ew-outlook{{font-size:11px;line-height:1.45;color:#d5dde4}}.ew-warning{{margin-top:11px;padding:9px 10px;border-radius:11px;background:rgba(244,183,64,.08);border:1px solid rgba(244,183,64,.22);font-size:10px;color:#d8c89f}}.ew-remove{{width:100%;margin-top:13px;border:1px solid rgba(255,106,77,.36);background:rgba(255,106,77,.08);color:#ff9a86;border-radius:999px;padding:10px;font-weight:750;cursor:pointer}}
 .ew-modal-backdrop{{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.66);display:none;align-items:center;justify-content:center;padding:16px}}.ew-modal-backdrop.open{{display:flex}}.ew-modal{{width:min(520px,100%);background:var(--ew-surface);border:1px solid #3a4351;border-radius:22px;padding:20px;box-shadow:0 28px 90px rgba(0,0,0,.55)}}.ew-modal-head{{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}}.ew-modal-head h3{{margin:0;font-size:18px}}.ew-form{{display:grid;grid-template-columns:1fr 1fr;gap:12px}}.ew-field.full{{grid-column:1/-1}}.ew-field label{{display:block;font-size:10px;color:var(--ew-muted);margin-bottom:6px}}.ew-input{{width:100%;background:#10141a;color:var(--ew-text);border:1px solid var(--ew-line);border-radius:12px;padding:11px 12px;font:600 12px/1.2 Geist,ui-sans-serif,sans-serif;outline:none}}.ew-input:focus{{border-color:#4c8f70;box-shadow:0 0 0 3px rgba(52,210,123,.08)}}.ew-error{{min-height:14px;color:#ff8c76;font-size:9px;margin-top:4px}}.ew-modal-actions{{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}}
 .ew-toast-stack{{position:fixed;right:18px;bottom:18px;z-index:1200;display:grid;gap:8px}}.ew-toast{{min-width:250px;max-width:360px;background:#1c222b;border:1px solid #384251;border-radius:13px;padding:11px 13px;box-shadow:0 16px 50px rgba(0,0,0,.4);font-size:11px;color:#e6ebef}}.ew-toast.good{{border-color:rgba(52,210,123,.45)}}.ew-toast.bad{{border-color:rgba(255,106,77,.45)}}.ew-toast.warn{{border-color:rgba(244,183,64,.45)}}
@@ -154,7 +154,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
         <div><div class="ew-title">Entry Watchlist</div><div class="ew-subtitle">Prices: <span id="ew-price-time">__NOW__</span></div></div>
       </div>
       <div class="ew-actions">
-        <button class="ew-btn primary" id="ew-refresh"><span class="spin">↻</span> Refresh</button>
+        <button class="ew-btn primary" id="ew-refresh" title="Run the GitHub refresh workflow"><span class="spin">↻</span> Refresh</button>
         <button class="ew-btn" id="ew-add">＋ Add stock</button>
       </div>
     </header>
@@ -178,7 +178,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
 
     <footer class="ew-footer">
       <strong>Not advice.</strong>
-      <p>The scale shows current price, planned entry, and the tentative target horizon when available. <b>AT ENTRY</b> means current price is at or below your planned entry, <b>WAIT</b> means it is above, and <b>CHECK DATA</b> means price or entry is missing. The bar is a price-distance visual, not a prediction.</p>
+      <p>The scale shows current price, planned reference, and the tentative target horizon when available. <b>AT ENTRY</b> means current price is at or below your planned entry, <b>WAIT</b> means it is above, and <b>CHECK DATA</b> means price or entry is missing. The bar is a price-distance visual, not a prediction.</p>
       <p>Targets shown here are model/analyst outputs or user-entered targets. They are <b>not validated</b> and should not be treated as facts or guaranteed returns.</p>
       <div class="ew-score-explain">
         <div class="ew-score-box"><b>1 · Market setup</b><span>The model first checks whether markets are risk-on, neutral or risk-off, plus whether the sector is expanding, stable or contracting.</span></div>
@@ -200,14 +200,10 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
     <div class="ew-modal-head"><h3 id="ew-modal-title">Add or update stock</h3><button class="ew-pop-close" id="ew-modal-x" aria-label="Close">×</button></div>
     <form id="ew-form" novalidate>
       <div class="ew-form">
-        <div class="ew-field"><label>Ticker *</label><input class="ew-input" id="f-ticker" autocomplete="off" placeholder="MU"><div class="ew-error" id="e-ticker"></div></div>
-        <div class="ew-field"><label>Planned reference</label><input class="ew-input" id="f-entry" inputmode="decimal" placeholder="Auto: 52-week low"><div class="ew-error" id="e-entry">New stocks default to the 52-week low after the GitHub refresh.</div></div>
-        <div class="ew-field full"><label>Company</label><input class="ew-input" id="f-company" placeholder="Optional"></div>
-        <div class="ew-field"><label>Current price</label><input class="ew-input" id="f-price" inputmode="decimal" placeholder="Optional"><div class="ew-error" id="e-price"></div></div>
-        <div class="ew-field"><label>Target price</label><input class="ew-input" id="f-target" inputmode="decimal" placeholder="Optional"><div class="ew-error" id="e-target"></div></div>
-        <div class="ew-field full"><label>Target horizon</label><select class="ew-input" id="f-horizon"><option value="">Not set</option><option>1M</option><option>3M</option><option>6M</option><option>12M</option></select></div>
+        <div class="ew-field full"><label>Ticker *</label><input class="ew-input" id="f-ticker" autocomplete="off" placeholder="e.g. AMD"><div class="ew-error" id="e-ticker"></div></div>
+        <div class="ew-field full"><div class="ew-warning">GitHub will fetch the stock data and use the ticker's <b>52-week low</b> as the default planned reference level.</div></div>
       </div>
-      <div class="ew-modal-actions"><button type="button" class="ew-btn" id="ew-cancel">Cancel</button><button class="ew-btn primary" type="submit">Save stock</button></div>
+      <div class="ew-modal-actions"><button type="button" class="ew-btn" id="ew-cancel">Cancel</button><button class="ew-btn primary" type="submit">Add to GitHub</button></div>
     </form>
   </div>
 </div>
@@ -313,7 +309,7 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
     pop.innerHTML=`<div class="ew-pop-head"><div><div class="ew-pop-title">${s.ticker} · ${derive(s)[0]}</div><div class="ew-pop-company">${s.company||s.ticker}</div></div><button class="ew-pop-close" data-pop-close aria-label="Close">×</button></div>
       <div class="ew-pop-why">${s.why||'No thesis note set.'}</div>
       <div class="ew-detail-grid">
-        <div class="ew-detail"><label>Planned entry</label><strong>${fmt(s.entry)}</strong></div>
+        <div class="ew-detail"><label>Planned reference</label><strong>${fmt(s.entry)}</strong></div>
         <div class="ew-detail"><label>Stop</label><strong>${stop}</strong></div>
         <div class="ew-detail"><label>Size</label><strong>${size}</strong></div>
         <div class="ew-detail"><label>Model score</label><strong>${Number.isFinite(Number(s.score))?Number(s.score).toFixed(1)+' '+(s.grade||''):'Not available'}</strong></div>
@@ -344,37 +340,33 @@ var(--ew-bg);color:var(--ew-text);font-family:Geist,Inter,ui-sans-serif,system-u
     const p=$('#ew-pop'); if(hover){{p.onmouseenter=()=>clearTimeout(hoverTimer);p.onmouseleave=()=>{{hoverTimer=setTimeout(closePop,240)}}}}
   }}
   function toast(msg,type='good'){{const n=document.createElement('div');n.className='ew-toast '+type;n.textContent=msg;$('#ew-toasts').appendChild(n);setTimeout(()=>n.remove(),4200)}}
-  async function refreshPrices(){{
-    const b=$('#ew-refresh');b.classList.add('loading');b.disabled=true;
-    if(!PRICE_URL){{toast('No PRICE_URL feed is configured.','warn');b.classList.remove('loading');b.disabled=false;return}}
-    try{{
-      const res=await fetch(PRICE_URL+(PRICE_URL.includes('?')?'&':'?')+'t='+Date.now(),{{cache:'no-store'}});
-      if(!res.ok)throw new Error('HTTP '+res.status);
-      const j=await res.json();let count=0;
-      BASE.forEach(s=>{{const x=j[s.ticker];if(x&&Number.isFinite(Number(x.price))){{s.price=Number(x.price);if(Number.isFinite(Number(x.chg)))s.chg=Number(x.chg);count++}}}});
-      Object.values(additions).forEach(s=>{{const x=j[s.ticker];if(x&&Number.isFinite(Number(x.price))){{s.price=Number(x.price);if(Number.isFinite(Number(x.chg)))s.chg=Number(x.chg);count++}}}});
-      safeSet(LS.add,additions);$('#ew-price-time').textContent=new Date().toLocaleString(undefined,{{hour12:true}});render();toast('Prices refreshed for '+count+' stocks.','good');
-    }}catch(err){{toast('Refresh failed. Keeping last prices: '+err.message,'bad')}}
-    finally{{b.classList.remove('loading');b.disabled=false}}
+  function githubCommandUrl(title,body=''){{
+    const base='https://github.com/Chaimamdur-data/personal-news-paper/issues/new';
+    return base+'?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
+  }}
+  function runGitHubRefresh(){{
+    const b=$('#ew-refresh');b.classList.add('loading');
+    const url=githubCommandUrl('[Watchlist] REFRESH','Owner-only command: submit this issue to run the refresh workflow.');
+    window.open(url,'_blank','noopener');
+    setTimeout(()=>b.classList.remove('loading'),1200);
+    toast('GitHub command opened. Submit it to run the refresh job.','good');
   }}
   function openModal(){{$('#ew-modal-bg').classList.add('open');setTimeout(()=>$('#f-ticker').focus(),30)}}
-  function closeModal(){{$('#ew-modal-bg').classList.remove('open');$('#ew-form').reset();['ticker','entry','price','target'].forEach(x=>$('#e-'+x).textContent='')}}
+  function closeModal(){{$('#ew-modal-bg').classList.remove('open');$('#ew-form').reset();$('#e-ticker').textContent=''}}
   function num(v){{if(v.trim()==='')return null;const n=Number(v);return Number.isFinite(n)?n:NaN}}
   function submit(e){{
-    e.preventDefault();['ticker','entry','price','target'].forEach(x=>$('#e-'+x).textContent='');
-    const ticker=$('#f-ticker').value.trim().toUpperCase(),entry=num($('#f-entry').value),price=num($('#f-price').value),target=num($('#f-target').value);
-    let bad=false;if(!/^[A-Z][A-Z0-9.-]{{0,9}}$/.test(ticker)){{$('#e-ticker').textContent='Enter a valid ticker.';bad=true}}if(!Number.isFinite(entry)||entry<=0){{$('#e-entry').textContent='Planned entry is required and must be above 0.';bad=true}}if(Number.isNaN(price)||price!==null&&price<=0){{$('#e-price').textContent='Use a positive number or leave blank.';bad=true}}if(Number.isNaN(target)||target!==null&&target<=0){{$('#e-target').textContent='Use a positive number or leave blank.';bad=true}}if(bad)return;
-    removed.delete(ticker);safeSet(LS.removed,[...removed]);
-    const existing=BASE.find(x=>x.ticker===ticker);
-    const patch={{entry,company:$('#f-company').value.trim()||(existing?.company||ticker)}};if(price!==null)patch.price=price;if(target!==null)patch.target=target;const h=$('#f-horizon').value;if(h)patch.target_horizon=h;
-    if(existing){{overrides[ticker]=Object.assign({{}},overrides[ticker]||{{}},patch);safeSet(LS.overrides,overrides);toast(ticker+' updated.','good')}}
-    else{{additions[ticker]=Object.assign({{ticker,category:'My additions',category_thesis:'Locally saved watchlist additions',why:'Added locally. Thesis note not set.',price:null,chg:null,target:null,target_horizon:null,target_upside:null,target_note:'User-entered target; not validated.',score:null,grade:null,signal:null,conviction:null,type:null,analyst_rec:null,analyst_count:0,analyst_breakdown:{{}},industry_outlook:{{label:'N/A',note:'Industry data unavailable for local-only stock.'}},peer_pulse:'Peer data unavailable.',stop:null,size:null,local_only:true}},patch);safeSet(LS.add,additions);toast(ticker+' added to this browser.','good')}}
-    closeModal();render();
+    e.preventDefault();$('#e-ticker').textContent='';
+    const ticker=$('#f-ticker').value.trim().toUpperCase();
+    if(!/^[A-Z][A-Z0-9.-]{{0,9}}$/.test(ticker)){{$('#e-ticker').textContent='Enter a valid ticker.';return;}}
+    const url=githubCommandUrl('[Watchlist] ADD '+ticker,'Owner-only command: add '+ticker+' to the GitHub watchlist. The workflow will fetch its 52-week low and store that as the default planned reference.');
+    window.open(url,'_blank','noopener');
+    closeModal();
+    toast('GitHub add command opened for '+ticker+'. Submit it to persist the stock.','good');
   }}
   function removeStock(ticker){{removed.add(ticker);delete additions[ticker];safeSet(LS.removed,[...removed]);safeSet(LS.add,additions);closePop();render();toast(ticker+' removed from this browser watchlist.','warn')}}
   document.addEventListener('keydown',e=>{{if(e.key==='Escape'){{closePop();closeModal()}}}});
   document.addEventListener('click',e=>{{if(active&&!e.target.closest('#ew-pop')&&!e.target.closest('[data-info]'))closePop()}});
-  document.querySelectorAll('[data-state-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-state-filter]').forEach(x=>x.classList.toggle('active',x===b));stateFilter=b.dataset.stateFilter;render()});$('#ew-view-mode').onchange=e=>{viewMode=e.target.value;render()};$('#ew-refresh').onclick=refreshPrices;$('#ew-add').onclick=openModal;$('#ew-modal-x').onclick=closeModal;$('#ew-cancel').onclick=closeModal;$('#ew-modal-bg').onclick=e=>{{if(e.target===e.currentTarget)closeModal()}};$('#ew-form').onsubmit=submit;
+  document.querySelectorAll('[data-state-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-state-filter]').forEach(x=>x.classList.toggle('active',x===b));stateFilter=b.dataset.stateFilter;render()});$('#ew-view-mode').onchange=e=>{viewMode=e.target.value;render()};$('#ew-refresh').onclick=runGitHubRefresh;$('#ew-add').onclick=openModal;$('#ew-modal-x').onclick=closeModal;$('#ew-cancel').onclick=closeModal;$('#ew-modal-bg').onclick=e=>{{if(e.target===e.currentTarget)closeModal()}};$('#ew-form').onsubmit=submit;
   render();
 }})();
 </script>
