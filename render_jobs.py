@@ -1,158 +1,164 @@
-"""Curated high-compensation data/analytics job tab for The Chai Ledger."""
+"""Current high-fit data/analytics/AI roles for The Chai Ledger."""
 from datetime import datetime
 from html import escape
 
-
 JOBS = [
     {
-        "company": "Airwallex",
-        "title": "Director of AI Analytics & CEO Office",
-        "location": "San Francisco · Hybrid",
-        "salary": "$300K–$320K",
-        "comp": "Equity + Bonus",
-        "match": 96,
-        "type": "AI + Analytics Leadership",
-        "why": "Exceptional match for your AI-enabled analytics leadership, executive partnership, data strategy, and enterprise transformation background.",
-        "summary": "Leads AI analytics from the CEO Office within Engineering/Data Science, combining strategic analytics, AI adoption, executive decision support, and high-impact cross-functional execution.",
-        "url": "https://jobs.ashbyhq.com/airwallex/5f17444c-fea7-4394-8bab-6284b46f1a1c?departmentId=866a2bea-da1c-4818-ad99-5fbd0ea8a5fb",
-        "verified": "Sep 2026",
+        "company":"Early Warning","title":"Sr Director, Data Platform & Analytics Engineering","location":"San Francisco · In-office",
+        "salary":"$206K–$330K","comp":"Leadership role","match":97,"track":"Data Platform",
+        "why":"Direct overlap with data-platform modernization, analytics engineering, governance, observability, trusted data products, and engineering leadership.",
+        "url":"https://builtin.com/job/sr-director-data-platform-analytics-engineering/11490867","source":"Built In","freshness":"Current"
     },
     {
-        "company": "DoorDash",
-        "title": "Director, Analytics — Commerce Platform",
-        "location": "San Francisco / Sunnyvale",
-        "salary": "$255K–$375K",
-        "comp": "Equity",
-        "match": 94,
-        "type": "Product + GTM Analytics",
-        "why": "Strong overlap with your 0→1 analytics, product/GTM measurement, executive metrics, and scaled data-platform experience.",
-        "summary": "Owns analytics and data science for Commerce Platform across new products and scaling businesses, shaping metrics, GTM investments, and the data foundations behind product decisions.",
-        "url": "https://jobs.khoslaventures.com/companies/doordash/jobs/78563094-director-analytics-commerce-platform",
-        "verified": "Sep 2026",
+        "company":"Uber","title":"Director, Mobility Analytics, Strategy & Planning","location":"San Francisco · In-office",
+        "salary":"$239K–$265K","comp":"Leadership role","match":96,"track":"Analytics Leadership",
+        "why":"Excellent fit for executive analytics, data governance, self-service, AI-assisted workflows, planning, and cross-functional operating leadership.",
+        "url":"https://builtin.com/job/director-mobility-analytics-strategy-planning/11247298","source":"Built In","freshness":"Current"
     },
     {
-        "company": "Hims & Hers",
-        "title": "Principal Data Engineer",
-        "location": "U.S. Remote",
-        "salary": "$220K–$260K",
-        "comp": "Equity",
-        "match": 93,
-        "type": "Principal Data Engineering",
-        "why": "Very strong fit for your Snowflake/dbt/data architecture, streaming, governance, and hands-on principal-level engineering depth.",
-        "summary": "Principal-level data engineering role focused on scalable data architecture, production pipelines, platform standards, and technical leadership across analytics and data science.",
-        "url": "https://jobs.ashbyhq.com/hims-and-hers/a321e167-59ab-46cc-9b50-75154f122bdb?category=operational_accounting",
-        "verified": "Sep 2026",
+        "company":"Snorkel AI","title":"Director, GTM Systems & AI Transformation","location":"San Francisco · Hybrid",
+        "salary":"Not surfaced","comp":"AI + GTM","match":96,"track":"AI + GTM",
+        "why":"Very close to RevOps systems, GTM data architecture, workflow automation, AI-enabled process innovation, and hands-on transformation leadership.",
+        "url":"https://job-boards.greenhouse.io/snorkelai/jobs/6190745004","source":"Greenhouse","freshness":"Current"
     },
     {
-        "company": "Collective Health",
-        "title": "Director of Analytics",
-        "location": "San Francisco · Hybrid",
-        "salary": "$200K–$250K",
-        "comp": "350,000 Stock Options",
-        "match": 92,
-        "type": "Analytics + BI Modernization",
-        "why": "Excellent fit for your BI modernization, governed reporting, LLM/RAG analytics, metric governance, and team-building experience.",
-        "summary": "Leads modernization of analytics and client reporting infrastructure, metric governance and data quality, with explicit use of LLM/RAG-enabled insights and cross-functional analytics leadership.",
-        "url": "https://builtin.com/job/director-analytics/9723826",
-        "verified": "Sep 2026",
+        "company":"Achieve","title":"Director, Product Management — Data & Agentic AI Platform","location":"San Mateo · Hybrid",
+        "salary":"$220K–$250K","comp":"Data + Agentic AI","match":95,"track":"AI Platform",
+        "why":"Strong match for semantic layers, governed data products, agent orchestration, evaluation, monitoring, AI workflows, and enterprise change.",
+        "url":"https://builtin.com/job/director-product-management-data-agentic-ai-platform/11737111","source":"Built In","freshness":"Current"
     },
     {
-        "company": "Jazz Pharmaceuticals",
-        "title": "Senior Director, Analytics and Insights",
-        "location": "San Francisco / Remote",
-        "salary": "$232K–$348K",
-        "comp": "Bonus + Equity",
-        "match": 86,
-        "type": "Commercial Analytics",
-        "why": "Strong executive analytics and AI-workflow fit, though healthcare/pharma domain depth is a larger gap than the top four roles.",
-        "summary": "Leads customer analytics, insights and performance reporting, including AI, automation and agentic workflows, with ownership of analytics strategy, talent, vendors and executive decision support.",
-        "url": "https://careers.jazzpharma.com/job/1505/senior-director-analytics-and-insights-commercial-us-ca-san-francisco/",
-        "verified": "Sep 2026",
+        "company":"Microsoft AI","title":"Director, AI Data Acquisition and Operations","location":"Bay Area / U.S.",
+        "salary":"$165.6K–$272.3K Bay Area","comp":"Additional comp may apply","match":92,"track":"AI Data",
+        "why":"Strong AI-data operations and cross-functional program fit; slightly less aligned to your analytics-engineering/GTM core than the top roles.",
+        "url":"https://job-boards.greenhouse.io/microsoftcorporation/jobs/4393853009","source":"Greenhouse","freshness":"Current"
+    },
+    {
+        "company":"Scribd","title":"Director of Analytics Engineering","location":"San Francisco · Hybrid",
+        "salary":"Not surfaced","comp":"Check posting","match":94,"track":"Analytics Engineering",
+        "why":"Excellent fit for analytics engineering leadership, metric foundations, self-service analytics, and modern data-stack architecture.",
+        "url":"https://jobs.ashbyhq.com/ScribdInc/de20593d-6bc8-4450-ba5c-5802819224da","source":"Ashby","freshness":"Current"
+    },
+    {
+        "company":"Lila Sciences","title":"Senior Director, Data Platform Engineering","location":"San Francisco",
+        "salary":"Not surfaced","comp":"Check posting","match":93,"track":"Data Platform",
+        "why":"Strong fit for end-to-end data-platform architecture, reliability, self-service infrastructure, ML/AI workloads, and engineering leadership.",
+        "url":"https://job-boards.greenhouse.io/lilasciences/jobs/4202443009","source":"Greenhouse","freshness":"Current"
+    },
+    {
+        "company":"Crusoe","title":"Senior Director, Analytics & Data Science","location":"San Francisco · On-site",
+        "salary":"Not surfaced","comp":"Check posting","match":91,"track":"Analytics Leadership",
+        "why":"Strong analytics leadership fit in an AI-infrastructure company; the role is broader into data science and strategic initiatives.",
+        "url":"https://jobs.ashbyhq.com/Crusoe/a47eea20-0f86-4d60-ab86-4e4f9ad9abc7","source":"Ashby","freshness":"Current"
+    },
+    {
+        "company":"Instead","title":"Senior Director of Data Analytics & Business Systems","location":"San Francisco · On-site",
+        "salary":"Not surfaced","comp":"Check posting","match":91,"track":"Analytics + Systems",
+        "why":"Strong match for Salesforce, BI, pipelines, executive metrics, automation, and cross-functional business systems ownership.",
+        "url":"https://job-boards.greenhouse.io/instead/jobs/7772740003","source":"Greenhouse","freshness":"Current"
+    },
+    {
+        "company":"Figma","title":"Director, Data Science","location":"San Francisco / New York / U.S.",
+        "salary":"Not surfaced","comp":"Check posting","match":88,"track":"AI + Analytics",
+        "why":"Good leadership and AI-measurement fit, especially around AI product analytics and evals; heavier data-science depth makes it more of a stretch.",
+        "url":"https://job-boards.greenhouse.io/figma/jobs/6130865004","source":"Greenhouse","freshness":"Current"
+    },
+    {
+        "company":"Snorkel AI","title":"Director, Forward Deployed Researcher — Data as a Service","location":"San Francisco · Hybrid / U.S. Remote",
+        "salary":"Not surfaced","comp":"AI data","match":86,"track":"AI Data",
+        "why":"Interesting agentic-AI/data role with customer-facing technical leadership, but more research-heavy than your strongest analytics-engineering lane.",
+        "url":"https://job-boards.greenhouse.io/snorkelai/jobs/5837448004","source":"Greenhouse","freshness":"Current"
+    },
+    {
+        "company":"Snorkel AI","title":"Director, Data Partnerships","location":"San Francisco · Hybrid",
+        "salary":"Not surfaced","comp":"AI data ecosystem","match":80,"track":"AI Data",
+        "why":"Relevant AI/data ecosystem exposure, but partnership sourcing is less aligned to your hands-on data/analytics leadership background.",
+        "url":"https://job-boards.greenhouse.io/snorkelai/jobs/6214981004","source":"Greenhouse","freshness":"Current"
     },
 ]
 
-
-def _card(job):
-    match = job["match"]
-    match_class = "match-top" if match >= 93 else "match-strong" if match >= 88 else "match-good"
+def _card(j):
+    salary_class="job-salary unknown" if j["salary"]=="Not surfaced" else "job-salary"
     return f"""
-    <article class="job-card">
-      <div class="job-card-top">
-        <div>
-          <div class="job-company">{escape(job['company'])}</div>
-          <h2>{escape(job['title'])}</h2>
-          <div class="job-type">{escape(job['type'])}</div>
-        </div>
-        <div class="job-match {match_class}"><strong>{match}%</strong><span>RESUME MATCH</span></div>
+    <article class="job-card" data-track="{escape(j['track'])}">
+      <div class="job-top">
+        <div class="job-company">{escape(j['company'])}</div>
+        <div class="job-match">{j['match']}%</div>
       </div>
+      <h2>{escape(j['title'])}</h2>
+      <div class="job-meta"><span>{escape(j['location'])}</span><span>{escape(j['source'])}</span><span>{escape(j['freshness'])}</span></div>
       <div class="job-facts">
-        <div><span>BASE</span><strong>{escape(job['salary'])}</strong></div>
-        <div><span>LOCATION</span><strong>{escape(job['location'])}</strong></div>
-        <div><span>UPSIDE</span><strong>{escape(job['comp'])}</strong></div>
+        <div><label>Base</label><strong class="{salary_class}">{escape(j['salary'])}</strong></div>
+        <div><label>Track</label><strong>{escape(j['track'])}</strong></div>
+        <div><label>Other</label><strong>{escape(j['comp'])}</strong></div>
       </div>
-      <div class="job-why"><span>WHY IT FITS</span>{escape(job['why'])}</div>
-      <p class="job-summary">{escape(job['summary'])}</p>
-      <div class="job-actions">
-        <span>Verified {escape(job['verified'])}</span>
-        <a href="{escape(job['url'])}" target="_blank" rel="noopener">View Job →</a>
-      </div>
+      <p>{escape(j['why'])}</p>
+      <a class="job-link" href="{escape(j['url'])}" target="_blank" rel="noopener">View job description ↗</a>
     </article>"""
 
-
 def render_jobs_section():
-    cards = "".join(_card(j) for j in sorted(JOBS, key=lambda x: x["match"], reverse=True))
+    jobs=sorted(JOBS,key=lambda x:x["match"],reverse=True)
+    cards="".join(_card(j) for j in jobs)
+    tracks=sorted({j["track"] for j in jobs})
+    chips='<button class="job-filter active" data-job-filter="All">All</button>'+''.join(
+        f'<button class="job-filter" data-job-filter="{escape(t)}">{escape(t)}</button>' for t in tracks
+    )
     return f"""
-    <style>
-      .jobs-page{{max-width:1180px;margin:0 auto;background:#f3ede2;min-height:100vh;padding:24px 28px 40px;color:#171713;font-family:Georgia,'Times New Roman',serif}}
-      .jobs-masthead{{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:3px double #24221e;padding-bottom:13px;margin-bottom:12px}}
-      .jobs-eyebrow{{font:700 9px/1.2 Arial,sans-serif;letter-spacing:.8px;color:#6e675b;margin-bottom:7px}}
-      .jobs-masthead h1{{font-size:40px;line-height:.95;margin:0 0 7px;letter-spacing:-1.1px}}
-      .jobs-masthead p{{font-size:11px;font-style:italic;color:#6e675b;margin:0;max-width:720px}}
-      .jobs-edition{{font:9px/1.5 Arial,sans-serif;text-align:right;white-space:nowrap}}
-      .jobs-rule{{display:flex;flex-wrap:wrap;gap:7px 16px;border-bottom:1px solid #24221e;padding:8px 0 10px;margin-bottom:16px;font:8px/1.3 Arial,sans-serif;text-transform:uppercase;letter-spacing:.45px}}
-      .jobs-rule b{{color:#674e25}}
-      .jobs-grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-left:1px solid #24221e;border-top:1px solid #24221e}}
-      .job-card{{padding:16px;border-right:1px solid #24221e;border-bottom:1px solid #24221e;min-width:0}}
-      .job-card-top{{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}}
-      .job-company{{font:800 9px/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:.65px;color:#674e25;margin-bottom:5px}}
-      .job-card h2{{font-size:20px;line-height:1.05;margin:0 0 6px;letter-spacing:-.2px}}
-      .job-type{{font:7.5px/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:.45px;border:1px solid #24221e;display:inline-block;padding:3px 5px}}
-      .job-match{{min-width:72px;text-align:center;border:1px solid #24221e;padding:7px 6px 6px;font-family:Arial,sans-serif}}
-      .job-match strong{{display:block;font-size:21px;line-height:1}}
-      .job-match span{{display:block;font-size:6.5px;line-height:1.1;margin-top:3px;letter-spacing:.4px}}
-      .match-top{{background:#183f2f;color:#fff;border-color:#183f2f}}
-      .match-strong{{background:#d6b36c}}
-      .match-good{{background:#ddd5c6}}
-      .job-facts{{display:grid;grid-template-columns:.8fr 1.1fr 1fr;gap:0;border-top:1px solid #8f877a;border-bottom:1px solid #8f877a;margin:13px 0 11px}}
-      .job-facts div{{padding:8px 8px 7px 0}}
-      .job-facts span{{display:block;font:6.5px/1 Arial,sans-serif;color:#776f63;letter-spacing:.45px;margin-bottom:3px}}
-      .job-facts strong{{font:700 10px/1.2 Arial,sans-serif}}
-      .job-why{{font-size:10px;line-height:1.4;color:#4f4a42;margin-bottom:8px}}
-      .job-why span{{font:800 7px/1 Arial,sans-serif;letter-spacing:.45px;color:#171713;margin-right:6px}}
-      .job-summary{{font-size:11px;line-height:1.42;color:#595349;margin:0 0 13px}}
-      .job-actions{{display:flex;justify-content:space-between;align-items:center;gap:10px;font:7.5px/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:.4px;color:#756e62}}
-      .job-actions a{{background:#171713;color:#f3ede2;text-decoration:none;padding:8px 10px;font-weight:800}}
-      .job-actions a:hover{{background:#674e25}}
-      .jobs-note{{margin-top:15px;border-top:2px solid #24221e;padding-top:9px;font:8px/1.45 Arial,sans-serif;color:#746d61}}
-      @media(max-width:760px){{
-        .jobs-page{{padding:18px 14px 30px}}
-        .jobs-masthead h1{{font-size:31px}}
-        .jobs-grid{{grid-template-columns:1fr}}
-        .job-card h2{{font-size:19px}}
-        .job-facts{{grid-template-columns:1fr 1fr}}
-        .job-facts div:last-child{{grid-column:1/-1}}
-      }}
-    </style>
-    <section class="jobs-page">
-      <header class="jobs-masthead">
-        <div>
-          <div class="jobs-eyebrow">◇ THE CHAI LEDGER / CAREER RADAR</div>
-          <h1>Jobs Worth Your Time</h1>
-          <p>High-compensation data, analytics and AI leadership roles ranked against your resume — strict Bay Area/remote focus.</p>
-        </div>
-        <div class="jobs-edition">Shortlist<br><strong>{datetime.now().strftime('%b %d, %Y')}</strong></div>
-      </header>
-      <div class="jobs-rule"><span><b>FILTER</b> Salary ceiling ≥ $250K</span><span><b>COMP</b> Equity / options / bonus required</span><span><b>FIT</b> Data · BI · GTM · AI · Analytics Engineering</span></div>
-      <div class="jobs-grid">{cards}</div>
-      <div class="jobs-note">Match % is a resume-fit estimate, not an employer score. Job availability and compensation can change; use “View Job” to confirm the live posting before applying.</div>
-    </section>"""
+<style>
+.jobs-page{{min-height:100vh;background:
+radial-gradient(780px 390px at 14% -5%,rgba(52,210,123,.08),transparent 58%),
+radial-gradient(720px 360px at 88% 0%,rgba(99,169,255,.08),transparent 58%),
+#0e1116;color:#f2f5f7;padding:28px 22px 44px;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}}
+.jobs-shell{{max-width:1220px;margin:0 auto}}
+.jobs-head{{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;padding-bottom:18px;border-bottom:1px solid #2b323e}}
+.jobs-eyebrow{{font-size:9px;font-weight:850;letter-spacing:1px;color:#34d27b;margin-bottom:8px;text-transform:uppercase}}
+.jobs-head h1{{font-size:36px;line-height:1;margin:0 0 8px;letter-spacing:-1.2px}}
+.jobs-head p{{margin:0;max-width:760px;font-size:12px;line-height:1.5;color:#94a0ad}}
+.jobs-date{{font:600 10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#94a0ad;text-align:right;white-space:nowrap}}
+.jobs-toolbar{{display:flex;justify-content:space-between;gap:14px;align-items:center;margin:16px 0 18px}}
+.jobs-filters{{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}}
+.jobs-filters::-webkit-scrollbar{{display:none}}
+.job-filter{{border:1px solid #2b323e;background:#161a21;color:#96a2af;padding:8px 10px;border-radius:999px;white-space:nowrap;font-size:10px;font-weight:750;cursor:pointer}}
+.job-filter.active{{background:#34d27b;color:#07130c;border-color:#34d27b}}
+.jobs-count{{font:650 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#7f8b97;white-space:nowrap}}
+.jobs-grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+.job-card{{border:1px solid #2b323e;background:linear-gradient(180deg,#161a21,#13171d);border-radius:20px;padding:16px;transition:.18s ease}}
+.job-card:hover{{border-color:#414b59;transform:translateY(-1px)}}
+.job-card.hidden{{display:none}}
+.job-top{{display:flex;justify-content:space-between;gap:12px;align-items:center}}
+.job-company{{font-size:10px;font-weight:850;color:#34d27b;text-transform:uppercase;letter-spacing:.7px}}
+.job-match{{font:800 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(52,210,123,.12);color:#59e595;border:1px solid rgba(52,210,123,.22);border-radius:999px;padding:6px 8px}}
+.job-card h2{{font-size:20px;line-height:1.12;margin:9px 0 9px;letter-spacing:-.3px}}
+.job-meta{{display:flex;gap:7px;flex-wrap:wrap;color:#7e8996;font-size:9px}}
+.job-meta span{{background:#1d222b;border:1px solid #29313b;padding:5px 7px;border-radius:999px}}
+.job-facts{{display:grid;grid-template-columns:1.1fr .9fr .9fr;gap:8px;margin:14px 0}}
+.job-facts div{{background:#1a1f27;border:1px solid rgba(255,255,255,.04);border-radius:12px;padding:9px}}
+.job-facts label{{display:block;font-size:8px;color:#7f8a96;margin-bottom:5px;text-transform:uppercase;letter-spacing:.55px}}
+.job-facts strong{{display:block;font-size:11px;line-height:1.25}}
+.job-salary{{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}}
+.job-salary.unknown{{color:#f4b740}}
+.job-card p{{font-size:11px;line-height:1.5;color:#aeb8c3;margin:0 0 14px}}
+.job-link{{display:inline-flex;text-decoration:none;border:1px solid #36404d;background:#20262f;color:#f0f4f6;border-radius:999px;padding:9px 11px;font-size:10px;font-weight:800}}
+.job-link:hover{{border-color:#34d27b;color:#c8f7dc}}
+.jobs-note{{margin-top:18px;padding-top:11px;border-top:1px solid #2b323e;color:#707c89;font-size:9px;line-height:1.55}}
+@media(max-width:780px){{.jobs-page{{padding:20px 11px 34px}}.jobs-head{{display:block}}.jobs-head h1{{font-size:30px}}.jobs-date{{text-align:left;margin-top:10px}}.jobs-toolbar{{display:block}}.jobs-count{{display:block;margin-top:10px}}.jobs-grid{{grid-template-columns:1fr}}}}
+@media(max-width:480px){{.job-facts{{grid-template-columns:1fr 1fr}}.job-facts div:last-child{{grid-column:1/-1}}}}
+@media(prefers-reduced-motion:reduce){{.job-card{{transition:none}}}}
+</style>
+<section class="jobs-page"><div class="jobs-shell">
+  <header class="jobs-head"><div><div class="jobs-eyebrow">The Chai Ledger / Career Radar</div><h1>Jobs Worth Checking</h1><p>Broader current search across data, analytics, AI and platform leadership. Match % is a resume-fit estimate, not an employer score.</p></div><div class="jobs-date">Current snapshot<br><strong>{datetime.now().strftime('%b %d, %Y')}</strong></div></header>
+  <div class="jobs-toolbar"><div class="jobs-filters">{chips}</div><span class="jobs-count" id="jobs-count">{len(jobs)} roles</span></div>
+  <div class="jobs-grid" id="jobs-grid">{cards}</div>
+  <div class="jobs-note">Compensation is shown only when surfaced by the current posting/search result. “Not surfaced” is intentional—not guessed. Always confirm the live job description before applying.</div>
+</div></section>
+<script>
+(()=>{{
+ const buttons=[...document.querySelectorAll('.job-filter')], cards=[...document.querySelectorAll('.job-card')], count=document.getElementById('jobs-count');
+ buttons.forEach(b=>b.addEventListener('click',()=>{{
+  buttons.forEach(x=>x.classList.toggle('active',x===b));
+  const f=b.dataset.jobFilter;let n=0;
+  cards.forEach(c=>{{const show=f==='All'||c.dataset.track===f;c.classList.toggle('hidden',!show);if(show)n++;}});
+  count.textContent=n+' roles';
+ }}));
+}})();
+</script>"""
