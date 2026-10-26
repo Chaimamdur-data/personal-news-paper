@@ -52,6 +52,62 @@ KOREAN_CURRENT = [
     },
 ]
 
+
+FALLBACK_CATALOG = [
+    # Hindi movies — current 30-day window
+    {"title":"Udta Teer","date":"23 October 2026","type":"Movie","language":"Hindi","genre":"Comedy","platform":"OTT TBA","rating":5.0,"url":"https://www.gadgets360.com/entertainment/new-hindi-movies","source":"Gadgets 360"},
+    {"title":"Tu Hai Meri Kiran","date":"23 October 2026","type":"Movie","language":"Hindi","genre":"Mystery, Romance, Thriller","platform":"OTT TBA","rating":5.0,"url":"https://www.gadgets360.com/entertainment/new-hindi-movies","source":"Gadgets 360"},
+    {"title":"Gajab Raat","date":"23 October 2026","type":"Movie","language":"Hindi","genre":"Crime, Thriller","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/new-hindi-movies","source":"Gadgets 360"},
+    {"title":"Prem Keetanu","date":"2 October 2026","type":"Movie","language":"Hindi","genre":"Comedy, Romance","platform":"Netflix","rating":5.0,"url":"https://www.gadgets360.com/entertainment/new-hindi-movies","source":"Gadgets 360"},
+    {"title":"Don't Be Shy!","date":"25 September 2026","type":"Movie","language":"Hindi","genre":"Comedy, Romance","platform":"Prime Video","rating":2.9,"url":"https://www.gadgets360.com/entertainment/new-hindi-movies","source":"Gadgets 360"},
+    {"title":"Love Lottery","date":"25 September 2026","type":"Movie","language":"Hindi","genre":"Drama, Romance, Thriller","platform":"OTT TBA","rating":3.6,"url":"https://www.gadgets360.com/entertainment/new-hindi-movies","source":"Gadgets 360"},
+    {"title":"Nakhrewaalii","date":"30 October 2026","type":"Movie","language":"Hindi","genre":"Drama","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-bollywood-movies","source":"Gadgets 360"},
+    {"title":"Ramayana: Rise of Legend","date":"5 November 2026","type":"Movie","language":"Hindi","genre":"Action, Adventure, Drama","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-bollywood-movies","source":"Gadgets 360"},
+    {"title":"Little Thomas","date":"13 November 2026","type":"Movie","language":"Hindi","genre":"Comedy, Family","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-bollywood-movies","source":"Gadgets 360"},
+    {"title":"Section 84","date":"14 November 2026","type":"Movie","language":"Hindi","genre":"Drama, Thriller","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-bollywood-movies","source":"Gadgets 360"},
+
+    # Telugu movies
+    {"title":"418","date":"23 October 2026","type":"Movie","language":"Telugu","genre":"Horror, Mystery, Thriller","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/new-telugu-movies","source":"Gadgets 360"},
+    {"title":"Crazy Kalyanam","date":"16 October 2026","type":"Movie","language":"Telugu","genre":"Comedy, Drama","platform":"OTT TBA","rating":3.0,"url":"https://www.gadgets360.com/entertainment/new-telugu-movies","source":"Gadgets 360"},
+    {"title":"Ranabaali","date":"16 October 2026","type":"Movie","language":"Telugu","genre":"Drama, History","platform":"OTT TBA","rating":3.6,"url":"https://www.gadgets360.com/entertainment/new-telugu-movies","source":"Gadgets 360"},
+    {"title":"Anakapalli","date":"2 October 2026","type":"Movie","language":"Telugu","genre":"Action, Drama, Romance","platform":"OTT TBA","rating":3.5,"url":"https://www.gadgets360.com/entertainment/new-telugu-movies","source":"Gadgets 360"},
+    {"title":"Rupayanamaha","date":"2 October 2026","type":"Movie","language":"Telugu","genre":"Drama","platform":"OTT TBA","rating":4.5,"url":"https://www.gadgets360.com/entertainment/new-telugu-movies","source":"Gadgets 360"},
+    {"title":"Sigma","date":"2 October 2026","type":"Movie","language":"Telugu","genre":"Action, Comedy, Crime, Drama","platform":"OTT TBA","rating":3.8,"url":"https://www.gadgets360.com/entertainment/new-telugu-movies","source":"Gadgets 360"},
+    {"title":"Itllu Arjuna","date":"30 October 2026","type":"Movie","language":"Telugu","genre":"Action","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-telugu-movies","source":"Gadgets 360"},
+    {"title":"Hatah","date":"6 November 2026","type":"Movie","language":"Telugu","genre":"Thriller","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-telugu-movies","source":"Gadgets 360"},
+    {"title":"Bhogi","date":"12 November 2026","type":"Movie","language":"Telugu","genre":"Action, Drama, History","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-telugu-movies","source":"Gadgets 360"},
+    {"title":"ENE Repeat","date":"19 November 2026","type":"Movie","language":"Telugu","genre":"Comedy","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-telugu-movies","source":"Gadgets 360"},
+    {"title":"Aakasamlo Oka Tara","date":"20 November 2026","type":"Movie","language":"Telugu","genre":"Action, Adventure","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-telugu-movies","source":"Gadgets 360"},
+
+    # English movies
+    {"title":"Wildwood","date":"23 October 2026","type":"Movie","language":"English","genre":"Animation, Adventure","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/new-english-movies","source":"Gadgets 360"},
+    {"title":"Clayface","date":"23 October 2026","type":"Movie","language":"English","genre":"Horror, Thriller","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/new-english-movies","source":"Gadgets 360"},
+    {"title":"Whalefall","date":"16 October 2026","type":"Movie","language":"English","genre":"Adventure, Drama, Horror, Thriller","platform":"OTT TBA","rating":4.0,"url":"https://www.gadgets360.com/entertainment/new-english-movies","source":"Gadgets 360"},
+    {"title":"Beware Boiúna","date":"9 October 2026","type":"Movie","language":"English","genre":"Action, Horror, Thriller","platform":"OTT TBA","rating":4.5,"url":"https://www.gadgets360.com/entertainment/new-english-movies","source":"Gadgets 360"},
+    {"title":"Doing Life","date":"2 October 2026","type":"Movie","language":"English","genre":"Drama","platform":"Netflix","rating":None,"url":"https://www.gadgets360.com/entertainment/new-english-movies","source":"Gadgets 360"},
+    {"title":"Verity","date":"2 October 2026","type":"Movie","language":"English","genre":"Crime, Drama, Mystery, Romance","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/new-english-movies","source":"Gadgets 360"},
+    {"title":"Sense and Sensibility","date":"30 October 2026","type":"Movie","language":"English","genre":"Drama, Romance","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-hollywood-movies","source":"Gadgets 360"},
+    {"title":"The Cat in the Hat","date":"6 November 2026","type":"Movie","language":"English","genre":"Animation, Comedy","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-hollywood-movies","source":"Gadgets 360"},
+    {"title":"Heartland","date":"13 November 2026","type":"Movie","language":"English","genre":"Drama","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-hollywood-movies","source":"Gadgets 360"},
+    {"title":"Steps","date":"20 November 2026","type":"Movie","language":"English","genre":"Drama","platform":"OTT TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-hollywood-movies","source":"Gadgets 360"},
+
+    # Web series — Hindi / Telugu / English
+    {"title":"The Terminal List Season 2","date":"21 October 2026","type":"Series","language":"English","genre":"Thriller","platform":"Prime Video","rating":None,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"Cyberpunk: Edgerunners 2","date":"20 October 2026","type":"Series","language":"English","genre":"Action, Adventure, Animation","platform":"Netflix","rating":4.0,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"Tulsa King Season 4","date":"16 October 2026","type":"Series","language":"English","genre":"Action, Crime, Drama","platform":"JioHotstar","rating":5.0,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"The Diplomat Season 4","date":"15 October 2026","type":"Series","language":"English","genre":"Drama, Thriller","platform":"Netflix","rating":None,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"Haunted Hotel Season 2","date":"9 October 2026","type":"Series","language":"English","genre":"Animation, Comedy, Horror","platform":"Netflix","rating":None,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"Below","date":"8 October 2026","type":"Series","language":"English","genre":"Horror, Mystery, Thriller","platform":"Netflix","rating":None,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"Koffee with Karan Season 9","date":"14 October 2026","type":"Series","language":"Hindi","genre":"Talk Show","platform":"JioHotstar","rating":4.5,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"Pati Patni Aur Panga Season 2","date":"10 October 2026","type":"Series","language":"Hindi","genre":"Game Show, Reality","platform":"JioHotstar","rating":None,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"Dupahiya Season 2","date":"1 October 2026","type":"Series","language":"Hindi","genre":"Comedy, Drama","platform":"Platform TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"The Traitors Telugu","date":"15 October 2026","type":"Series","language":"Telugu","genre":"Game Show, Reality","platform":"Prime Video","rating":None,"url":"https://www.gadgets360.com/entertainment/new-web-series","source":"Gadgets 360"},
+    {"title":"Akka","date":"30 October 2026","type":"Series","language":"Hindi","genre":"Drama","platform":"Platform TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-web-series","source":"Gadgets 360"},
+    {"title":"Nocturne","date":"30 October 2026","type":"Series","language":"English","genre":"Crime, Mystery, Thriller","platform":"Platform TBA","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-web-series","source":"Gadgets 360"},
+    {"title":"Black Doves Season 2","date":"5 November 2026","type":"Series","language":"English","genre":"Drama, Mystery, Thriller","platform":"Netflix","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-web-series","source":"Gadgets 360"},
+    {"title":"Percy Jackson and the Olympians Season 3","date":"20 November 2026","type":"Series","language":"English","genre":"Action, Adventure, Fantasy","platform":"JioHotstar","rating":None,"url":"https://www.gadgets360.com/entertainment/upcoming-web-series","source":"Gadgets 360"},
+]
+
 def _fetch(url):
     req=Request(url,headers={"User-Agent":UA,"Accept":"text/html,*/*"})
     with urlopen(req,timeout=24) as r:
@@ -177,6 +233,16 @@ def fetch_ott_recommendations():
             key=(x["title"].lower(),x["date_obj"])
             if key in seen:continue
             seen.add(key);items.append(x)
+
+    if len(items) < 10:
+        print("  ℹ️ Using stored OTT catalog fallback")
+        for x in FALLBACK_CATALOG:
+            try:d=datetime.strptime(x["date"],"%d %B %Y").date()
+            except Exception:continue
+            key=(x["title"].lower(),d)
+            if key in seen:continue
+            y=dict(x);y["date_obj"]=d;y["date"]=d.strftime("%d %b %Y");y["theatrical"]=y.get("platform")=="OTT TBA"
+            items.append(y);seen.add(key)
 
     for x in KOREAN_CURRENT:
         try:d=datetime.strptime(x["date"],"%d %B %Y").date()
