@@ -562,7 +562,7 @@ def main():
 
     print("Fetching OTT recommendations...")
     ott_data = fetch_ott_recommendations()
-    print(f"  ✅ OTT: {len(ott_data['watch_now'])} watch-now · {len(ott_data['recent'])} recent · {len(ott_data['upcoming'])} upcoming")
+    print(f"  ✅ OTT: {len(ott_data.get('movies', []))} movies · {len(ott_data.get('series', []))} series · {len(ott_data.get('items', []))} total")
     ott_html = render_ott_tab(ott_data)
 
     html = render_shell(stock_html, news_html, ott_html)
