@@ -26,7 +26,7 @@ STOCK_META = {
     "META":"AI-driven ad efficiency and strong cash generation support the core thesis.",
     "AAPL":"A sticky ecosystem and huge installed base support durable cash generation.",
     "ORCL":"OCI, databases and AI infrastructure demand are the main reasons Oracle stays on the list.",
-    "PSTG":"Flash storage, subscriptions and AI-data workloads are the core Pure Storage thesis.",
+    "P":"Flash storage, subscriptions and AI-data workloads are the core Pure Storage thesis.",
     "SNOW":"Cloud data workloads and AI use cases provide upside if consumption growth reaccelerates.",
     "CRM":"Free-cash-flow improvement and AI monetization are the key turnaround tests.",
     "WDAY":"Sticky HR/finance subscriptions and capital returns support the recovery thesis.",
@@ -35,6 +35,7 @@ STOCK_META = {
     "SPGI":"Ratings, indices and market data create recurring information economics.",
     "DAL":"Premium travel and loyalty economics can amplify earnings when the cycle is healthy.",
     "UAL":"International network strength and capacity discipline drive the cyclical thesis.",
+    "NFLX":"International network strength and capacity discipline drive the cyclical thesis.",
     "EXPE":"Scale, B2B growth and Vrbo provide multiple travel-platform growth levers.",
 }
 
